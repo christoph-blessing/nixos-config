@@ -66,8 +66,10 @@
     hashedPasswordFile = "/etc/chris_password.txt";
     shell = pkgs.nushell;
     packages = with pkgs; [
-      firefox
-      keepassxc
+      (st.overrideAttrs (oldAttrs: rec {
+        configFile = writeText "config.def.h" (builtins.readFile ./st/config.def.h);
+        postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.def.h";
+      }))
     ];
   };
   users.users.root.hashedPassword = "!";
@@ -77,9 +79,7 @@
   environment.systemPackages = with pkgs; [
     os-prober
     git
-    st
     rofi
-    mattermost-desktop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

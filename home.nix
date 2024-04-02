@@ -47,6 +47,11 @@
   };
   
   home.packages = with pkgs; [
+    firefox
+    keepassxc
+    mattermost-desktop
+    git
+    rofi
     lua-language-server
     stylua
     ripgrep
