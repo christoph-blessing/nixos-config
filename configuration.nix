@@ -101,19 +101,26 @@
     configDir = "/home/chris/.config/syncthing";
   };
 
-  security.pam.services = {
-    login.u2fAuth = true;
-    sudo.u2fAuth = true;
-  };
-
   services.udev.extraRules = ''
     ACTION=="remove",\
       ENV{ID_BUS}=="usb",\
       ENV{ID_MODEL_ID}=="0407",\
       ENV{ID_VENDOR_ID}=="1050",\
       ENV{ID_VENDOR}=="Yubico",\
-      RUN+="${pkgs.lightdm}/bin/dm-tool lock"
+      RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
   '';
+
+  security.pam.services = {
+    login = {
+      u2fAuth = true;
+      unixAuth = false;
+    };
+    sudo = {
+      u2fAuth = true;
+      unixAuth = false;
+    };
+    i3lock.unixAuth = false;
+  };
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
@@ -122,6 +129,12 @@
   # services.openssh.enable = true;
 
   programs.ssh.startAgent = true;
+
+  programs.i3lock = {
+    enable = true;
+    u2fSupport = true;
+  };
+  programs.xss-lock.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

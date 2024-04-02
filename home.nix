@@ -86,7 +86,7 @@
       "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
     };
   };
-  
+
   home.packages = with pkgs; [
     firefox
     keepassxc
