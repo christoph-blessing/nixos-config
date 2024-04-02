@@ -37,9 +37,7 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    windowManager.bspwm = {
-      enable = true;
-    };
+    windowManager.bspwm.enable = true;
   };
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

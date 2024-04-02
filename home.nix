@@ -45,6 +45,47 @@
     configFile.source = nushell/config.nu;
     envFile.source = nushell/env.nu;
   };
+
+  programs.zellij = {
+    enable = true;
+  };
+
+  xsession.windowManager.bspwm = {
+    enable = true;
+    monitors = {
+      DP-1 = [
+        "I"
+        "II"
+        "III"
+        "IV"
+        "V"
+      ];
+    };
+    settings = {
+      border_width = 9;
+      window_gap = -9;
+      top_padding = 9;
+      right_padding = 9;
+      bottom_padding = 9;
+      left_padding = 9;
+      split_ratio = 0.5;
+      borderless_monocle = true;
+      gapless_monocle = true;
+      normal_border_color = "#928374";
+      focused_border_color = "#cc241d";
+      presel_feedback_color = "#b8bb26";
+    };
+  };
+
+  services.sxhkd = {
+    enable = true;
+    keybindings = {
+      "super + Return" = "st";
+      "super + space" = "rofi -show drun";
+      "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
+      "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
+    };
+  };
   
   home.packages = with pkgs; [
     firefox
