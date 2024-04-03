@@ -110,6 +110,8 @@
       RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
   '';
 
+  services.pcscd.enable = true;
+
   security.pam.services = {
     login = {
       u2fAuth = true;

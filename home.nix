@@ -50,6 +50,8 @@
     enable = true;
   };
 
+  programs.rofi.enable = true;
+
   xsession.windowManager.bspwm = {
     enable = true;
     monitors = {
@@ -84,6 +86,7 @@
       "super + space" = "rofi -show drun";
       "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
       "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
+      "alt + o" = "oath";
     };
   };
 
@@ -92,10 +95,12 @@
     keepassxc
     mattermost-desktop
     git
-    rofi
     lua-language-server
     stylua
     ripgrep
+    yubikey-manager
+    xclip
+    (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
   ];
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
