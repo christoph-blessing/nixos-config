@@ -82,10 +82,12 @@
   services.sxhkd = {
     enable = true;
     keybindings = {
+      "super + Escape" = "pkill -USR1 -x sxhkd";
       "super + Return" = "st";
       "super + space" = "rofi -show drun";
       "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
       "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
+      "super + {_,shift + }w" = "bspc node -{c,k}";
       "alt + o" = "oath";
     };
   };
