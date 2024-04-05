@@ -6,6 +6,16 @@
   home.username = "chris";
   home.homeDirectory = "/home/chris";
 
+  home.keyboard = {
+    layout = "us";
+    model = "pc105";
+    options = [
+      "compose:menu"
+    ];
+  };
+
+  xsession.enable = true;
+
   programs.git = {
     enable = true;
     userName = "Christoph Blessing";
