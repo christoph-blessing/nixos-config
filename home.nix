@@ -62,6 +62,16 @@
 
   programs.rofi.enable = true;
 
+  programs.firefox = {
+    enable = true;
+    profiles.default = {
+      settings = {
+        "browser.in-content.dark-mode" = true;
+        "ui.systemUsesDarkTheme" = 1;
+      };
+    };
+  };
+
   xsession.windowManager.bspwm = {
     enable = true;
     monitors = {
@@ -103,7 +113,6 @@
   };
 
   home.packages = with pkgs; [
-    firefox
     keepassxc
     mattermost-desktop
     git
