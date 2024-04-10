@@ -22,6 +22,11 @@
     userEmail = "chris24.blessing@gmail.com";
   };
 
+  programs.gpg = {
+    enable = true;
+    settings.no-tty = true;
+  };
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -97,6 +102,11 @@
       focused_border_color = "#cc241d";
       presel_feedback_color = "#b8bb26";
     };
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    pinentryFlavor = "curses";
   };
 
   services.sxhkd = {
