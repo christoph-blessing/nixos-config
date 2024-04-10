@@ -24,6 +24,7 @@
       expunge = "both";
       remove = "both";
     };
+    msmtp.enable = true;
     passwordCommand = "gpg --quiet --for-your-eyes-only --no-tty --decrypt ${email/gmail-password.asc}";
   };
 
@@ -38,6 +39,8 @@
   programs.gpg.enable = true;
 
   programs.mbsync.enable = true;
+
+  programs.msmtp.enable = true;
 
   programs.neovim = {
     enable = true;
