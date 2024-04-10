@@ -18,6 +18,7 @@
     address = "chris24.blessing@gmail.com";
     primary = true;
     flavor = "gmail.com";
+    himalaya.enable = true;
     mbsync = {
       enable = true;
       create = "both";
@@ -26,6 +27,7 @@
     };
     msmtp.enable = true;
     passwordCommand = "gpg --quiet --for-your-eyes-only --no-tty --decrypt ${email/gmail-password.asc}";
+    realName = "Christoph Blessing";
   };
 
   xsession.enable = true;
@@ -37,6 +39,8 @@
   };
 
   programs.gpg.enable = true;
+
+  programs.himalaya.enable = true;
 
   programs.mbsync.enable = true;
 
