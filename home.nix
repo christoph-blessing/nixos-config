@@ -14,6 +14,19 @@
     ];
   };
 
+  accounts.email.accounts.gmail = {
+    address = "chris24.blessing@gmail.com";
+    primary = true;
+    flavor = "gmail.com";
+    mbsync = {
+      enable = true;
+      create = "both";
+      expunge = "both";
+      remove = "both";
+    };
+    passwordCommand = "gpg --quiet --for-your-eyes-only --no-tty --decrypt ${email/gmail-password.asc}";
+  };
+
   xsession.enable = true;
 
   programs.git = {
@@ -23,6 +36,8 @@
   };
 
   programs.gpg.enable = true;
+
+  programs.mbsync.enable = true;
 
   programs.neovim = {
     enable = true;
