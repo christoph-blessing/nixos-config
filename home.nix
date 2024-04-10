@@ -32,7 +32,7 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    extraConfig = ":luafile neovim/init.lua";
+    extraConfig = ":luafile ${neovim/init.lua}";
     plugins = with pkgs.vimPlugins; [
       vim-sleuth
       comment-nvim
