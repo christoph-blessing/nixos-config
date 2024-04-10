@@ -22,10 +22,7 @@
     userEmail = "chris24.blessing@gmail.com";
   };
 
-  programs.gpg = {
-    enable = true;
-    settings.no-tty = true;
-  };
+  programs.gpg.enable = true;
 
   programs.neovim = {
     enable = true;
