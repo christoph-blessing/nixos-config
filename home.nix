@@ -74,6 +74,8 @@
     ];
   };
 
+  programs.nheko.enable = true;
+
   programs.nushell = {
     enable = true;
     configFile.source = nushell/config.nu;
