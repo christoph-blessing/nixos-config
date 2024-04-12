@@ -143,7 +143,6 @@
 
   home.packages = with pkgs; [
     keepassxc
-    mattermost-desktop
     git
     lua-language-server
     stylua
