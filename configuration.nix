@@ -38,8 +38,25 @@
   services.xserver = {
     enable = true;
     windowManager.bspwm.enable = true;
+    videoDrivers = [ "nvidia" ];
+    resolutions = [
+      {
+        x = 5120;
+        y = 1440;
+      }
+    ];
   };
-  
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "nvidia-x11"
+      "nvidia-settings"
+      "steam"
+      "steam-original"
+      "steam-run"
+      "teamspeak-client"
+    ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Configure keymap in X11
@@ -138,11 +155,20 @@
 
   programs.ssh.startAgent = true;
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
   programs.i3lock = {
     enable = true;
     u2fSupport = true;
   };
   programs.xss-lock.enable = true;
+
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

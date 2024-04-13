@@ -151,6 +151,7 @@
     ripgrep
     yubikey-manager
     xclip
+    teamspeak_client
     (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
   ];
   # This value determines the Home Manager release that your
