@@ -95,6 +95,7 @@
     os-prober
     git
     rofi
+    protonup-qt
   ];
 
   fonts.packages = with pkgs; [
