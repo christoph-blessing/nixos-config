@@ -127,7 +127,7 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentryFlavor = "curses";
+    pinentryPackage = pkgs.pinentry-rofi;
   };
 
   services.sxhkd = {
