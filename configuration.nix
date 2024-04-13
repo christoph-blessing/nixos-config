@@ -162,6 +162,12 @@
     dedicatedServer.openFirewall = true;
   };
 
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+  programs.gamescope = {
+    enable = true;
+    capSysNice = false;
+  };
+
   programs.i3lock = {
     enable = true;
     u2fSupport = true;
