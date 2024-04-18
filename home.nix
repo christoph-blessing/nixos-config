@@ -84,6 +84,9 @@
 
   programs.zellij = {
     enable = true;
+    settings = {
+      copy_command = "xclip -selection clipboard";
+    };
   };
 
   programs.rofi.enable = true;
