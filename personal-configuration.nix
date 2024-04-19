@@ -4,6 +4,16 @@
   imports = [ ./hardware-configuration.nix ];
 
   networking.hostName = "nixe";
+  
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+    resolutions = [
+      {
+        x = 5120;
+        y = 1440;
+      }
+    ];
+  };
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [

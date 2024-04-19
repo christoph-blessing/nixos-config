@@ -32,13 +32,6 @@
   services.xserver = {
     enable = true;
     windowManager.bspwm.enable = true;
-    videoDrivers = [ "nvidia" ];
-    resolutions = [
-      {
-        x = 5120;
-        y = 1440;
-      }
-    ];
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -113,7 +106,6 @@
   services.pcscd.enable = true;
 
   services.printing.enable = true;
-
   services.avahi = {
     enable = true;
     nssmdns4 = true;
