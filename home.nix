@@ -104,7 +104,7 @@
   xsession.windowManager.bspwm = {
     enable = true;
     monitors = {
-      DP-1 = [
+      DP-4 = [
         "I"
         "II"
         "III"
