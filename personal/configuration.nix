@@ -34,6 +34,11 @@
     dedicatedServer.openFirewall = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    os-prober
+    protonup-qt
+  ];
+
   boot.kernelParams = [ "nvidia-drm.modeset=1" ];
   programs.gamescope = {
     enable = true;
