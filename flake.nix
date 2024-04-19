@@ -11,7 +11,6 @@
     nixosConfigurations.nixe = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [ 
-        ./shared-configuration.nix
 	./personal-configuration.nix
         home-manager.nixosModules.home-manager
 	{
