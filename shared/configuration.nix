@@ -34,6 +34,11 @@
     windowManager.bspwm.enable = true;
   };
 
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "chris";
+  };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Configure keymap in X11

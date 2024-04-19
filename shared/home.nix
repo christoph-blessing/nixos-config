@@ -108,6 +108,9 @@
       focused_border_color = "#cc241d";
       presel_feedback_color = "#b8bb26";
     };
+    extraConfig = ''
+      loginctl lock-session
+    '';
   };
 
   services.gpg-agent = {
