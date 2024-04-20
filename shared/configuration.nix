@@ -100,9 +100,15 @@
   };
 
   services.udev.extraRules = ''
+    ACTION=="add",\
+      ENV{SUBSYSTEM}=="usb",\
+      ENV{PRODUCT}=="1050/407/524",\
+      ENV{DEVTYPE}=="usb_device",\
+      RUN+="${pkgs.bash}/bin/bash -c '${pkgs.pamtester}/bin/pamtester login chris authenticate && ${pkgs.procps}/bin/pkill -x i3lock'"
     ACTION=="remove",\
       ENV{SUBSYSTEM}=="usb",\
       ENV{PRODUCT}=="1050/407/524",\
+      ENV{DEVTYPE}=="usb_device",\
       RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
   '';
 
