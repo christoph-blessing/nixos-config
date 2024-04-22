@@ -18,6 +18,16 @@
     passwordCommand = "gpg --quiet --for-your-eyes-only --no-tty --decrypt ${email/gmail-password.asc}";
     realName = "Christoph Blessing";
   };
+  
+  xsession.windowManager.bspwm.monitors = {
+    DP-4 = [
+      "I"
+      "II"
+      "III"
+      "IV"
+      "V"
+    ];
+  };
 
   home.packages = with pkgs; [
     teamspeak_client
