@@ -16,6 +16,11 @@
 
   programs.git = {
     enable = true;
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+    };
     userName = "Christoph Blessing";
     userEmail = "chris24.blessing@gmail.com";
   };
