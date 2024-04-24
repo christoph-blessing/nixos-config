@@ -17,6 +17,7 @@
     enable = true;
     userControlled.enable = true;
     environmentFile = "/run/secrets/wireless_env";
+    networks.s2blHXGXbwQeTARZ.psk = "@PSK@";
     networks.eduroam = {
       auth = ''
         key_mgmt=WPA-EAP
