@@ -132,6 +132,7 @@
       "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
       "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
       "super + {_,shift + }w" = "bspc node -{c,k}";
+      "super + f" = "bspc desktop -l next";
       "alt + o" = "oath";
     };
   };
