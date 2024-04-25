@@ -15,6 +15,22 @@
 
  programs.autorandr = {
    enable = true;
+   hooks.postswitch.move_desktops = ''
+     move_desktops() {
+       source=$1
+       target=$2
+       bspc monitor $source --add-desktops temp
+       for desktop in $(bspc query --monitor $source --desktops); do bspc desktop $desktop --to-monitor $target; done
+       bspc monitor $source --remove
+       bspc desktop Desktop --remove
+     }
+
+     if [ $AUTORANDR_CURRENT_PROFILE == "mobile" ]; then
+       move_desktops DP-1-2 eDP-1
+     elif [ $AUTORANDR_CURRENT_PROFILE == "docked" ]; then
+       move_desktops eDP-1 DP-1-2
+     fi
+   '';
    profiles.docked = {
      fingerprint = {
        "e-DP1" = "00ffffffffffff004d101515000000000d1f0104a52215780ede50a3544c99260f505400000001010101010101010101010101010101283c80a070b023403020360050d210000018203080a070b023403020360050d210000018000000fe00445737584e804c513135364e31000000000002410332001200000a010a202000d2";
