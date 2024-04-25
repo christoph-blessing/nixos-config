@@ -40,4 +40,12 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "zoom"
+  ];
+
+  environment.systemPackages = with pkgs; [
+    zoom-us
+  ];
 }
