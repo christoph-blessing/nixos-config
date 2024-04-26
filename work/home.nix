@@ -3,13 +3,28 @@
 {
   imports = [ ../shared/home.nix ];
 
-  xsession.windowManager.bspwm.monitors = {
-    eDP-1 = [
-      "I"
-      "II"
-      "III"
-      "IV"
-      "V"
+  xsession.windowManager.bspwm = {
+    monitors = {
+      eDP-1 = [
+        "Terminal"
+        "Web"
+        "Passwords"
+        "I"
+        "II"
+      ];
+    };
+    extraConfig = ''
+      bspc node @Terminal:/ --insert-receptacle
+      bspc rule --add st-256color --one-shot node=@Terminal:/
+      bspc node @Web:/ --insert-receptacle
+      bspc rule --add firefox --one-shot node=@Web:/
+      bspc node @Passwords:/ --insert-receptacle
+      bspc rule --add KeePassXC --one-shot node=@Passwords:/
+    '';
+    startupPrograms = [
+      "st"
+      "firefox"
+      "keepassxc"
     ];
   };
 

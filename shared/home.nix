@@ -90,15 +90,6 @@
 
   xsession.windowManager.bspwm = {
     enable = true;
-    monitors = {
-      DP-4 = [
-        "I"
-        "II"
-        "III"
-        "IV"
-        "V"
-      ];
-    };
     settings = {
       border_width = 9;
       window_gap = -9;
