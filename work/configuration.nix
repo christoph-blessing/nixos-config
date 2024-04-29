@@ -51,4 +51,15 @@
 
   virtualisation.docker.enable = true;
   users.users.chris.extraGroups = [ "docker" ];
+
+  services.udev.extraRules = ''
+    ACTION=="add",\
+      ENV{SUBSYSTEM}=="input",\
+      ENV{PRODUCT}=="5/1d50/615e/1",\
+      RUN+="${pkgs.bash}/bin/bash -c 'export DISPLAY=:0 XAUTHORITY=/home/chris/.Xauthority; ${pkgs.xorg.xinput}/bin/xinput disable \"AT Translated Set 2 keyboard\"'"
+    ACTION=="remove",\
+      ENV{SUBSYSTEM}=="input",\
+      ENV{PRODUCT}=="5/1d50/615e/1",\
+      RUN+="${pkgs.bash}/bin/bash -c 'export DISPLAY=:0 XAUTHORITY=/home/chris/.Xauthority; ${pkgs.xorg.xinput}/bin/xinput enable \"AT Translated Set 2 keyboard\"'"
+  '';
 }
