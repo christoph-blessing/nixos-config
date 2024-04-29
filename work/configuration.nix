@@ -48,4 +48,7 @@
   environment.systemPackages = with pkgs; [
     zoom-us
   ];
+
+  virtualisation.docker.enable = true;
+  users.users.chris.extraGroups = [ "docker" ];
 }
