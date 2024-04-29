@@ -20,6 +20,7 @@
 	  home-manager.useUserPackages = true;
 	  home-manager.users.chris = import ./personal/home.nix;
 	}
+        sops-nix.nixosModules.sops
       ];
     };
     nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
