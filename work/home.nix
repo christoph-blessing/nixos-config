@@ -79,5 +79,53 @@
   home.packages = with pkgs; [
     pavucontrol
   ];
+
+  services.polybar = {
+    enable = true;
+    script = "polybar mybar &";
+    settings = {
+      "colors" = {
+        background = "#282A2E";
+        background-alt = "#373B41";
+        foreground = "#C5C8C6";
+        primary = "#F0C674";
+        secondary = "#8ABEB7";
+        alert = "#A54242";
+        disabled = "#707880";
+      };
+      "bar/mybar" = {
+        width = "100%";
+        background = "\${colors.background}";
+        foreground = "\${colors.foreground}";
+        modules.left = "bspwm";
+        modules.right = "cpu memory battery date";
+        module.margin = 1;
+        separator = "|";
+      };
+      "module/bspwm" = {
+        type = "internal/bspwm";
+        enable.click = false;
+        enable.scroll = false;
+        label.focused.background = "\${colors.background-alt}";
+      };
+      "module/cpu" = {
+        type = "internal/cpu";
+        format.prefix = "CPU ";
+      };
+      "module/memory" = {
+        type = "internal/memory";
+        format.prefix = "RAM ";
+      };
+      "module/battery" = {
+        type = "internal/battery";
+      };
+      "module/date" = {
+        type = "internal/date";
+        interval = 1;
+        date = "%H:%M";
+        label = "%date%";
+      };
+    };
+  };
 }
 
