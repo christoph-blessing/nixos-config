@@ -139,6 +139,7 @@
     yubikey-manager
     xclip
     (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
+    pyright
   ];
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

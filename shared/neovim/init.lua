@@ -150,6 +150,11 @@ lspconfig.lua_ls.setup({
 	},
 	capabilities = capabilities,
 })
+lspconfig.pyright.setup({
+	settings = {
+		typeCheckingMode = "off",
+	},
+})
 
 require("conform").setup({
 	notify_on_error = false,
