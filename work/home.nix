@@ -14,14 +14,14 @@
     };
     extraConfig = ''
       bspc node @I:/ --insert-receptacle
-      bspc rule --add st-256color --one-shot node=@I:/
+      bspc rule --add Alacritty --one-shot node=@I:/
       bspc node @II:/ --insert-receptacle
       bspc rule --add firefox --one-shot node=@II:/
       bspc node @III:/ --insert-receptacle
       bspc rule --add KeePassXC --one-shot node=@III:/
     '';
     startupPrograms = [
-      "st"
+      "alacritty"
       "firefox"
       "keepassxc"
     ];

@@ -14,6 +14,8 @@
 
   xsession.enable = true;
 
+  programs.alacritty.enable = true;
+
   programs.git = {
     enable = true;
     extraConfig = {
@@ -119,7 +121,7 @@
     enable = true;
     keybindings = {
       "super + Escape" = "pkill -USR1 -x sxhkd";
-      "super + Return" = "st";
+      "super + Return" = "alacritty";
       "super + space" = "rofi -show drun";
       "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
       "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";

@@ -68,12 +68,6 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     hashedPasswordFile = "/etc/chris_password.txt";
     shell = pkgs.nushell;
-    packages = with pkgs; [
-      (st.overrideAttrs (oldAttrs: rec {
-        configFile = writeText "config.def.h" (builtins.readFile ./st/config.def.h);
-        postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.def.h";
-      }))
-    ];
   };
   users.users.root.hashedPassword = "!";
 
