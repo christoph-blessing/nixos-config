@@ -6,20 +6,19 @@
   xsession.windowManager.bspwm = {
     monitors = {
       eDP-1 = [
-        "Terminal"
-        "Web"
-        "Passwords"
         "I"
         "II"
+        "III"
+        "IV"
       ];
     };
     extraConfig = ''
-      bspc node @Terminal:/ --insert-receptacle
-      bspc rule --add st-256color --one-shot node=@Terminal:/
-      bspc node @Web:/ --insert-receptacle
-      bspc rule --add firefox --one-shot node=@Web:/
-      bspc node @Passwords:/ --insert-receptacle
-      bspc rule --add KeePassXC --one-shot node=@Passwords:/
+      bspc node @I:/ --insert-receptacle
+      bspc rule --add st-256color --one-shot node=@I:/
+      bspc node @II:/ --insert-receptacle
+      bspc rule --add firefox --one-shot node=@II:/
+      bspc node @III:/ --insert-receptacle
+      bspc rule --add KeePassXC --one-shot node=@III:/
     '';
     startupPrograms = [
       "st"
