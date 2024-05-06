@@ -31,24 +31,20 @@
  programs.autorandr = {
    enable = true;
    hooks.postswitch.move_desktops = ''
-     move_desktops() {
-       source=$1
-       target=$2
+     target=$AUTORANDR_MONITORS
+     monitors=$(bspc query -M --names)
+     for source in $monitors; do
+       if [ $source == $target ]; then
+         continue
+       fi
+       desktops=$(bspc query -D --names --monitor $source)
        bspc monitor $source --add-desktops temp
-       for desktop in $(bspc query --monitor $source --desktops); do bspc desktop $desktop --to-monitor $target; done
+       for desktop in $desktops; do
+         bspc desktop $desktop --to-monitor $target
+       done
        bspc monitor $source --remove
-       bspc desktop Desktop --remove
-     }
-
-     if [ $AUTORANDR_CURRENT_PROFILE == "mobile" ]; then
-       move_desktops DP-1-2 eDP-1
-     elif [ $AUTORANDR_CURRENT_PROFILE == "docked1" ]; then
-       move_desktops eDP-1 DP-1-2
-     elif [ $AUTORANDR_CURRENT_PROFILE == "docked2" ]; then
-       move_desktops eDP-1 DP-1-1
-     elif [ $AUTORANDR_CURRENT_PROFILE == "docked3" ]; then
-       move_desktops eDP-1 DP-1-2
-     fi
+     done
+     bspc desktop Desktop --remove
    '';
    hooks.postswitch.move_bar = ''
      pkill -x polybar
