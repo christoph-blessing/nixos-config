@@ -84,6 +84,7 @@
       settings = {
         "browser.in-content.dark-mode" = true;
         "ui.systemUsesDarkTheme" = 1;
+        "browser.sessionstore.resume_from_crash" = false;
       };
     };
   };
