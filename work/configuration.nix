@@ -17,7 +17,8 @@
     enable = true;
     userControlled.enable = true;
     environmentFile = "/run/secrets/wireless_env";
-    networks.s2blHXGXbwQeTARZ.psk = "@PSK@";
+    networks.s2blHXGXbwQeTARZ.psk = "@HOME_PSK@";
+    networks."Chris Pixel 6".psk = "@PIXEL_PSK@";
     networks.eduroam = {
       auth = ''
         key_mgmt=WPA-EAP
