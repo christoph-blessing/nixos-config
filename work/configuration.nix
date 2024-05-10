@@ -1,35 +1,104 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../shared/configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../shared/configuration.nix
+  ];
 
   networking.hostName = "nixe-work";
 
   sops.secrets = {
-      wireless_env = { };
-    };
+    wireless_env = { };
+  };
 
-  networking.wireless = {
+  networking.networkmanager = {
     enable = true;
-    userControlled.enable = true;
-    environmentFile = "/run/secrets/wireless_env";
-    networks.s2blHXGXbwQeTARZ.psk = "@HOME_PSK@";
-    networks."Chris Pixel 6".psk = "@PIXEL_PSK@";
-    networks.eduroam = {
-      auth = ''
-        key_mgmt=WPA-EAP
-        eap=PEAP
-        ca_cert="/etc/ssl/certs/T-TeleSec_GlobalRoot_Class_2_pem"
-        identity="@IDENTITY@"
-        altsubject_match="DNS:eduroam.gwdg.de"
-        phase2="auth=MSCHAPV2"
-        password="@PASSWORD@"
-        anonymous_identity="eduroam@gwdg.de"
-      '';
+    ensureProfiles.environmentFiles = [ "/run/secrets/wireless_env" ];
+    ensureProfiles.profiles = {
+      Home = {
+        connection = {
+          id = "Home";
+          timestamp = "1715162203";
+          type = "wifi";
+          uuid = "5a7ed94b-4912-476b-8eb9-e1a3c994ace0";
+        };
+        ipv4 = {
+          method = "auto";
+        };
+        ipv6 = {
+          addr-gen-mode = "default";
+          method = "auto";
+        };
+        proxy = { };
+        wifi = {
+          mode = "infrastructure";
+          ssid = "s2blHXGXbwQeTARZ";
+        };
+        wifi-security = {
+          key-mgmt = "wpa-psk";
+          psk = "$HOME_PSK";
+        };
+      };
+      eduroam = {
+        "802-1x" = {
+          anonymous-identity = "eduroam@gwdg.de";
+          ca-cert = "/etc/ssl/certs/T-TeleSec_GlobalRoot_Class_2_pem";
+          eap = "peap;";
+          identity = "$IDENTITY";
+          password = "$PASSWORD";
+          phase2-auth = "mschapv2";
+        };
+        connection = {
+          id = "Eduroam";
+          timestamp = "1715177091";
+          type = "wifi";
+          uuid = "499c369b-f09e-43bc-8aca-adb236e9a0de";
+        };
+        ipv4 = {
+          method = "auto";
+        };
+        ipv6 = {
+          addr-gen-mode = "default";
+          method = "auto";
+        };
+        proxy = { };
+        wifi = {
+          mode = "infrastructure";
+          ssid = "eduroam";
+        };
+        wifi-security = {
+          key-mgmt = "wpa-eap";
+        };
+      };
+      Parents = {
+        connection = {
+          id = "Parents";
+          type = "wifi";
+          uuid = "c238bd94-39ef-4c1e-8cac-51a3b79c10a4";
+        };
+        ipv4 = {
+          method = "auto";
+        };
+        ipv6 = {
+          addr-gen-mode = "default";
+          method = "auto";
+        };
+        proxy = { };
+        wifi = {
+          mode = "infrastructure";
+          ssid = "TP-Link_A71B_5G";
+        };
+        wifi-security = {
+          key-mgmt = "wpa-psk";
+          psk = "$PARENTS_PSK";
+        };
+      };
     };
   };
 
@@ -42,16 +111,19 @@
     pulse.enable = true;
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "zoom"
-  ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "zoom" ];
 
   environment.systemPackages = with pkgs; [
     zoom-us
+    eduvpn-client
   ];
 
   virtualisation.docker.enable = true;
-  users.users.chris.extraGroups = [ "docker" ];
+
+  users.users.chris.extraGroups = [
+    "docker"
+    "networkmanager"
+  ];
 
   services.udev.extraRules = ''
     ACTION=="add",\
