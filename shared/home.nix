@@ -7,9 +7,7 @@
   home.keyboard = {
     layout = "us";
     model = "pc105";
-    options = [
-      "compose:menu"
-    ];
+    options = [ "compose:menu" ];
   };
 
   xsession.enable = true;
