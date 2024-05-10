@@ -76,9 +76,9 @@
           key-mgmt = "wpa-eap";
         };
       };
-      Parents = {
+      parents5g = {
         connection = {
-          id = "Parents";
+          id = "Parents 5G";
           type = "wifi";
           uuid = "c238bd94-39ef-4c1e-8cac-51a3b79c10a4";
         };
@@ -93,6 +93,29 @@
         wifi = {
           mode = "infrastructure";
           ssid = "TP-Link_A71B_5G";
+        };
+        wifi-security = {
+          key-mgmt = "wpa-psk";
+          psk = "$PARENTS_PSK";
+        };
+      };
+      parents = {
+        connection = {
+          id = "Parents";
+          type = "wifi";
+          uuid = "36c893d1-d7da-4276-ad5d-45d826621379";
+        };
+        ipv4 = {
+          method = "auto";
+        };
+        ipv6 = {
+          addr-gen-mode = "default";
+          method = "auto";
+        };
+        proxy = { };
+        wifi = {
+          mode = "infrastructure";
+          ssid = "TP-Link_A71B";
         };
         wifi-security = {
           key-mgmt = "wpa-psk";
