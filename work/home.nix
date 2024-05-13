@@ -164,6 +164,12 @@
       };
       "module/battery" = {
         type = "internal/battery";
+        label = {
+          charging = "Charging %percentage%%";
+          discharging = "Discharging %percentage%%";
+          full = "Fully charged";
+          low = "BATTERY LOW";
+        };
       };
       "module/date" = {
         type = "internal/date";
