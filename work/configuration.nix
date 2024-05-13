@@ -148,6 +148,10 @@
     "networkmanager"
   ];
 
+  services.libinput.touchpad = {
+    naturalScrolling = true;
+  };
+
   services.udev.extraRules = ''
     ACTION=="add",\
       ENV{SUBSYSTEM}=="input",\
