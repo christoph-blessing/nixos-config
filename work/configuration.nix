@@ -21,9 +21,9 @@
     enable = true;
     ensureProfiles.environmentFiles = [ "/run/secrets/wireless_env" ];
     ensureProfiles.profiles = {
-      Home = {
+      home = {
         connection = {
-          id = "Home";
+          id = "home";
           timestamp = "1715162203";
           type = "wifi";
           uuid = "5a7ed94b-4912-476b-8eb9-e1a3c994ace0";
@@ -55,7 +55,7 @@
           phase2-auth = "mschapv2";
         };
         connection = {
-          id = "Eduroam";
+          id = "eduroam";
           timestamp = "1715177091";
           type = "wifi";
           uuid = "499c369b-f09e-43bc-8aca-adb236e9a0de";
@@ -78,7 +78,7 @@
       };
       parents5g = {
         connection = {
-          id = "Parents 5G";
+          id = "parents5g";
           type = "wifi";
           uuid = "c238bd94-39ef-4c1e-8cac-51a3b79c10a4";
         };
@@ -101,9 +101,9 @@
       };
       parents = {
         connection = {
-          id = "Parents";
+          id = "parents";
           type = "wifi";
-          uuid = "36c893d1-d7da-4276-ad5d-45d826621379";
+          uuid = "474d6afa-5fcd-4664-80e0-19398cc6cf75";
         };
         ipv4 = {
           method = "auto";
