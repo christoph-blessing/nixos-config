@@ -144,7 +144,7 @@
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
-        modules.right = "cpu memory battery date";
+        modules.right = "cpu memory filesystem wireless-network alsa battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -161,6 +161,25 @@
       "module/memory" = {
         type = "internal/memory";
         format.prefix = "RAM ";
+      };
+      "module/wireless-network" = {
+        type = "internal/network";
+        interface = "wlp0s20f3";
+        label = {
+          connected = "%essid% %downspeed:9%";
+          disconnected = "not connected";
+        };
+      };
+      "module/filesystem" = {
+        type = "internal/fs";
+        label.mounted = "%mountpoint% %percentage_used%%";
+      };
+      "module/alsa" = {
+        type = "internal/alsa";
+        label = {
+          volume = "VOL %percentage%%";
+          muted = "Muted";
+        };
       };
       "module/battery" = {
         type = "internal/battery";
