@@ -11,6 +11,8 @@
     ../shared/configuration.nix
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
+
   networking.hostName = "nixe-work";
 
   sops.secrets = {
