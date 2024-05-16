@@ -28,7 +28,7 @@
           id = "home";
           timestamp = "1715162203";
           type = "wifi";
-          uuid = "5a7ed94b-4912-476b-8eb9-e1a3c994ace0";
+          uuid = "fc58d037-7cfb-478f-b7de-d17ed3311180";
         };
         ipv4 = {
           method = "auto";
