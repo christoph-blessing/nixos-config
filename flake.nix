@@ -7,6 +7,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
   outputs =
@@ -15,6 +16,7 @@
       nixpkgs,
       home-manager,
       sops-nix,
+      pre-commit-hooks,
     }:
     {
       nixosConfigurations.nixe = nixpkgs.lib.nixosSystem {
@@ -42,6 +44,19 @@
           }
           sops-nix.nixosModules.sops
         ];
+      };
+      checks."x86_64-linux".pre-commit-check = pre-commit-hooks.lib."x86_64-linux".run {
+        src = ./.;
+        hooks = {
+          nixfmt = {
+            enable = true;
+            package = nixpkgs.legacyPackages."x86_64-linux".nixfmt-rfc-style;
+          };
+        };
+      };
+      devShells."x86_64-linux".default = nixpkgs.legacyPackages."x86_64-linux".mkShell {
+        inherit (self.checks."x86_64-linux".pre-commit-check) shellHook;
+        buildInputs = self.checks."x86_64-linux".pre-commit-check.enabledPackages;
       };
     };
 }
