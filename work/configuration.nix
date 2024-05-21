@@ -147,6 +147,31 @@ in
           psk = "$PARENTS_PSK";
         };
       };
+      phone = {
+        connection = {
+          id = "phone";
+          interface-name = "wlp0s20f3";
+          type = "wifi";
+          uuid = "4000425f-5029-442f-bc37-a769ef6be700";
+        };
+        ipv4 = {
+          method = "auto";
+        };
+        ipv6 = {
+          addr-gen-mode = "default";
+          method = "auto";
+        };
+        proxy = { };
+        wifi = {
+          mode = "infrastructure";
+          ssid = "Chris Pixel 6";
+        };
+        wifi-security = {
+          auth-alg = "open";
+          key-mgmt = "wpa-psk";
+          psk = "$PHONE_PSK";
+        };
+      };
     };
   };
 
