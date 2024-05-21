@@ -85,6 +85,9 @@
         "browser.in-content.dark-mode" = true;
         "ui.systemUsesDarkTheme" = 1;
         "browser.sessionstore.resume_from_crash" = false;
+        "signon.rememberSignons" = false;
+        "browser.translations.automaticallyPopup" = false;
+        "browser.aboutConfig.showWarning" = false;
       };
     };
   };
