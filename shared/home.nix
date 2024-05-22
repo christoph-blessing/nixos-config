@@ -134,6 +134,14 @@
 
   services.ssh-agent.enable = true;
 
+  home.file = {
+    keepassxc = {
+      enable = true;
+      source = ../keepassxc/keepassxc.ini;
+      target = ".config/keepassxc/keepassxc.ini";
+    };
+  };
+
   home.packages = with pkgs; [
     keepassxc
     git
