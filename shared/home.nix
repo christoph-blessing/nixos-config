@@ -137,7 +137,7 @@
   home.file = {
     keepassxc = {
       enable = true;
-      source = ../keepassxc/keepassxc.ini;
+      source = ./keepassxc/keepassxc.ini;
       target = ".config/keepassxc/keepassxc.ini";
     };
   };
