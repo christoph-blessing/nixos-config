@@ -154,7 +154,10 @@
     };
   };
 
-  home.packages = with pkgs; [ pavucontrol ];
+  home.packages = with pkgs; [
+    pavucontrol
+    (writeShellScriptBin "vpn" (builtins.readFile ./scripts/vpn.sh))
+  ];
 
   services.polybar = {
     enable = true;
@@ -174,7 +177,7 @@
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wireless-network alsa battery date";
+        modules.right = "cpu memory filesystem wireless-network vpn alsa battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -196,8 +199,8 @@
         type = "internal/network";
         interface = "wlp0s20f3";
         label = {
-          connected = "%essid% %downspeed:9%";
-          disconnected = "not connected";
+          connected = "WIFI %essid% %downspeed:9%";
+          disconnected = "WIFI not connected";
         };
       };
       "module/filesystem" = {
@@ -225,6 +228,12 @@
         interval = 1;
         date = "%H:%M";
         label = "%date%";
+      };
+      "module/vpn" = {
+        type = "custom/script";
+        exec = "vpn";
+        label = "VPN %output%";
+        interval = 5;
       };
     };
   };
