@@ -154,10 +154,12 @@
     };
   };
 
-  home.packages = with pkgs; [
-    pavucontrol
-    (writeShellScriptBin "vpn" (builtins.readFile ./scripts/vpn.sh))
-  ];
+  home.packages = with pkgs; [ pavucontrol ];
+
+  home.file.".config/polybar/vpn.sh" = {
+    source = pkgs.callPackage ./polybar/vpn.nix { };
+    executable = true;
+  };
 
   services.polybar = {
     enable = true;
@@ -231,7 +233,7 @@
       };
       "module/vpn" = {
         type = "custom/script";
-        exec = "vpn";
+        exec = "~/.config/polybar/vpn.sh";
         label = "VPN %output%";
         interval = 5;
       };
