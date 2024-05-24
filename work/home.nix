@@ -19,6 +19,7 @@
       bspc rule --add firefox --one-shot node=@II:/
       bspc node @III:/ --insert-receptacle
       bspc rule --add KeePassXC --one-shot node=@III:/
+      autorandr --ignore-lid --change
     '';
     startupPrograms = [
       "alacritty"
