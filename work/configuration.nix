@@ -241,4 +241,6 @@ in
   };
   hardware.enableRedistributableFirmware = true;
   hardware.firmware = [ ivsc-firmware ];
+
+  services.fwupd.enable = true;
 }
