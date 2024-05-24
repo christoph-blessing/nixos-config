@@ -155,6 +155,7 @@
         type = "internal/date";
         interval = 1;
         date = "%H:%M";
+        date-alt = "%Y-%m-%d %H:%M";
         label = "%date%";
       };
       "module/vpn" = {
