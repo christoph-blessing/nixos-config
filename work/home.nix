@@ -46,10 +46,6 @@
       done
       bspc desktop Desktop --remove
     '';
-    hooks.postswitch.move_bar = ''
-      pkill -x polybar
-      polybar -q mybar &
-    '';
     profiles.mobile = {
       fingerprint = {
         "e-DP1" = "00ffffffffffff000daed013000000000f210104a51d127803ee95a3544c99260f505400000001010101010101010101010101010101743c80a070b028403020a6001eb21000001a000000fd00303c4a4a0f010a202020202020000000fe003233575657803133334a43470a0000000000024101a8000000000a410a202000a0";
@@ -102,12 +98,14 @@
       };
       "bar/mybar" = {
         width = "100%";
+        height = "2%";
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
         modules.right = "cpu memory filesystem wireless-network vpn alsa battery date";
         module.margin = 1;
         separator = "|";
+        override-redirect = false;
       };
       "module/bspwm" = {
         type = "internal/bspwm";
