@@ -30,7 +30,14 @@
 
   programs.autorandr = {
     enable = true;
-    hooks.postswitch.move_desktops = ''
+    hooks.postswitch.set-up-monitor = ''
+      if [ -f "/tmp/autorandr_current_profile" ]; then
+        previous_profile=$(cat /tmp/autorandr_current_profile)
+        if [ $previous_profile == $AUTORANDR_CURRENT_PROFILE ]; then
+          exit
+        fi
+      fi
+
       target=$AUTORANDR_MONITORS
       monitors=$(bspc query -M --names)
       for source in $monitors; do
@@ -45,6 +52,11 @@
         bspc monitor $source --remove
       done
       bspc desktop Desktop --remove
+
+      pkill -x polybar
+      polybar -q mybar &
+
+      echo $AUTORANDR_CURRENT_PROFILE > /tmp/autorandr_current_profile
     '';
     profiles.mobile = {
       fingerprint = {
