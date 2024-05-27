@@ -110,14 +110,12 @@
       };
       "bar/mybar" = {
         width = "100%";
-        height = "2%";
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
         modules.right = "cpu memory filesystem wireless-network vpn alsa battery date";
         module.margin = 1;
         separator = "|";
-        override-redirect = false;
       };
       "module/bspwm" = {
         type = "internal/bspwm";
