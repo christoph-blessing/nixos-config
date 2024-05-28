@@ -243,4 +243,9 @@ in
   hardware.firmware = [ ivsc-firmware ];
 
   services.fwupd.enable = true;
+
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    lidSwitchExternalPower = "suspend-then-hibernate";
+  };
 }
