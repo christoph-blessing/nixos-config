@@ -197,6 +197,7 @@ in
   environment.systemPackages = with pkgs; [
     zoom-us
     eduvpn-client
+    solaar
   ];
 
   virtualisation.docker.enable = true;
@@ -248,4 +249,6 @@ in
     lidSwitch = "suspend-then-hibernate";
     lidSwitchExternalPower = "suspend-then-hibernate";
   };
+
+  hardware.logitech.wireless.enable = true;
 }
