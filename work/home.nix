@@ -88,16 +88,19 @@
     };
   };
 
-  home.packages = with pkgs; [ pavucontrol ];
-
   home.file.".config/polybar/vpn.sh" = {
     source = pkgs.callPackage ./polybar/vpn.nix { };
     executable = true;
   };
 
+  home.file.".config/polybar/volume.sh" = {
+    source = pkgs.callPackage ./polybar/volume.nix { };
+    executable = true;
+  };
+
   services.polybar = {
     enable = true;
-    script = "sleep 10; polybar mybar &";
+    script = "polybar mybar &";
     settings = {
       "colors" = {
         background = "#282A2E";
@@ -113,7 +116,7 @@
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wireless-network vpn alsa battery date";
+        modules.right = "cpu memory filesystem wireless-network vpn volume battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -143,12 +146,14 @@
         type = "internal/fs";
         label.mounted = "%mountpoint% %percentage_used%%";
       };
-      "module/alsa" = {
-        type = "internal/alsa";
-        label = {
-          volume = "VOL %percentage%%";
-          muted = "Muted";
-        };
+      "module/volume" = {
+        type = "custom/script";
+        exec = "~/.config/polybar/volume.sh --node-nickname 'alsa_output.pci-0000_00_1f.3.analog-stereo: Speakers' --node-nickname 'bluez_output.AC_80_0A_A4_4E_06.1: Headphones' listen";
+        tail = true;
+        click-left = "~/.config/polybar/volume.sh togmute";
+        click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
+        scroll-up = "~/.config/polybar/volume.sh --volume-max 130 up";
+        scroll-down = "~/.config/polybar/volume.sh --volume-max 130 down";
       };
       "module/battery" = {
         type = "internal/battery";
