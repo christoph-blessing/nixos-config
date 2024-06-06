@@ -41,6 +41,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.chris = import ./work/home.nix;
+            home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
           }
           sops-nix.nixosModules.sops
         ];

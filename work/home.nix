@@ -3,6 +3,52 @@
 {
   imports = [ ../shared/home.nix ];
 
+  sops = {
+    defaultSopsFile = ../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/chris/.config/sops/age/keys.txt";
+    secrets = {
+      "email/password" = { };
+    };
+  };
+
+  accounts.email.accounts.work = {
+    address = "christophbenjamin.blessing@gwdg.de";
+    primary = true;
+    passwordCommand = "cat ~/.config/sops-nix/secrets/email/password";
+    userName = "cblessi";
+    realName = "Christoph Blessing";
+    imap = {
+      host = "email.gwdg.de";
+      port = 993;
+      tls = {
+        enable = true;
+      };
+    };
+    mbsync = {
+      enable = true;
+      extraConfig.account = {
+        AuthMechs = [ "LOGIN" ];
+      };
+      create = "maildir";
+      patterns = [
+        "INBOX"
+        "Drafts"
+        "Sent Items"
+      ];
+    };
+    smtp = {
+      host = "email.gwdg.de";
+      port = 587;
+      tls = {
+        enable = true;
+        useStartTls = true;
+      };
+    };
+    msmtp.enable = true;
+    himalaya.enable = true;
+  };
+
   xsession.windowManager.bspwm = {
     monitors = {
       eDP-1 = [
