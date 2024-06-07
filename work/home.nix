@@ -12,10 +12,15 @@
     };
   };
 
+  services.mbsync = {
+    enable = true;
+  };
+  systemd.user.services.mbsync.Unit.After = [ "sops-nix.service" ];
+
   accounts.email.accounts.work = {
     address = "christophbenjamin.blessing@gwdg.de";
     primary = true;
-    passwordCommand = "cat ~/.config/sops-nix/secrets/email/password";
+    passwordCommand = "${pkgs.coreutils}/bin/cat ~/.config/sops-nix/secrets/email/password";
     userName = "cblessi";
     realName = "Christoph Blessing";
     imap = {
