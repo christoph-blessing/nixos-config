@@ -9,6 +9,7 @@
     age.keyFile = "/home/chris/.config/sops/age/keys.txt";
     secrets = {
       "email/password" = { };
+      "email/certificate" = { };
     };
   };
 
@@ -16,6 +17,11 @@
     enable = true;
   };
   systemd.user.services.mbsync.Unit.After = [ "sops-nix.service" ];
+
+  home.file.".config/himalaya/sendmail.sh" = {
+    source = pkgs.callPackage ./sendmail.nix { };
+    executable = true;
+  };
 
   accounts.email.accounts.work = {
     address = "christophbenjamin.blessing@gwdg.de";
@@ -51,7 +57,17 @@
       };
     };
     msmtp.enable = true;
-    himalaya.enable = true;
+    himalaya = {
+      enable = true;
+      settings = {
+        message = {
+          send = {
+            backend = "sendmail";
+          };
+        };
+        sendmail.cmd = "/home/chris/.config/himalaya/sendmail.sh";
+      };
+    };
   };
 
   xsession.windowManager.bspwm = {
