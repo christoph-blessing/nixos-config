@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
 
+let
+  syncEmailScript = pkgs.writeShellScript "sync_email.sh" ''
+    ${pkgs.isync}/bin/mbsync --all --verbose
+    ${pkgs.notmuch}/bin/notmuch new
+  '';
+in
 {
   imports = [ ../shared/home.nix ];
 
@@ -12,11 +18,6 @@
       "email/certificate" = { };
     };
   };
-
-  services.mbsync = {
-    enable = true;
-  };
-  systemd.user.services.mbsync.Unit.After = [ "sops-nix.service" ];
 
   home.file.".config/himalaya/sendmail.sh" = {
     source = pkgs.callPackage ./sendmail.nix { };
@@ -67,6 +68,28 @@
         };
         sendmail.cmd = "/home/chris/.config/himalaya/sendmail.sh";
       };
+    };
+    notmuch.enable = true;
+  };
+
+  programs.notmuch.enable = true;
+
+  systemd.user.services.sync-email = {
+    Unit = {
+      Description = "email synchronisation";
+      After = [ "sops-nix.service" ];
+    };
+    Service = {
+      ExecStart = "${syncEmailScript}";
+    };
+  };
+  systemd.user.timers.sync-email = {
+    Unit = {
+      Description = "email synchronisation";
+    };
+    Timer = {
+      OnCalendar = "*:0/5";
+      Unit = "sync-email.service";
     };
   };
 

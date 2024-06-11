@@ -34,6 +34,10 @@ in
     ../shared/configuration.nix
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: { himalaya = prev.himalaya.override { buildFeatures = [ "notmuch" ]; }; })
+  ];
+
   boot.kernelPackages = pkgs.linuxPackages_6_1;
 
   networking.hostName = "nixe-work";
