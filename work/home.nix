@@ -91,6 +91,9 @@ in
       OnCalendar = "*:0/5";
       Unit = "sync-email.service";
     };
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
   };
 
   xsession.windowManager.bspwm = {
