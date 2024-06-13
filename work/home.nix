@@ -61,9 +61,15 @@ in
     himalaya = {
       enable = true;
       settings = {
+        folder.alias = {
+          inbox = "/home/chris/Maildir/work/Inbox";
+          sent = "/home/chris/Maildir/work/Sent Items";
+          drafts = "/home/chris/Maildir/work/Drafts";
+        };
         message = {
           send = {
             backend = "sendmail";
+            save-copy = true;
           };
         };
         sendmail.cmd = "/home/chris/.config/himalaya/sendmail.sh";
