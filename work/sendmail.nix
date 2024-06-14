@@ -18,6 +18,6 @@ writeShellScript "sendmail.sh" ''
   }
 
   message=$(cat)
-  address=$(echo "$message" | grep -oP '(?<=To: <).*(?=>)')
+  address=$(echo "$message" | grep -oP '^To:.*?<\K[^>]+')
   echo "$message" | openssl smime -sign -signer /home/chris/.config/sops-nix/secrets/email/certificate | msmtp "$address";
 ''
