@@ -71,11 +71,12 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  sops.secrets.password = { };
   users.mutableUsers = false;
   users.users.chris = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    hashedPasswordFile = "/etc/chris_password.txt";
+    hashedPasswordFile = "/run/secrets/password";
     shell = pkgs.nushell;
   };
   users.users.root.hashedPassword = "!";
