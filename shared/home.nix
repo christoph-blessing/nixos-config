@@ -63,6 +63,11 @@
 
   programs.nheko.enable = true;
 
+  home.file.".config/nushell/completions" = {
+    source = ./nushell/completions;
+    recursive = true;
+  };
+
   programs.nushell = {
     enable = true;
     configFile.source = nushell/config.nu;

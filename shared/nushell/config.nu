@@ -788,3 +788,5 @@ $env.config = {
 if $env.ZELLIJ? == null {
     zellij attach --create
 }
+
+use completions/bluetoothctl-completions.nu *
