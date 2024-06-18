@@ -17,20 +17,19 @@
     "thunderbolt"
     "nvme"
     "usb_storage"
-    "usbhid"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9d076c07-9a2f-4f60-80c5-260b978a69ff";
+    device = "/dev/disk/by-uuid/e931642d-0ba2-46a8-a0b8-819ddeafa171";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/1949-BD61";
+    device = "/dev/disk/by-uuid/BC2B-6537";
     fsType = "vfat";
   };
 
@@ -42,7 +41,6 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp4s0u2u4.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
