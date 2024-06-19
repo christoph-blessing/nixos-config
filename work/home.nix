@@ -19,11 +19,6 @@ in
     };
   };
 
-  home.file.".config/himalaya/sendmail.sh" = {
-    source = pkgs.callPackage ./sendmail.nix { };
-    executable = true;
-  };
-
   accounts.email.accounts.work = {
     address = "christophbenjamin.blessing@gwdg.de";
     primary = true;
@@ -58,27 +53,30 @@ in
       };
     };
     msmtp.enable = true;
-    himalaya = {
+    neomutt = {
       enable = true;
-      settings = {
-        folder.alias = {
-          inbox = "/home/chris/Maildir/work/Inbox";
-          sent = "/home/chris/Maildir/work/Sent Items";
-          drafts = "/home/chris/Maildir/work/Drafts";
-        };
-        message = {
-          send = {
-            backend = "sendmail";
-            save-copy = true;
-          };
-        };
-        sendmail.cmd = "/home/chris/.config/himalaya/sendmail.sh";
-      };
+      extraConfig = ''
+        set smime_sign_as = 0x56BD7EFC
+        set crypt_auto_sign = yes
+        set smime_is_default = yes
+      '';
     };
-    notmuch.enable = true;
   };
 
-  programs.notmuch.enable = true;
+  home.file.".gnupg/gpgsm.conf".text = ''
+    disable-crl-checks
+  '';
+
+  home.file.".gnupg/trustlist.txt".text = ''
+    D1:EB:23:A4:6D:17:D6:8F:D9:25:64:C2:F1:F1:60:17:64:D8:E3:49 S
+  '';
+
+  programs.neomutt = {
+    enable = true;
+    extraConfig = ''
+      set crypt_use_gpgme
+    '';
+  };
 
   systemd.user.services.sync-email = {
     Unit = {

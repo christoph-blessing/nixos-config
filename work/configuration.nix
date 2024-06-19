@@ -11,10 +11,6 @@
     ../shared/configuration.nix
   ];
 
-  nixpkgs.overlays = [
-    (final: prev: { himalaya = prev.himalaya.override { buildFeatures = [ "notmuch" ]; }; })
-  ];
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/9beadd98-f8e3-4bdd-8c3b-15619ae38609";
 
