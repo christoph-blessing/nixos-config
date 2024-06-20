@@ -1,11 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  syncEmailScript = pkgs.writeShellScript "sync_email.sh" ''
-    ${pkgs.isync}/bin/mbsync --all --verbose
-    ${pkgs.notmuch}/bin/notmuch new
-  '';
-in
 {
   imports = [ ../shared/home.nix ];
 
@@ -42,10 +36,12 @@ in
         AuthMechs = [ "LOGIN" ];
       };
       create = "maildir";
+      expunge = "both";
       patterns = [
         "INBOX"
         "Drafts"
         "Sent Items"
+        "Deleted Items"
       ];
     };
     smtp = {
@@ -59,13 +55,22 @@ in
     msmtp.enable = true;
     neomutt = {
       enable = true;
+      extraMailboxes = [
+        "Drafts"
+        "Sent Items"
+        "Deleted Items"
+      ];
       extraConfig = ''
         set smime_sign_as = 0x56BD7EFC
         set crypt_auto_sign = yes
         set smime_is_default = yes
+        set record = "+Sent Items"
+        set trash = "+Deleted Items"
       '';
     };
   };
+
+  services.mbsync.enable = true;
 
   home.file.".gnupg/gpgsm.conf".text = ''
     disable-crl-checks
@@ -80,28 +85,6 @@ in
     extraConfig = ''
       set crypt_use_gpgme
     '';
-  };
-
-  systemd.user.services.sync-email = {
-    Unit = {
-      Description = "email synchronisation";
-      After = [ "sops-nix.service" ];
-    };
-    Service = {
-      ExecStart = "${syncEmailScript}";
-    };
-  };
-  systemd.user.timers.sync-email = {
-    Unit = {
-      Description = "email synchronisation";
-    };
-    Timer = {
-      OnCalendar = "*:0/5";
-      Unit = "sync-email.service";
-    };
-    Install = {
-      WantedBy = [ "timers.target" ];
-    };
   };
 
   xsession.windowManager.bspwm = {
