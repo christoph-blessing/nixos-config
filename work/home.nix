@@ -15,7 +15,6 @@ in
     age.keyFile = "/home/chris/.config/sops/age/keys.txt";
     secrets = {
       "email/password" = { };
-      "email/certificate" = { };
     };
   };
 
