@@ -15,6 +15,7 @@ in
     age.keyFile = "/home/chris/.config/sops/age/keys.txt";
     secrets = {
       "email/password" = { };
+      "email/signature.txt" = { };
     };
   };
 
@@ -23,7 +24,11 @@ in
     primary = true;
     passwordCommand = "${pkgs.coreutils}/bin/cat ~/.config/sops-nix/secrets/email/password";
     userName = "cblessi";
-    realName = "Christoph Blessing";
+    realName = "Christoph Benjamin Blessing";
+    signature = {
+      command = "${pkgs.coreutils}/bin/cat ~/.config/sops-nix/secrets/email/signature.txt";
+      showSignature = "append";
+    };
     imap = {
       host = "email.gwdg.de";
       port = 993;
