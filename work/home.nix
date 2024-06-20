@@ -87,6 +87,11 @@
     '';
   };
 
+  home.file.".mailcap".text = ''
+    text/html; firefox --new-window %s
+    application/pdf; firefox --new-window %s
+  '';
+
   xsession.windowManager.bspwm = {
     monitors = {
       eDP-1 = [
