@@ -39,6 +39,8 @@
     };
   };
 
+  swapDevices = [ { label = "swap"; } ];
+
   networking.hostName = "nixe-work";
 
   sops.secrets = {
