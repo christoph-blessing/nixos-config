@@ -45,6 +45,8 @@
     protonup-qt
   ];
 
+  boot.initrd.systemd.enable = true;
+
   boot.kernelParams = [ "nvidia-drm.modeset=1" ];
   programs.gamescope = {
     enable = true;
