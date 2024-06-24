@@ -127,6 +127,8 @@
         fi
       fi
 
+      systemctl --user stop polybar.service
+
       target=$AUTORANDR_MONITORS
       monitors=$(bspc query -M --names)
       for source in $monitors; do
@@ -142,8 +144,7 @@
       done
       bspc desktop Desktop --remove
 
-      pkill -x polybar
-      polybar -q mybar &
+      systemctl --user start polybar.service
 
       echo $AUTORANDR_CURRENT_PROFILE > /tmp/autorandr_current_profile
     '';
