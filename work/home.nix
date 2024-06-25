@@ -45,6 +45,7 @@
         "Deleted Items"
       ];
       onNotify = "${pkgs.isync}/bin/mbsync work";
+      onNotifyPost = "${pkgs.libnotify}/bin/notify-send 'New mail arrived'";
     };
     mbsync = {
       enable = true;
@@ -87,6 +88,7 @@
   };
 
   services.imapnotify.enable = true;
+  services.dunst.enable = true;
 
   home.file.".gnupg/gpgsm.conf".text = ''
     disable-crl-checks
