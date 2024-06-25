@@ -16,11 +16,17 @@
   accounts.email.accounts.work = {
     address = "christophbenjamin.blessing@gwdg.de";
     primary = true;
-    passwordCommand = "${pkgs.coreutils}/bin/cat ~/.config/sops-nix/secrets/email/password";
+    passwordCommand =
+      let
+        passwordScript = pkgs.writeShellScript "passsword_script.sh" ''
+          ${pkgs.coreutils}/bin/cat ${config.sops.secrets."email/password".path}
+        '';
+      in
+      "${passwordScript}";
     userName = "cblessi";
     realName = "Christoph Benjamin Blessing";
     signature = {
-      command = "${pkgs.coreutils}/bin/cat ~/.config/sops-nix/secrets/email/signature.txt";
+      command = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."email/signature.txt".path}";
       showSignature = "append";
     };
     imap = {
@@ -29,6 +35,16 @@
       tls = {
         enable = true;
       };
+    };
+    imapnotify = {
+      enable = true;
+      boxes = [
+        "INBOX"
+        "Drafts"
+        "Sent Items"
+        "Deleted Items"
+      ];
+      onNotify = "${pkgs.isync}/bin/mbsync work";
     };
     mbsync = {
       enable = true;
@@ -70,7 +86,7 @@
     };
   };
 
-  services.mbsync.enable = true;
+  services.imapnotify.enable = true;
 
   home.file.".gnupg/gpgsm.conf".text = ''
     disable-crl-checks
