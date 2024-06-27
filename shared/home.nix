@@ -148,6 +148,7 @@
     xclip
     (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
     pyright
+    nixd
   ];
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

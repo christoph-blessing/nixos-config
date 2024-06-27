@@ -155,6 +155,7 @@ lspconfig.pyright.setup({
 		typeCheckingMode = "off",
 	},
 })
+lspconfig.nixd.setup({})
 
 require("conform").setup({
 	notify_on_error = false,
