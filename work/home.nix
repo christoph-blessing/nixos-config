@@ -240,7 +240,7 @@
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wireless-network vpn volume battery date";
+        modules.right = "cpu memory filesystem wireless-network vpn xkeyboard volume battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -300,6 +300,9 @@
         exec = "~/.config/polybar/vpn.sh";
         label = "VPN %output%";
         interval = 5;
+      };
+      "module/xkeyboard" = {
+        type = "internal/xkeyboard";
       };
     };
   };

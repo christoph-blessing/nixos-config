@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, pkgs, ... }:
 
 {
   imports = [
@@ -244,5 +239,12 @@
         '';
       }
     ];
+    xkb.extraLayouts = {
+      mine = {
+        description = "My custom xkb layout.";
+        languages = [ "eng" ];
+        symbolsFile = ./keyboard/xkb_symbols;
+      };
+    };
   };
 }
