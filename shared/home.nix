@@ -60,6 +60,7 @@
       todo-comments-nvim
       mini-nvim
       nvim-treesitter.withAllGrammars
+      nvim-autopairs
     ];
   };
 

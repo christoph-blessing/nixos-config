@@ -1,6 +1,5 @@
 vim.cmd.colorscheme("tokyonight-night")
 vim.cmd.hi("Comment gui=none")
-
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
@@ -224,3 +223,7 @@ require("nvim-treesitter.configs").setup({
 	},
 	indent = { enable = true, disable = { "ruby" } },
 })
+
+require("nvim-autopairs").setup({})
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
