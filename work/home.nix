@@ -107,9 +107,10 @@
     '';
   };
 
-  home.file.".mailcap".text = ''
-    text/html; firefox --new-window %s
-    application/pdf; firefox --new-window %s
+  home.file.".mailcap".text = with pkgs; ''
+    text/html; ${firefox}/bin/firefox --new-window %s
+    application/pdf; ${firefox}/bin/firefox --new-window %s
+    image/png; ${feh}/bin/feh %s
   '';
 
   xsession.windowManager.bspwm = {
