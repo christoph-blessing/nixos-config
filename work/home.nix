@@ -39,12 +39,7 @@
     };
     imapnotify = {
       enable = true;
-      boxes = [
-        "INBOX"
-        "Drafts"
-        "Sent Items"
-        "Deleted Items"
-      ];
+      boxes = [ "INBOX" ];
       onNotify = "${pkgs.isync}/bin/mbsync work";
       onNotifyPost = "${pkgs.libnotify}/bin/notify-send 'New mail arrived'";
     };
