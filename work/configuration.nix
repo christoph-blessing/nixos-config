@@ -247,4 +247,6 @@
       };
     };
   };
+
+  services.guix.enable = true;
 }

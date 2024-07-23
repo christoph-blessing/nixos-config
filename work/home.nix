@@ -108,6 +108,10 @@
     image/png; ${feh}/bin/feh %s
   '';
 
+  programs.nushell.extraEnv = ''
+    $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/chris/.config/guix/current/bin')
+  '';
+
   xsession.windowManager.bspwm = {
     monitors = {
       eDP-1 = [
