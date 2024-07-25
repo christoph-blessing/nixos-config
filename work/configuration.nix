@@ -6,7 +6,7 @@
     ../shared/configuration.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_9;
   boot.initrd = {
     kernelModules = [
       "vfat"
@@ -175,7 +175,6 @@
     };
   };
 
-  sound.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
