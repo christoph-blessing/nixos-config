@@ -224,6 +224,9 @@ require("nvim-treesitter.configs").setup({
 	indent = { enable = true, disable = { "ruby" } },
 })
 
-require("nvim-autopairs").setup({})
+local npairs = require("nvim-autopairs")
+npairs.setup({})
+npairs.get_rule("'").not_filetypes = { "scheme" }
+npairs.get_rule("`").not_filetypes = { "scheme" }
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
