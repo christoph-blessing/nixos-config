@@ -61,6 +61,7 @@
       mini-nvim
       nvim-treesitter.withAllGrammars
       nvim-autopairs
+      rainbow-delimiters-nvim
     ];
   };
 
