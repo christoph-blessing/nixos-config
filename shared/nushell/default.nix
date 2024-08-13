@@ -14,8 +14,8 @@
           src = pkgs.fetchFromGitHub {
             owner = "christoph-blessing";
             repo = old.src.repo;
-            rev = "486984fc96991b9caa8ccd3437011abe605073c3";
-            hash = "sha256-V1yWJGPgEtgUFJoqk0ZLAUKA3UyPb5NGnExkujKqE9o=";
+            rev = "f6fd4ae6f56122d01e378ef1a618e5cb898d1bdb";
+            hash = "sha256-eVPWCfQdleV+bVoGQMS6tNVFHHexakj9M6cO4/w1p8g=";
           };
         });
       in
