@@ -167,7 +167,9 @@ require("conform").setup({
 	end,
 	formatters_by_ft = {
 		lua = { "stylua" },
+		scheme = { "guix" },
 	},
+	formatters = { guix = { command = "guix", args = { "style", "-f", "$FILENAME" }, stdin = false, inherit = false } },
 })
 
 local cmp = require("cmp")
