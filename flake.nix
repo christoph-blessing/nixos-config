@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-guix.url = "github:NixOS/nixpkgs?ref=00d80d13810dbfea8ab4ed1009b09100cca86ba8";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -15,6 +16,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-guix,
       home-manager,
       sops-nix,
       pre-commit-hooks,
@@ -36,6 +38,12 @@
       nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          (
+            { ... }:
+            {
+              nixpkgs.overlays = [ (final: prev: { guix = nixpkgs-guix.legacyPackages.${prev.system}.guix; }) ];
+            }
+          )
           ./work/configuration.nix
           home-manager.nixosModules.home-manager
           {
