@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-guix.url = "github:NixOS/nixpkgs?ref=00d80d13810dbfea8ab4ed1009b09100cca86ba8";
+    nixpkgs-libgit2.url = "github:NixOS/nixpkgs?ref=a6c20a73872c4af66ec5489b7241030a155b24c3";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -16,14 +16,17 @@
     {
       self,
       nixpkgs,
-      nixpkgs-guix,
+      nixpkgs-libgit2,
       home-manager,
       sops-nix,
       pre-commit-hooks,
     }:
+    let
+      system = "x86_64-linux";
+    in
     {
       nixosConfigurations.nixe = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         modules = [
           ./personal/configuration.nix
           home-manager.nixosModules.home-manager
@@ -36,12 +39,15 @@
         ];
       };
       nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         modules = [
           (
             { ... }:
+            let
+              libgit2 = nixpkgs-libgit2.legacyPackages."${system}".libgit2;
+            in
             {
-              nixpkgs.overlays = [ (final: prev: { guix = nixpkgs-guix.legacyPackages.${prev.system}.guix; }) ];
+              nixpkgs.overlays = [ (final: prev: { guile-git = prev.guile-git.override { inherit libgit2; }; }) ];
             }
           )
           ./work/configuration.nix
@@ -55,18 +61,18 @@
           sops-nix.nixosModules.sops
         ];
       };
-      checks."x86_64-linux".pre-commit-check = pre-commit-hooks.lib."x86_64-linux".run {
+      checks.system.pre-commit-check = pre-commit-hooks.lib.system.run {
         src = ./.;
         hooks = {
           nixfmt = {
             enable = true;
-            package = nixpkgs.legacyPackages."x86_64-linux".nixfmt-rfc-style;
+            package = nixpkgs.legacyPackages.system.nixfmt-rfc-style;
           };
         };
       };
-      devShells."x86_64-linux".default = nixpkgs.legacyPackages."x86_64-linux".mkShell {
-        inherit (self.checks."x86_64-linux".pre-commit-check) shellHook;
-        buildInputs = self.checks."x86_64-linux".pre-commit-check.enabledPackages;
+      devShells.system.default = nixpkgs.legacyPackages.system.mkShell {
+        inherit (self.checks.system.pre-commit-check) shellHook;
+        buildInputs = self.checks.system.pre-commit-check.enabledPackages;
       };
     };
 }
