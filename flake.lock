@@ -73,18 +73,18 @@
         "type": "github"
       }
     },
-    "nixpkgs-guix": {
+    "nixpkgs-libgit2": {
       "locked": {
-        "lastModified": 1719848872,
-        "narHash": "sha256-H3+EC5cYuq+gQW8y0lSrrDZfH71LB4DAf+TDFyvwCNA=",
+        "lastModified": 1721390509,
+        "narHash": "sha256-un4CQrKEssnxvwENBxvHY+UenFh8LhBF8GmBqIWafQU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "00d80d13810dbfea8ab4ed1009b09100cca86ba8",
+        "rev": "a6c20a73872c4af66ec5489b7241030a155b24c3",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "00d80d13810dbfea8ab4ed1009b09100cca86ba8",
+        "ref": "a6c20a73872c4af66ec5489b7241030a155b24c3",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -148,7 +148,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-guix": "nixpkgs-guix",
+        "nixpkgs-libgit2": "nixpkgs-libgit2",
         "pre-commit-hooks": "pre-commit-hooks",
         "sops-nix": "sops-nix"
       }
