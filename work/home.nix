@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../shared/home.nix ];
+  imports = [
+    ../shared/home.nix
+    ./pomodoro/pymodoro.nix
+  ];
 
   sops = {
     defaultSopsFile = ../secrets/secrets.yaml;
