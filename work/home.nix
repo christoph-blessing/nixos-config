@@ -3,7 +3,7 @@
 {
   imports = [
     ../shared/home.nix
-    ./pomodoro/pymodoro.nix
+    ./pymodoro/pymodoro.nix
   ];
 
   sops = {
