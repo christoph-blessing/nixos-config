@@ -90,8 +90,6 @@
   services.imapnotify.enable = true;
   services.dunst.enable = true;
 
-  home.packages = [ (pkgs.callPackage ./pomodoro/pomodoro.nix { }) ];
-
   home.file.".gnupg/gpgsm.conf".text = ''
     disable-crl-checks
   '';
