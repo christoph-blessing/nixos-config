@@ -43,7 +43,7 @@ class Timer:
         if not self._is_running():
             raise NotRunning
         assert self._timer is not None
-        self._timer["process"].terminate()
+        self._timer["conn"].send("STOP")
 
     def status(self):
         if not self._is_running():
@@ -101,11 +101,14 @@ def run_timer(conn, duration, sound_path):
                         "is_paused": is_paused,
                     }
                 )
+            case "STOP":
+                break
             case "PAUSE":
                 is_paused = True
             case "RESUME":
                 is_paused = False
-    subprocess.run(["aplay", sound_path])
+    else:
+        subprocess.run(["aplay", sound_path])
     sys.exit()
 
 
