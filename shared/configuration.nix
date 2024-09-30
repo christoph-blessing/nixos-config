@@ -121,13 +121,6 @@
 
   services.pcscd.enable = true;
 
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
   security.pam.services = {
     login = {
       u2fAuth = true;
