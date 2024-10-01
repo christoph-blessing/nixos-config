@@ -10,7 +10,37 @@ def send_command(command):
 
 
 def start(args):
-    command = f"start {args.duration}"
+    digits = []
+    units = ["h", "m", "s"]
+    largest = None
+    total = 0
+    for token in args.duration_spec:
+        if token.isdigit():
+            digits.append(token)
+        elif token in units:
+            if largest and units.index(token) <= units.index(largest):
+                print(
+                    f"Error: Larger unit ({token}) can't follow smaller unit ({largest})!"
+                )
+                exit()
+            largest = token
+            if not digits:
+                print(f"Error: No duration specified for unit ({token})!")
+                exit()
+            duration = int("".join(digits))
+            digits.clear()
+            if token == "h":
+                duration *= 3600
+            elif token == "m":
+                duration *= 60
+            total += duration
+        else:
+            print(f"Error: Invalid token in duration spec ({token})!")
+            exit()
+    if digits:
+        print(f"Error: Missing unit!")
+        exit()
+    command = f"start {total}"
     send_command(command)
 
 
@@ -35,7 +65,7 @@ def main():
     subparsers = parser.add_subparsers()
 
     start_parser = subparsers.add_parser("start")
-    start_parser.add_argument("duration", type=int)
+    start_parser.add_argument("duration_spec")
     start_parser.set_defaults(func=start)
 
     stop_parser = subparsers.add_parser("stop")
