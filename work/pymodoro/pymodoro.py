@@ -9,24 +9,22 @@ def send_command(command):
     print(s.recv(4096).decode("utf-8"))
 
 
-def start(args):
+def parse_duration(spec):
     digits = []
     units = ["h", "m", "s"]
     largest = None
     total = 0
-    for token in args.duration_spec:
+    for token in spec:
         if token.isdigit():
             digits.append(token)
         elif token in units:
             if largest and units.index(token) <= units.index(largest):
-                print(
-                    f"Error: Larger unit ({token}) can't follow smaller unit ({largest})!"
+                raise ValueError(
+                    f"Error: Expected unit smaller than '{largest}', got '{token}'!"
                 )
-                exit()
             largest = token
             if not digits:
-                print(f"Error: No duration specified for unit ({token})!")
-                exit()
+                raise ValueError(f"Error: Expected duration for unit '{token}'!")
             duration = int("".join(digits))
             digits.clear()
             if token == "h":
@@ -35,12 +33,21 @@ def start(args):
                 duration *= 60
             total += duration
         else:
-            print(f"Error: Invalid token in duration spec ({token})!")
-            exit()
+            raise ValueError(
+                f"Error: Expected unit to be one of {units}, got '{token}'!"
+            )
     if digits:
-        print(f"Error: Missing unit!")
-        exit()
-    command = f"start {total}"
+        raise ValueError(f"Error: Expected unit for duration '{''.join(digits)}'!")
+    return total
+
+
+def start(args):
+    try:
+        duration = parse_duration(args.duration_spec)
+    except ValueError as error:
+        print(error)
+        exit(1)
+    command = f"start {duration}"
     send_command(command)
 
 
