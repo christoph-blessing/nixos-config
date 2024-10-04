@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ../shared/home.nix
     ./pymodoro/pymodoro.nix
+    ../shared/home.nix
   ];
 
   sops = {

@@ -1,35 +1,20 @@
-{ pkgs, lib, ... }:
+{ pkgs, pymodoro, ... }:
 let
-  pymodoro = (
-    pkgs.writeShellScriptBin "pymodoro" ''
-      PATH=${lib.makeBinPath [ pkgs.python3 ]}
-
-      python3 ${./pymodoro.py} "$@"
-    ''
-  );
-  pymodorod = (
-    pkgs.writeShellScriptBin "pymodorod" ''
-      PATH=${
-        lib.makeBinPath [
-          pkgs.python3
-          pkgs.alsa-utils
-        ]
-      }
-
-      python3 ${./pymodorod.py} "$@"
-    ''
-  );
+  pymodoroPkg = pymodoro.packages.${pkgs.system}.default;
 in
 {
-  home.packages = [ pymodoro ];
+  home.packages = [ pymodoroPkg ];
+  home.file.".config/pymodoro/config.toml".text = ''
+    [pymodorod]
+    done_cmd = ["${pkgs.alsa-utils}/bin/aplay", "${./school-bell.wav}"]
+  '';
   systemd.user.services = {
     pymodoro = {
       Unit = {
         Description = "Pymodoro timer daemon";
       };
       Service = {
-        ExecStart = "${pymodorod}/bin/pymodorod";
-        Environment = [ "SOUND_PATH=${./school-bell.wav}" ];
+        ExecStart = "${pymodoroPkg}/bin/pymodorod";
       };
       Install = {
         WantedBy = [ "multi-user.target" ];

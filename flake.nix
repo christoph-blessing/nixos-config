@@ -10,6 +10,10 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    pymodoro = {
+      url = "github:christoph-blessing/pymodoro";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -20,6 +24,7 @@
       home-manager,
       sops-nix,
       pre-commit-hooks,
+      pymodoro,
     }:
     let
       system = "x86_64-linux";
@@ -57,6 +62,9 @@
             home-manager.useUserPackages = true;
             home-manager.users.chris = import ./work/home.nix;
             home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
+            home-manager.extraSpecialArgs = {
+              inherit pymodoro;
+            };
           }
           sops-nix.nixosModules.sops
         ];
