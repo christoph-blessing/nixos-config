@@ -7,6 +7,9 @@ in
   home.file.".config/pymodoro/config.toml".text = ''
     [pymodorod]
     done_cmd = ["${pkgs.alsa-utils}/bin/aplay", "${./school-bell.wav}"]
+
+    [pymodoro]
+    default_duration = "25m"
   '';
   systemd.user.services = {
     pymodoro = {
