@@ -185,6 +185,21 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "zoom" ];
 
+  nixpkgs.overlays = [
+    # https://github.com/artyom-poptsov/guile-ssh/issues/42
+    (final: prev: {
+      guile-ssh = prev.guile-ssh.overrideAttrs (oldAttrs: rec {
+        version = "9336580f92f83bb73041c5374b400144a56b4c35";
+        src = prev.fetchFromGitHub {
+          owner = oldAttrs.src.owner;
+          repo = oldAttrs.src.repo;
+          rev = "${version}";
+          sha256 = "Hwg0xaNSm/SEZfzczjb7o8TJXfzT1mmOk1rJROxahLQ=";
+        };
+      });
+    })
+  ];
+
   environment.systemPackages = with pkgs; [
     zoom-us
     eduvpn-client

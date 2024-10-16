@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-libgit2.url = "github:NixOS/nixpkgs?ref=a6c20a73872c4af66ec5489b7241030a155b24c3";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -20,7 +19,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-libgit2,
       home-manager,
       sops-nix,
       pre-commit-hooks,
@@ -46,15 +44,6 @@
       nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          (
-            { ... }:
-            let
-              libgit2 = nixpkgs-libgit2.legacyPackages."${system}".libgit2;
-            in
-            {
-              nixpkgs.overlays = [ (final: prev: { guile-git = prev.guile-git.override { inherit libgit2; }; }) ];
-            }
-          )
           ./work/configuration.nix
           home-manager.nixosModules.home-manager
           {
