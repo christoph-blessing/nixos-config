@@ -58,18 +58,18 @@
           sops-nix.nixosModules.sops
         ];
       };
-      checks.system.pre-commit-check = pre-commit-hooks.lib.system.run {
+      checks.${system}.pre-commit-check = pre-commit-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
           nixfmt = {
             enable = true;
-            package = nixpkgs.legacyPackages.system.nixfmt-rfc-style;
+            package = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
           };
         };
       };
-      devShells.system.default = nixpkgs.legacyPackages.system.mkShell {
-        inherit (self.checks.system.pre-commit-check) shellHook;
-        buildInputs = self.checks.system.pre-commit-check.enabledPackages;
+      devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
+        inherit (self.checks.${system}.pre-commit-check) shellHook;
+        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
       };
     };
 }
