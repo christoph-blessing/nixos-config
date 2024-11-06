@@ -6,7 +6,7 @@
     ../shared/configuration.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_10;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
   boot.initrd = {
     kernelModules = [
       "vfat"
