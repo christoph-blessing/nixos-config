@@ -263,4 +263,6 @@
   };
 
   services.guix.enable = true;
+
+  services.printing.enable = true;
 }
