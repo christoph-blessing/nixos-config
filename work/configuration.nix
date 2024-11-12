@@ -73,7 +73,8 @@
       eduroam = {
         "802-1x" = {
           anonymous-identity = "eduroam@gwdg.de";
-          ca-cert = "/etc/ssl/certs/T-TeleSec_GlobalRoot_Class_2_pem";
+          ca-cert = "/home/chris/.config/cat_installer/ca.pem";
+          domain-suffix-match = "eduroam.gwdg.de";
           eap = "peap;";
           identity = "$IDENTITY";
           password = "$PASSWORD";
@@ -81,9 +82,8 @@
         };
         connection = {
           id = "eduroam";
-          timestamp = "1715177091";
           type = "wifi";
-          uuid = "499c369b-f09e-43bc-8aca-adb236e9a0de";
+          uuid = "af4e59e8-862d-4a8e-84e2-aa59816652e6";
         };
         ipv4 = {
           method = "auto";
@@ -183,7 +183,15 @@
     pulse.enable = true;
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "zoom" ];
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "zoom"
+      "ipu6-camera-bins-unstable"
+      "ipu6-camera-bins"
+      "ivsc-firmware-unstable"
+      "ivsc-firmware"
+    ];
 
   nixpkgs.overlays = [
     # https://github.com/artyom-poptsov/guile-ssh/issues/42
