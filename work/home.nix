@@ -243,7 +243,7 @@
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wireless-network vpn xkeyboard volume battery date";
+        modules.right = "cpu memory filesystem wired-network wireless-network vpn volume battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -261,12 +261,20 @@
         type = "internal/memory";
         format.prefix = "RAM ";
       };
+      "module/wired-network" = {
+        type = "internal/network";
+        interface = "enp0s13f0u3u1";
+        label = {
+          connected = "%ifname% %netspeed:9%";
+          disconnected = "not connected";
+        };
+      };
       "module/wireless-network" = {
         type = "internal/network";
         interface = "wlp86s0f0";
         label = {
-          connected = "WIFI %essid% %downspeed:9%";
-          disconnected = "WIFI not connected";
+          connected = "%essid% %netspeed:9%";
+          disconnected = "not connected";
         };
       };
       "module/filesystem" = {
@@ -294,8 +302,7 @@
       "module/date" = {
         type = "internal/date";
         interval = 1;
-        date = "%H:%M";
-        date-alt = "%Y-%m-%d %H:%M";
+        date = "%Y-%m-%d %H:%M";
         label = "%date%";
       };
       "module/vpn" = {
@@ -303,9 +310,6 @@
         exec = "~/.config/polybar/vpn.sh";
         label = "VPN %output%";
         interval = 5;
-      };
-      "module/xkeyboard" = {
-        type = "internal/xkeyboard";
       };
     };
   };
