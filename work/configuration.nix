@@ -39,12 +39,13 @@
   networking.hostName = "nixe-work";
 
   sops.secrets = {
-    wireless_env = { };
+    "network/network-manager.env" = { };
+    "network/eduroam-ca-cert.pem" = { };
   };
 
   networking.networkmanager = {
     enable = true;
-    ensureProfiles.environmentFiles = [ "/run/secrets/wireless_env" ];
+    ensureProfiles.environmentFiles = [ "/run/secrets/network/network-manager.env" ];
     ensureProfiles.profiles = {
       home = {
         connection = {
@@ -73,7 +74,7 @@
       eduroam = {
         "802-1x" = {
           anonymous-identity = "eduroam@gwdg.de";
-          ca-cert = "/home/chris/.config/cat_installer/ca.pem";
+          ca-cert = "/run/secrets/network/eduroam-ca-cert.pem";
           domain-suffix-match = "eduroam.gwdg.de";
           eap = "peap;";
           identity = "$IDENTITY";
