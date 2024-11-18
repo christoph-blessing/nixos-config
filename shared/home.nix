@@ -14,7 +14,10 @@
 
   xsession.enable = true;
 
-  programs.alacritty.enable = true;
+  programs.alacritty = {
+    enable = true;
+    settings.font.size = 10;
+  };
 
   programs.git = {
     enable = true;
