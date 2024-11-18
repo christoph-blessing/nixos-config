@@ -225,6 +225,7 @@
 
   services.libinput.touchpad = {
     naturalScrolling = true;
+    disableWhileTyping = true;
   };
 
   services.udev.extraRules = ''
