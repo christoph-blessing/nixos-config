@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./nushell ];
@@ -63,6 +63,7 @@
       nvim-autopairs
       rainbow-delimiters-nvim
       nvim-web-devicons
+      plantuml-syntax
     ];
   };
 
