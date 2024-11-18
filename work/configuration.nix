@@ -220,6 +220,7 @@
   users.users.chris.extraGroups = [
     "docker"
     "networkmanager"
+    "video"
   ];
 
   services.libinput.touchpad = {
@@ -239,6 +240,14 @@
     ACTION=="remove",\
       ENV{SUBSYSTEM}=="drm",\
       RUN+="${pkgs.autorandr}/bin/autorandr --batch --change"
+    ACTION=="add",\
+      ENV{SUBSYSTEM}=="backlight",\
+      KERNEL=="intel_backlight",\
+      RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+    ACTION=="add",\
+      ENV{SUBSYSTEM}=="backlight",\
+      KERNEL=="intel_backlight",\
+      RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
   '';
 
   services.fwupd.enable = true;

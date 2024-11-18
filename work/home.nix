@@ -243,7 +243,7 @@
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume battery date";
+        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume backlight battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -310,6 +310,12 @@
         exec = "~/.config/polybar/vpn.sh";
         label = "VPN %output%";
         interval = 5;
+      };
+      "module/backlight" = {
+        type = "internal/backlight";
+        enable-scroll = true;
+        use-actual-brightness = false;
+        label = "Backlight %percentage%%";
       };
     };
   };
