@@ -243,7 +243,7 @@
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wired-network wireless-network vpn volume battery date";
+        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume battery date";
         module.margin = 1;
         separator = "|";
       };

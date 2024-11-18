@@ -54,4 +54,22 @@ in
       override_pause_level = 100;
     };
   };
+  home.file.".config/polybar/pymodoro.sh" = {
+    source = pkgs.writeShellScript "pymodoro.sh" ''
+      PATH=${
+        lib.makeBinPath [
+          pymodoroPkg
+        ]
+      }
+      pymodoro
+    '';
+    executable = true;
+  };
+  services.polybar.settings = {
+    "module/pymodoro" = {
+      type = "custom/script";
+      exec = "~/.config/polybar/pymodoro.sh";
+      interval = 1;
+    };
+  };
 }
