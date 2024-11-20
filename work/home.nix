@@ -242,7 +242,8 @@
         width = "100%";
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
-        modules.left = "bspwm";
+        font-0 = "monospace";
+        font-1 = "emoji:pixelsize=16:style=Regular:scale=10;1";
         modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume backlight battery date";
         module.margin = 1;
         separator = "|";
@@ -317,6 +318,14 @@
         use-actual-brightness = false;
         label = "Backlight %percentage%%";
       };
+    };
+  };
+
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      emoji = [ "Noto Color Emoji:style=Regular" ];
+      monospace = [ "JetBrainsMono Nerd Font,JetBrainsMono NF:style=Regular" ];
     };
   };
 }
