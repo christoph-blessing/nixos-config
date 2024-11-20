@@ -222,11 +222,11 @@
         "pyproject-nix": "pyproject-nix"
       },
       "locked": {
-        "lastModified": 1730471388,
-        "narHash": "sha256-+9cUWU5O1Zk3KprBEzVzqsh6DBJAxQVEYUgUrJfkabo=",
+        "lastModified": 1732032461,
+        "narHash": "sha256-/42aBxGhqkhCB7oBSTDLU5ET1J5akc2v/JkDT1IVX0g=",
         "owner": "christoph-blessing",
         "repo": "pymodoro",
-        "rev": "ece479e5565541b274ad298cfcfd35478d9fcd6a",
+        "rev": "3552e8061d530f9bec85f544d4454e72a162600f",
         "type": "github"
       },
       "original": {
