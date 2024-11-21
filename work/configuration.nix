@@ -284,4 +284,9 @@
   services.guix.enable = true;
 
   services.printing.enable = true;
+
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6epmtl";
+  };
 }
