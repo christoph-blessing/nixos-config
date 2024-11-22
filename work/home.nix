@@ -244,6 +244,7 @@
         foreground = "\${colors.foreground}";
         font-0 = "monospace";
         font-1 = "emoji:pixelsize=16:style=Regular:scale=10;1";
+        modules.left = "bspwm";
         modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume backlight battery date";
         module.margin = 1;
         separator = "|";
@@ -256,11 +257,11 @@
       };
       "module/cpu" = {
         type = "internal/cpu";
-        format.prefix = "CPU ";
+        format.prefix = "💻 ";
       };
       "module/memory" = {
         type = "internal/memory";
-        format.prefix = "RAM ";
+        format.prefix = "💾 ";
       };
       "module/wired-network" = {
         type = "internal/network";
@@ -294,8 +295,8 @@
       "module/battery" = {
         type = "internal/battery";
         label = {
-          charging = "Charging %percentage%%";
-          discharging = "Discharging %percentage%%";
+          charging = "🔌 %percentage%%";
+          discharging = "🔋 %percentage%%";
           full = "Fully charged";
           low = "BATTERY LOW";
         };
@@ -316,7 +317,8 @@
         type = "internal/backlight";
         enable-scroll = true;
         use-actual-brightness = false;
-        label = "Backlight %percentage%%";
+        label = "🔆 %percentage%%";
+
       };
     };
   };
