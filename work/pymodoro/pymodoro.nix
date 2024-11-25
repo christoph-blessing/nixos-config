@@ -61,7 +61,7 @@ in
           pymodoroPkg
         ]
       }
-      echo "🍅 $(pymodoro)"
+      echo "🍅 $(pd status -s)"
     '';
     executable = true;
   };
