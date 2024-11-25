@@ -61,7 +61,7 @@ in
           pymodoroPkg
         ]
       }
-      pymodoro
+      echo "🍅 $(pymodoro)"
     '';
     executable = true;
   };

@@ -275,8 +275,8 @@
         type = "internal/network";
         interface = "wlp86s0f0";
         label = {
-          connected = "%essid% %netspeed:9%";
-          disconnected = "not connected";
+          connected = "📡 %essid% %netspeed:9%";
+          disconnected = "📡 🚫";
         };
       };
       "module/filesystem" = {
@@ -285,20 +285,20 @@
       };
       "module/volume" = {
         type = "custom/script";
-        exec = "~/.config/polybar/volume.sh --node-nickname 'alsa_output.pci-0000_00_1f.3.analog-stereo: Speakers' --node-nickname 'bluez_output.AC_80_0A_A4_4E_06.1: Headphones' listen";
+        exec = "~/.config/polybar/volume.sh --node-nickname 'alsa_output.pci-0000_00_1f.3.analog-stereo: Speakers' --node-nickname 'bluez_output.AC_80_0A_A4_4E_06.1: Headphones' --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
         tail = true;
         click-left = "~/.config/polybar/volume.sh togmute";
         click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
-        scroll-up = "~/.config/polybar/volume.sh --volume-max 130 up";
-        scroll-down = "~/.config/polybar/volume.sh --volume-max 130 down";
+        scroll-up = "~/.config/polybar/volume.sh --volume-max 100 up";
+        scroll-down = "~/.config/polybar/volume.sh --volume-max 100 down";
       };
       "module/battery" = {
         type = "internal/battery";
         label = {
           charging = "🔌 %percentage%%";
           discharging = "🔋 %percentage%%";
-          full = "Fully charged";
-          low = "BATTERY LOW";
+          full = "🔋";
+          low = "🪫";
         };
       };
       "module/date" = {
@@ -310,7 +310,7 @@
       "module/vpn" = {
         type = "custom/script";
         exec = "~/.config/polybar/vpn.sh";
-        label = "VPN %output%";
+        label = "%output%";
         interval = 5;
       };
       "module/backlight" = {
