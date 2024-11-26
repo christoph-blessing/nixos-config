@@ -70,6 +70,8 @@ in
       type = "custom/script";
       exec = "~/.config/polybar/pymodoro.sh";
       interval = 1;
+      click-left = "exec ${pymodoroPkg}/bin/pd start";
+      click-right = "exec ${pymodoroPkg}/bin/pd stop";
     };
   };
 }
