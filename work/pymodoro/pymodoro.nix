@@ -44,7 +44,7 @@ in
         ExecStart = "${pymodoroPkg}/bin/pymodorod";
       };
       Install = {
-        WantedBy = [ "multi-user.target" ];
+        WantedBy = [ "default.target" ];
       };
     };
   };
