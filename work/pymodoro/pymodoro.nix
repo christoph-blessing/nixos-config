@@ -61,16 +61,28 @@ in
           pymodoroPkg
         ]
       }
-      echo "🍅 $(pd status -s)"
+      case "$1" in
+        status)
+          echo "🍅 $(pd status -s)"
+          ;;
+        toggle)
+          if [[ "$(pd status -s)" == 'Inactive' ]]; then
+            pd start
+          elif [[ "$(pd status -s)" == *"(paused)" ]]; then
+            pd resume
+          else
+            pd pause
+          fi
+      esac
     '';
     executable = true;
   };
   services.polybar.settings = {
     "module/pymodoro" = {
       type = "custom/script";
-      exec = "~/.config/polybar/pymodoro.sh";
+      exec = "~/.config/polybar/pymodoro.sh status";
       interval = 1;
-      click-left = "exec ${pymodoroPkg}/bin/pd start";
+      click-left = "~/.config/polybar/pymodoro.sh toggle";
       click-right = "exec ${pymodoroPkg}/bin/pd stop";
     };
   };
