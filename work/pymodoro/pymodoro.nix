@@ -63,7 +63,12 @@ in
       }
       case "$1" in
         status)
-          echo "🍅 $(pd status -s)"
+          status=$(pd status -s)
+          if [[ "$status" == 'Inactive' ]]; then
+            echo "🍅"
+          else
+            echo "🍅 $status"
+          fi
           ;;
         toggle)
           if [[ "$(pd status -s)" == 'Inactive' ]]; then
