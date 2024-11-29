@@ -70,11 +70,9 @@
     ];
   };
 
-  programs.zellij = {
-    enable = true;
-    settings = {
-      copy_command = "xclip -selection clipboard";
-    };
+  programs.zellij.enable = true;
+  home.file.".config/zellij/config.kdl" = {
+    source = ./zellij/config.kdl;
   };
 
   programs.rofi.enable = true;
