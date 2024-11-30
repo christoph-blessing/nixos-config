@@ -336,4 +336,19 @@
       monospace = [ "JetBrainsMono Nerd Font,JetBrainsMono NF:style=Regular" ];
     };
   };
+
+  home.packages = with pkgs; [
+    (writeShellScriptBin "reboot" ''
+      if [[ "$(realpath /run/current-system/)" != "$(realpath /nix/var/nix/profiles/system/)" ]]; then
+         read -p "Current config will not be booted! Continue? y/n " answer
+         if [[ "$answer" != 'y' ]]; then
+            echo "Aborting"
+            exit
+         fi
+      fi
+
+      echo 'Rebooting'
+      ${pkgs.systemd}/bin/systemctl reboot
+    '')
+  ];
 }
