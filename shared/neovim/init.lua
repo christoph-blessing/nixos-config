@@ -155,6 +155,7 @@ lspconfig.pyright.setup({
 	},
 })
 lspconfig.nixd.setup({})
+lspconfig.zls.setup({})
 
 require("conform").setup({
 	notify_on_error = false,
