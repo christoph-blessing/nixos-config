@@ -16,7 +16,7 @@ writeShellScript "vpn.sh" ''
   output=$(eduvpn-cli status 2>&1 > /dev/null)
 
   if [ "$output" = "You are currently not connected to a server" ]; then
-          echo "🔓"
+          echo ""
   else
           echo "🔒"
   fi
