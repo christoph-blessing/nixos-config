@@ -104,7 +104,6 @@
       set crypt_use_gpgme
       set abort_key = "<Esc>"
     '';
-    vimKeys = true;
   };
   home.sessionVariables = {
     ESCDELAY = "0";
