@@ -209,6 +209,24 @@ cmp.setup({
 	},
 })
 
+luasnip.add_snippets("python", {
+	luasnip.snippet("debug", {
+		luasnip.text_node('logging.debug(f"{'),
+		luasnip.insert_node(0),
+		luasnip.text_node('=}")'),
+	}),
+})
+
+luasnip.add_snippets("zig", {
+	luasnip.snippet("debug", {
+		luasnip.text_node('print("'),
+		luasnip.insert_node(1),
+		luasnip.text_node('\\n", .{'),
+		luasnip.insert_node(0),
+		luasnip.text_node("});"),
+	}),
+})
+
 require("todo-comments").setup({ signs = false })
 
 require("mini.ai").setup({ n_lines = 500 })
