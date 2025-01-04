@@ -219,9 +219,9 @@ luasnip.add_snippets("python", {
 
 luasnip.add_snippets("zig", {
 	luasnip.snippet("debug", {
-		luasnip.text_node('print("'),
+		luasnip.text_node('std.debug.print("{'),
 		luasnip.insert_node(1),
-		luasnip.text_node('\\n", .{'),
+		luasnip.text_node('}\\n", .{'),
 		luasnip.insert_node(0),
 		luasnip.text_node("});"),
 	}),
