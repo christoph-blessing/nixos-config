@@ -265,7 +265,7 @@
         font-0 = "monospace";
         font-1 = "emoji:pixelsize=16:style=Regular:scale=10;1";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume backlight battery date";
+        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume microphone backlight battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -305,12 +305,20 @@
       };
       "module/volume" = {
         type = "custom/script";
-        exec = "~/.config/polybar/volume.sh --node-nickname 'alsa_output.pci-0000_00_1f.3.analog-stereo: Speakers' --node-nickname 'bluez_output.AC_80_0A_A4_4E_06.1: Headphones' --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
+        exec = "~/.config/polybar/volume.sh --format '$VOL_ICON $NODE_NICKNAME' --node-nickname 'alsa_output.pci-0000_00_1f.3.analog-stereo:💻' --node-nickname 'bluez_output.AC_80_0A_A4_4E_06.1:🎧' --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
         tail = true;
         click-left = "~/.config/polybar/volume.sh togmute";
         click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
         scroll-up = "~/.config/polybar/volume.sh --volume-max 100 up";
         scroll-down = "~/.config/polybar/volume.sh --volume-max 100 down";
+      };
+      "module/microphone" = {
+        type = "custom/script";
+        exec = "~/.config/polybar/volume.sh --node-type input --format '$VOL_ICON $ICON_NODE' --icon-node 🎤 --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
+        tail = true;
+        click-left = "~/.config/polybar/volume.sh --node-type input togmute";
+        scroll-up = "~/.config/polybar/volume.sh --node-type input --volume-max 100 up";
+        scroll-down = "~/.config/polybar/volume.sh --node-type input --volume-max 100 down";
       };
       "module/battery" = {
         type = "internal/battery";
