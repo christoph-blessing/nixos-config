@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ../shared/home.nix ];
@@ -29,5 +29,9 @@
     ];
   };
 
-  home.packages = with pkgs; [ teamspeak_client ];
+  home.packages = with pkgs; [
+    teamspeak_client
+    ledger-live-desktop
+    monero-cli
+  ];
 }
