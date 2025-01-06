@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -31,7 +30,8 @@
       "steam"
       "steam-original"
       "steam-run"
-      "teamspeak-client"
+      "steam-unwrapped"
+      "teamspeak3"
     ];
 
   programs.steam = {
@@ -53,6 +53,5 @@
     capSysNice = false;
   };
 
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
+  hardware.nvidia.open = true;
 }
