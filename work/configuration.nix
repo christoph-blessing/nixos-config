@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../shared/configuration.nix
+    ./mitmproxy.nix
   ];
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
