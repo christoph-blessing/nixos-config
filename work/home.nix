@@ -284,7 +284,7 @@
       };
       "module/wired-network" = {
         type = "internal/network";
-        interface = "enp0s13f0u3u1";
+        interface = "enp0s13f0u3u4u4";
         label = {
           connected = "%ifname% %netspeed:9%";
           disconnected = "not connected";
