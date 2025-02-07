@@ -207,6 +207,7 @@
     solaar
     zip
     unzip
+    nitrokey-app2
   ];
 
   virtualisation.docker.enable = true;
@@ -283,4 +284,6 @@
     enable = false;
     platform = "ipu6epmtl";
   };
+
+  hardware.nitrokey.enable = true;
 }
