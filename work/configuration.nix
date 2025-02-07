@@ -205,6 +205,8 @@
     })
     eduvpn-client
     solaar
+    zip
+    unzip
   ];
 
   virtualisation.docker.enable = true;
