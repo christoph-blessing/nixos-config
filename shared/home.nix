@@ -127,7 +127,7 @@
       "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
       "super + {_,shift + }w" = "bspc node -{c,k}";
       "super + f" = "bspc desktop -l next";
-      "alt + o" = "oath";
+      "control + alt + o" = "oath";
       "control + alt + l" = "${pkgs.i3lock}/bin/i3lock";
     };
   };
