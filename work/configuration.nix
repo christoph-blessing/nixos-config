@@ -275,7 +275,7 @@
   services.printing.enable = true;
 
   hardware.ipu6 = {
-    enable = false;
+    enable = true;
     platform = "ipu6epmtl";
   };
 
