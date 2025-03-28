@@ -202,6 +202,7 @@
     zip
     unzip
     nitrokey-app2
+    libreoffice
   ];
 
   virtualisation.docker.enable = true;
