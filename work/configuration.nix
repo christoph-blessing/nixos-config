@@ -203,6 +203,8 @@
     unzip
     nitrokey-app2
     libreoffice
+    tree
+    qrencode
   ];
 
   virtualisation.docker.enable = true;
