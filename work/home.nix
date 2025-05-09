@@ -342,9 +342,10 @@
       };
       "module/vpn" = {
         type = "custom/script";
-        exec = "~/.config/polybar/vpn.sh";
+        exec = "~/.config/polybar/vpn.sh status";
+        click-left = "~/.config/polybar/vpn.sh toggle";
         label = "%output%";
-        interval = 5;
+        interval = 1;
       };
       "module/backlight" = {
         type = "internal/backlight";
