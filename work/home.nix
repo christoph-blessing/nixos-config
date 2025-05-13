@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -270,7 +275,7 @@
         font-0 = "monospace";
         font-1 = "emoji:pixelsize=16:style=Regular:scale=10;1";
         modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro volume microphone backlight battery date";
+        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro notifications volume microphone backlight battery date";
         module.margin = 1;
         separator = "|";
       };
@@ -352,8 +357,47 @@
         enable-scroll = true;
         use-actual-brightness = false;
         label = "🔆 %percentage%%";
-
       };
+      "module/notifications" =
+        let
+          notificationsScript = (
+            pkgs.writeShellScriptBin "notifications" ''
+              PATH=${
+                lib.makeBinPath [
+                  pkgs.dunst
+                ]
+              }
+
+              get_status () {
+                is_paused=$(dunstctl is-paused)
+                if [ "$is_paused" == 'true' ]; then
+                   echo '🔕'
+                else
+                   echo '🔔'
+                fi
+              }
+
+              toggle() {
+                dunstctl set-paused toggle
+              }
+
+              command=$1
+
+              if [ "$command" == 'status' ]; then
+                echo $(get_status)
+              elif [ "$command" == 'toggle' ]; then
+                toggle
+              fi
+            ''
+          );
+        in
+        {
+          type = "custom/script";
+          exec = "${notificationsScript}/bin/notifications status";
+          click-left = "${notificationsScript}/bin/notifications toggle";
+          label = "%output%";
+          interval = 1;
+        };
     };
   };
 
