@@ -63,6 +63,7 @@
       todo-comments-nvim
       mini-nvim
       nvim-treesitter.withAllGrammars
+      nvim-treesitter-textobjects
       nvim-autopairs
       rainbow-delimiters-nvim
       nvim-web-devicons

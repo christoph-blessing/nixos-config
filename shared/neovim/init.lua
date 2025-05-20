@@ -250,6 +250,28 @@ require("nvim-treesitter.configs").setup({
 	indent = { enable = true, disable = { "ruby" } },
 })
 
+require("nvim-treesitter.configs").setup({
+	textobjects = {
+		select = {
+			enable = true,
+			lookahead = true,
+			keymaps = {
+				["af"] = { query = "@function.outer", desc = "around function" },
+				["if"] = { query = "@function.inner", desc = "inner function" },
+				["ac"] = { query = "@class.outer", desc = "around class" },
+				["ic"] = { query = "@class.inner", desc = "inner class" },
+				["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+			},
+			selection_modes = {
+				["@function.outer"] = "V",
+				["@function.inner"] = "V",
+				["@class.outer"] = "V",
+				["@class.inner"] = "V",
+			},
+		},
+	},
+})
+
 local npairs = require("nvim-autopairs")
 npairs.setup({})
 npairs.get_rule("'").not_filetypes = { "scheme" }
