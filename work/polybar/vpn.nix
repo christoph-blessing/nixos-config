@@ -3,6 +3,8 @@
   writeShellScript,
   coreutils,
   eduvpn-client,
+  xdg-utils,
+  firefox,
 }:
 
 writeShellScript "vpn.sh" ''
@@ -10,6 +12,8 @@ writeShellScript "vpn.sh" ''
     lib.makeBinPath [
       coreutils
       eduvpn-client
+      xdg-utils
+      firefox
     ]
   }
 
