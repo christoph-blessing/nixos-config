@@ -7,7 +7,7 @@
     ./mitmproxy.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
   boot.initrd = {
     kernelModules = [
       "vfat"
