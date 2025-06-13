@@ -50,6 +50,8 @@
       gitsigns-nvim
       which-key-nvim
       telescope-nvim
+      telescope-fzf-native-nvim
+      telescope-ui-select-nvim
       nvim-lspconfig
       fidget-nvim
       neodev-nvim
