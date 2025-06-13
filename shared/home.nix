@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   imports = [ ./nushell ];
@@ -43,8 +43,28 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    extraConfig = ":luafile ${neovim/init.lua}";
+    extraLuaConfig = ''
+      require("lazy").setup({
+        spec = {
+          { import = "plugins" },
+        },
+        performance = {
+          reset_packpath = false,
+          rtp = {
+            reset = false,
+          }
+        },
+        dev = {
+          path = "${pkgs.vimUtils.packDir config.programs.neovim.finalPackage.passthru.packpathDirs}/pack/myNeovimPackages/start",
+          patterns = {""},
+        },
+        install = {
+          missing = false,
+        },
+      })
+    '';
     plugins = with pkgs.vimPlugins; [
+      lazy-nvim
       vim-sleuth
       comment-nvim
       gitsigns-nvim
@@ -71,6 +91,13 @@
       nvim-web-devicons
       plantuml-syntax
     ];
+  };
+
+  xdg = {
+    configFile."nvim/lua" = {
+      recursive = true;
+      source = ./neovim;
+    };
   };
 
   programs.zellij.enable = true;
