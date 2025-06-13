@@ -44,52 +44,29 @@
     viAlias = true;
     vimAlias = true;
     extraLuaConfig = ''
-      require("lazy").setup({
-        spec = {
-          { import = "plugins" },
-        },
-        performance = {
-          reset_packpath = false,
-          rtp = {
-            reset = false,
-          }
-        },
-        dev = {
-          path = "${pkgs.vimUtils.packDir config.programs.neovim.finalPackage.passthru.packpathDirs}/pack/myNeovimPackages/start",
-          patterns = {""},
-        },
-        install = {
-          missing = false,
-        },
-      })
+      require("setup").setup({lazy_dev_path = "${pkgs.vimUtils.packDir config.programs.neovim.finalPackage.passthru.packpathDirs}/pack/myNeovimPackages/start"})
     '';
     plugins = with pkgs.vimPlugins; [
+      tokyonight-nvim
       lazy-nvim
-      vim-sleuth
-      comment-nvim
       gitsigns-nvim
+      guess-indent-nvim
       which-key-nvim
       telescope-nvim
       telescope-fzf-native-nvim
       telescope-ui-select-nvim
+      nvim-web-devicons
+      plenary-nvim
       nvim-lspconfig
       fidget-nvim
-      neodev-nvim
-      nvim-cmp
-      luasnip
-      cmp_luasnip
-      cmp-nvim-lsp
-      cmp-path
-      tokyonight-nvim
+      blink-cmp
       conform-nvim
+      luasnip
+      lazydev-nvim
       todo-comments-nvim
       mini-nvim
       nvim-treesitter.withAllGrammars
       nvim-treesitter-textobjects
-      nvim-autopairs
-      rainbow-delimiters-nvim
-      nvim-web-devicons
-      plantuml-syntax
     ];
   };
 
