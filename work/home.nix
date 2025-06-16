@@ -119,6 +119,8 @@
     text/html; ${firefox}/bin/firefox --new-window %s
     application/pdf; ${firefox}/bin/firefox --new-window %s
     image/png; ${feh}/bin/feh %s
+    application/vnd.openxmlformats-officedocument.presentationml.presentation; ${libreoffice}/bin/libreoffice --impress %s
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; ${libreoffice}/bin/libreoffice --calc %s
   '';
 
   programs.nushell.extraEnv = ''
