@@ -245,161 +245,159 @@
     };
   };
 
-  home.file.".config/polybar/vpn.sh" = {
-    source = pkgs.callPackage ./polybar/vpn.nix { };
-    executable = true;
-  };
-
-  home.file.".config/polybar/volume.sh" = {
-    source = pkgs.callPackage ./polybar/volume.nix { };
-    executable = true;
-  };
-
-  services.polybar = {
-    enable = true;
-    script = "polybar mybar &";
-    settings = {
-      "colors" = {
-        background = "#282A2E";
-        background-alt = "#373B41";
-        foreground = "#C5C8C6";
-        primary = "#F0C674";
-        secondary = "#8ABEB7";
-        alert = "#A54242";
-        disabled = "#707880";
-      };
-      "bar/mybar" = {
-        width = "100%";
-        background = "\${colors.background}";
-        foreground = "\${colors.foreground}";
-        font-0 = "monospace";
-        font-1 = "emoji:pixelsize=16:style=Regular:scale=10;1";
-        modules.left = "bspwm";
-        modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro notifications volume microphone backlight battery date";
-        module.margin = 1;
-        separator = "|";
-      };
-      "module/bspwm" = {
-        type = "internal/bspwm";
-        enable.click = false;
-        enable.scroll = false;
-        label.focused.background = "\${colors.background-alt}";
-      };
-      "module/cpu" = {
-        type = "internal/cpu";
-        format.prefix = "💻 ";
-      };
-      "module/memory" = {
-        type = "internal/memory";
-        format.prefix = "💾 ";
-      };
-      "module/wired-network" = {
-        type = "internal/network";
-        interface = "enp0s13f0u3u4u4";
-        label = {
-          connected = "%ifname% %netspeed:9%";
-          disconnected = "not connected";
+  services.polybar =
+    let
+      pulseaudio-control = pkgs.callPackage ./polybar/pulseaudio-control.nix { };
+    in
+    {
+      enable = true;
+      script = "polybar mybar &";
+      settings = {
+        "colors" = {
+          background = "#282A2E";
+          background-alt = "#373B41";
+          foreground = "#C5C8C6";
+          primary = "#F0C674";
+          secondary = "#8ABEB7";
+          alert = "#A54242";
+          disabled = "#707880";
         };
-      };
-      "module/wireless-network" = {
-        type = "internal/network";
-        interface = "wlp86s0f0";
-        label = {
-          connected = "📡 %essid% %netspeed:9%";
-          disconnected = "📡 🚫";
+        "bar/mybar" = {
+          width = "100%";
+          background = "\${colors.background}";
+          foreground = "\${colors.foreground}";
+          font-0 = "monospace";
+          font-1 = "emoji:pixelsize=16:style=Regular:scale=10;1";
+          modules.left = "bspwm";
+          modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro notifications volume microphone backlight battery date";
+          module.margin = 1;
+          separator = "|";
         };
-      };
-      "module/filesystem" = {
-        type = "internal/fs";
-        label.mounted = "%mountpoint% %percentage_used%%";
-      };
-      "module/volume" = {
-        type = "custom/script";
-        exec = "~/.config/polybar/volume.sh --format '$VOL_ICON $NODE_NICKNAME' --node-nickname 'alsa_output.pci-0000_00_1f.3.analog-stereo:💻' --node-nickname 'bluez_output.AC_80_0A_A4_4E_06.1:🎧' --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
-        tail = true;
-        click-left = "~/.config/polybar/volume.sh togmute";
-        click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
-        scroll-up = "~/.config/polybar/volume.sh --volume-max 100 up";
-        scroll-down = "~/.config/polybar/volume.sh --volume-max 100 down";
-      };
-      "module/microphone" = {
-        type = "custom/script";
-        exec = "~/.config/polybar/volume.sh --node-type input --format '$VOL_ICON $ICON_NODE' --icon-node 🎤 --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
-        tail = true;
-        click-left = "~/.config/polybar/volume.sh --node-type input togmute";
-        scroll-up = "~/.config/polybar/volume.sh --node-type input --volume-max 100 up";
-        scroll-down = "~/.config/polybar/volume.sh --node-type input --volume-max 100 down";
-      };
-      "module/battery" = {
-        type = "internal/battery";
-        label = {
-          charging = "🔌 %percentage%%";
-          discharging = "🔋 %percentage%%";
-          full = "🔋";
-          low = "🪫";
+        "module/bspwm" = {
+          type = "internal/bspwm";
+          enable.click = false;
+          enable.scroll = false;
+          label.focused.background = "\${colors.background-alt}";
         };
-      };
-      "module/date" = {
-        type = "internal/date";
-        interval = 1;
-        date = "%Y-%m-%d %H:%M";
-        label = "%date%";
-      };
-      "module/vpn" = {
-        type = "custom/script";
-        exec = "~/.config/polybar/vpn.sh status";
-        click-left = "~/.config/polybar/vpn.sh toggle";
-        label = "%output%";
-        interval = 1;
-      };
-      "module/backlight" = {
-        type = "internal/backlight";
-        enable-scroll = true;
-        use-actual-brightness = false;
-        label = "🔆 %percentage%%";
-      };
-      "module/notifications" =
-        let
-          notificationsScript = (
-            pkgs.writeShellScriptBin "notifications" ''
-              PATH=${
-                lib.makeBinPath [
-                  pkgs.dunst
-                ]
-              }
-
-              get_status () {
-                is_paused=$(dunstctl is-paused)
-                if [ "$is_paused" == 'true' ]; then
-                   echo '🔕'
-                else
-                   echo '🔔'
-                fi
-              }
-
-              toggle() {
-                dunstctl set-paused toggle
-              }
-
-              command=$1
-
-              if [ "$command" == 'status' ]; then
-                echo $(get_status)
-              elif [ "$command" == 'toggle' ]; then
-                toggle
-              fi
-            ''
-          );
-        in
-        {
+        "module/cpu" = {
+          type = "internal/cpu";
+          format.prefix = "💻 ";
+        };
+        "module/memory" = {
+          type = "internal/memory";
+          format.prefix = "💾 ";
+        };
+        "module/wired-network" = {
+          type = "internal/network";
+          interface = "enp0s13f0u3u4u4";
+          label = {
+            connected = "%ifname% %netspeed:9%";
+            disconnected = "not connected";
+          };
+        };
+        "module/wireless-network" = {
+          type = "internal/network";
+          interface = "wlp86s0f0";
+          label = {
+            connected = "📡 %essid% %netspeed:9%";
+            disconnected = "📡 🚫";
+          };
+        };
+        "module/filesystem" = {
+          type = "internal/fs";
+          label.mounted = "%mountpoint% %percentage_used%%";
+        };
+        "module/volume" = {
           type = "custom/script";
-          exec = "${notificationsScript}/bin/notifications status";
-          click-left = "${notificationsScript}/bin/notifications toggle";
-          label = "%output%";
-          interval = 1;
+          exec = "${pulseaudio-control} --format '$VOL_ICON $NODE_NICKNAME' --node-nickname 'alsa_output.pci-0000_00_1f.3.analog-stereo:💻' --node-nickname 'bluez_output.AC_80_0A_A4_4E_06.1:🎧' --node-nickname 'bluez_output.94_DB_56_4F_46_F9.1:🎧' --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
+          tail = true;
+          click-left = "${pulseaudio-control} togmute";
+          click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
+          scroll-up = "${pulseaudio-control} --volume-max 100 up";
+          scroll-down = "${pulseaudio-control} --volume-max 100 down";
         };
+        "module/microphone" = {
+          type = "custom/script";
+          exec = "${pulseaudio-control} --node-type input --format '$VOL_ICON $ICON_NODE' --icon-node 🎤 --icon-muted 🔇 --icons-volume 🔈,🔉,🔊 listen";
+          tail = true;
+          click-left = "${pulseaudio-control} --node-type input togmute";
+          scroll-up = "${pulseaudio-control} --node-type input --volume-max 100 up";
+          scroll-down = "${pulseaudio-control} --node-type input --volume-max 100 down";
+        };
+        "module/battery" = {
+          type = "internal/battery";
+          label = {
+            charging = "🔌 %percentage%%";
+            discharging = "🔋 %percentage%%";
+            full = "🔋";
+            low = "🪫";
+          };
+        };
+        "module/date" = {
+          type = "internal/date";
+          interval = 1;
+          date = "%Y-%m-%d %H:%M";
+          label = "%date%";
+        };
+        "module/vpn" =
+          let
+            eduvpn = pkgs.callPackage ./polybar/eduvpn.nix { };
+          in
+          {
+            type = "custom/script";
+            exec = "${eduvpn} status";
+            click-left = "${eduvpn} toggle";
+            label = "%output%";
+            interval = 1;
+          };
+        "module/backlight" = {
+          type = "internal/backlight";
+          enable-scroll = true;
+          use-actual-brightness = false;
+          label = "🔆 %percentage%%";
+        };
+        "module/notifications" =
+          let
+            notificationsScript = (
+              pkgs.writeShellScriptBin "notifications" ''
+                PATH=${
+                  lib.makeBinPath [
+                    pkgs.dunst
+                  ]
+                }
+
+                get_status () {
+                  is_paused=$(dunstctl is-paused)
+                  if [ "$is_paused" == 'true' ]; then
+                     echo '🔕'
+                  else
+                     echo '🔔'
+                  fi
+                }
+
+                toggle() {
+                  dunstctl set-paused toggle
+                }
+
+                command=$1
+
+                if [ "$command" == 'status' ]; then
+                  echo $(get_status)
+                elif [ "$command" == 'toggle' ]; then
+                  toggle
+                fi
+              ''
+            );
+          in
+          {
+            type = "custom/script";
+            exec = "${notificationsScript}/bin/notifications status";
+            click-left = "${notificationsScript}/bin/notifications toggle";
+            label = "%output%";
+            interval = 1;
+          };
+      };
     };
-  };
 
   fonts.fontconfig = {
     enable = true;

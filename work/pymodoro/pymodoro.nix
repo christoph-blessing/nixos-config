@@ -54,41 +54,41 @@ in
       override_pause_level = 100;
     };
   };
-  home.file.".config/polybar/pymodoro.sh" = {
-    source = pkgs.writeShellScript "pymodoro.sh" ''
-      PATH=${
-        lib.makeBinPath [
-          pymodoroPkg
-        ]
-      }
-      case "$1" in
-        status)
-          status=$(pd status -s)
-          if [[ "$status" == 'Inactive' ]]; then
-            echo "🍅"
-          else
-            echo "🍅 $status"
-          fi
-          ;;
-        toggle)
-          if [[ "$(pd status -s)" == 'Inactive' ]]; then
-            pd start
-          elif [[ "$(pd status -s)" == *"(paused)" ]]; then
-            pd resume
-          else
-            pd pause
-          fi
-      esac
-    '';
-    executable = true;
-  };
-  services.polybar.settings = {
-    "module/pymodoro" = {
-      type = "custom/script";
-      exec = "~/.config/polybar/pymodoro.sh status";
-      interval = 1;
-      click-left = "~/.config/polybar/pymodoro.sh toggle";
-      click-right = "exec ${pymodoroPkg}/bin/pd stop";
+  services.polybar.settings =
+    let
+      polybar-pymodoro = pkgs.writeShellScriptBin "polybar-pymodoro" ''
+        PATH=${
+          lib.makeBinPath [
+            pymodoroPkg
+          ]
+        }
+        case "$1" in
+          status)
+            status=$(pd status -s)
+            if [[ "$status" == 'Inactive' ]]; then
+              echo "🍅"
+            else
+              echo "🍅 $status"
+            fi
+            ;;
+          toggle)
+            if [[ "$(pd status -s)" == 'Inactive' ]]; then
+              pd start
+            elif [[ "$(pd status -s)" == *"(paused)" ]]; then
+              pd resume
+            else
+              pd pause
+            fi
+        esac
+      '';
+    in
+    {
+      "module/pymodoro" = {
+        type = "custom/script";
+        exec = "${polybar-pymodoro}/bin/polybar-pymodoro status";
+        interval = 1;
+        click-left = "${polybar-pymodoro}/bin/polybar-pymodoro toggle";
+        click-right = "exec ${pymodoroPkg}/bin/pd stop";
+      };
     };
-  };
 }
