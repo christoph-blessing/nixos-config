@@ -1,5 +1,5 @@
 return {
-	"NMAC427/guess-indent.nvim",
+	{ "NMAC427/guess-indent.nvim", opts = {} },
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
