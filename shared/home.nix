@@ -68,6 +68,13 @@
       nvim-treesitter.withAllGrammars
       nvim-treesitter-textobjects
     ];
+    extraPackages = with pkgs; [
+      lua-language-server
+      pyright
+      nixd
+      stylua
+      nixfmt-rfc-style
+    ];
   };
 
   xdg = {
@@ -151,18 +158,11 @@
   home.packages = with pkgs; [
     keepassxc
     git
-    lua-language-server
-    stylua
     ripgrep
     yubikey-manager
     xclip
     (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
-    pyright
-    nixd
     fd
-    zls
-    gopls
-    nixfmt-rfc-style
   ];
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
