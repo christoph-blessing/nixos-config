@@ -170,85 +170,117 @@
     };
   };
 
-  programs.autorandr = {
-    enable = true;
-    hooks.postswitch.set-up-monitor = ''
-      if [ -f "/tmp/autorandr_current_profile" ]; then
-        previous_profile=$(cat /tmp/autorandr_current_profile)
-        if [ $previous_profile == $AUTORANDR_CURRENT_PROFILE ]; then
+  programs.autorandr =
+    let
+      foo = pkgs.writeShellScriptBin "set-up-monitor" ''
+        set -e
+        echo "setting up monitor..."
+
+        current_profile=$AUTORANDR_CURRENT_PROFILE
+
+        previous_profile=
+        if [ -f "/tmp/autorandr_current_profile" ]; then
+          previous_profile="$(cat /tmp/autorandr_current_profile)"
+        fi
+
+        echo "previous profile: $previous_profile" 
+        echo "current profile: $current_profile" 
+
+        if [ -n "$previous_profile" ] && [ "$previous_profile" = "$current_profile" ]; then
+          echo "exiting: No profile change" 
           exit
+        else 
+          echo "profile change: $previous_profile -> $current_profile"
         fi
-      fi
 
-      systemctl --user stop polybar.service
-
-      target=$AUTORANDR_MONITORS
-      monitors=$(bspc query -M --names)
-      for source in $monitors; do
-        if [ $source == $target ]; then
-          continue
+        echo "checking if polybar is running" 
+        if pgrep -u $UID -x polybar > /dev/null; then
+          echo "polybar is running: sending kill signal" 
+          pkill polybar
+          echo "waiting for polybar to exit" 
+          while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
+          echo "polybar has exited" 
+        else
+          echo "polybar is not running"
         fi
-        desktops=$(bspc query -D --names --monitor $source)
-        bspc monitor $source --add-desktops temp
-        for desktop in $desktops; do
-          bspc desktop $desktop --to-monitor $target
+
+        echo "moving desktops"
+        target=$AUTORANDR_MONITORS
+        monitors=$(bspc query -M --names)
+        for source in $monitors; do
+          if [ "$source" = "$target" ]; then
+            continue
+          fi
+          desktops=$(bspc query -D --names --monitor $source)
+          bspc monitor $source --add-desktops temp
+          for desktop in $desktops; do
+            bspc desktop $desktop --to-monitor $target
+          done
+          bspc monitor $source --remove
         done
-        bspc monitor $source --remove
-      done
-      bspc desktop Desktop --remove
+        bspc desktop Desktop --remove
+        echo "finished moving desktops"
 
-      systemctl --user start polybar.service
+        echo "starting polybar" 
+        nohup polybar mybar & 
+        disown
+        echo "started polybar"
 
-      echo $AUTORANDR_CURRENT_PROFILE > /tmp/autorandr_current_profile
-    '';
-    profiles.mobile = {
-      fingerprint = {
-        "eDP-1" =
-          "00ffffffffffff0006afa4d70000000031200104a51d127803eac5a6544a9a2412505400000001010101010101010101010101010101fa3c80b870b0244010103e001eb21000001ac83080b870b0244010103e001eb21000001a000000fe005630395854804231333355414b00000000000241029e001200000a410a20200037";
+        echo $AUTORANDR_CURRENT_PROFILE > /tmp/autorandr_current_profile
+        echo "finished monitor setup"
+      '';
+    in
+    {
+      enable = true;
+      hooks.postswitch.set-up-monitor = "${foo}/bin/set-up-monitor >> /home/chris/foo.log 2>&1";
+      profiles.mobile = {
+        fingerprint = {
+          "eDP-1" =
+            "00ffffffffffff0006afa4d70000000031200104a51d127803eac5a6544a9a2412505400000001010101010101010101010101010101fa3c80b870b0244010103e001eb21000001ac83080b870b0244010103e001eb21000001a000000fe005630395854804231333355414b00000000000241029e001200000a410a20200037";
+        };
+        config = {
+          "eDP-1" = {
+            enable = true;
+            primary = true;
+            mode = "1920x1200";
+            rate = "60";
+          };
+        };
       };
-      config = {
-        "eDP-1" = {
-          enable = true;
-          primary = true;
-          mode = "1920x1200";
-          rate = "60";
+      profiles.office = {
+        fingerprint = {
+          "eDP-1" =
+            "00ffffffffffff0006afa4d70000000031200104a51d127803eac5a6544a9a2412505400000001010101010101010101010101010101fa3c80b870b0244010103e001eb21000001ac83080b870b0244010103e001eb21000001a000000fe005630395854804231333355414b00000000000241029e001200000a410a20200037";
+          "DP-1-3" =
+            "00ffffffffffff0010ac24d1563336310e20010380502178ea19f5aa4d43aa24105054a54b00714f8140818081c081009500b300d1c0e77c70a0d0a0295030203a001d4e3100001a000000ff004a3644575336330a2020202020000000fc0044454c4c205333343232445747000000fd0030781dc83c000a202020202020011f020353f1550102030711121613042f4647141f05103f4c4e60612309070783010000e200d567030c001000183c67d85dc4017888016d1a000002033078e6076c2c6c2ce305c000e40f000038e60605016c6c2c4ed470a0d0a0465030203a001d4e3100001a6fc200a0a0a05550302035001d4e3100001a000000000000000033";
+        };
+        config = {
+          "eDP-1".enable = false;
+          "DP-1-3" = {
+            enable = true;
+            primary = true;
+            mode = "3440x1440";
+            rate = "60";
+          };
+        };
+      };
+      profiles.home = {
+        fingerprint = {
+          "eDP-1" =
+            "00ffffffffffff0006afa4d70000000031200104a51d127803eac5a6544a9a2412505400000001010101010101010101010101010101fa3c80b870b0244010103e001eb21000001ac83080b870b0244010103e001eb21000001a000000fe005630395854804231333355414b00000000000241029e001200000a410a20200037";
+          "DP-1" =
+            "00ffffffffffff004c2d537055385843001e0104b57722783bc725b14b46a8260e5054bfef80714f810081c08180a9c0b3009500d1c074d600a0f038404030203a00a9504100001a000000fd003c78b7b761010a202020202020000000fc004c433439473935540a20202020000000ff0048345a4e3730303336390a202002ef02032df044105a3f5c2309070783010000e305c0006d1a0000020f3c7800048b127317e3060501e5018b849001565e00a0a0a0295030203500a9504100001a584d00b8a1381440f82c4500a9504100001e1a6800a0f0381f4030203a00a9504100001a6fc200a0a0a0555030203500a9504100001a00000000000000000000fc00ffffffffffff004a8bbf01010050630c140104b5301b783a3585a656489a24125054b30c00714f810081809500d1c0010101010101023a801871382d40582c4500dd0c1100001e000000fd00384b1e5311000a202020202020000000fc0052544b204648440a2020202020000000ff004c35363035313739343330320a0197";
+        };
+        config = {
+          "eDP-1".enable = false;
+          "DP-1" = {
+            enable = true;
+            primary = true;
+            mode = "5120x1440_60.00";
+          };
         };
       };
     };
-    profiles.office = {
-      fingerprint = {
-        "eDP-1" =
-          "00ffffffffffff0006afa4d70000000031200104a51d127803eac5a6544a9a2412505400000001010101010101010101010101010101fa3c80b870b0244010103e001eb21000001ac83080b870b0244010103e001eb21000001a000000fe005630395854804231333355414b00000000000241029e001200000a410a20200037";
-        "DP-1-3" =
-          "00ffffffffffff0010ac24d1563336310e20010380502178ea19f5aa4d43aa24105054a54b00714f8140818081c081009500b300d1c0e77c70a0d0a0295030203a001d4e3100001a000000ff004a3644575336330a2020202020000000fc0044454c4c205333343232445747000000fd0030781dc83c000a202020202020011f020353f1550102030711121613042f4647141f05103f4c4e60612309070783010000e200d567030c001000183c67d85dc4017888016d1a000002033078e6076c2c6c2ce305c000e40f000038e60605016c6c2c4ed470a0d0a0465030203a001d4e3100001a6fc200a0a0a05550302035001d4e3100001a000000000000000033";
-      };
-      config = {
-        "eDP-1".enable = false;
-        "DP-1-3" = {
-          enable = true;
-          primary = true;
-          mode = "3440x1440";
-          rate = "60";
-        };
-      };
-    };
-    profiles.home = {
-      fingerprint = {
-        "eDP-1" =
-          "00ffffffffffff0006afa4d70000000031200104a51d127803eac5a6544a9a2412505400000001010101010101010101010101010101fa3c80b870b0244010103e001eb21000001ac83080b870b0244010103e001eb21000001a000000fe005630395854804231333355414b00000000000241029e001200000a410a20200037";
-        "DP-1" =
-          "00ffffffffffff004c2d537055385843001e0104b57722783bc725b14b46a8260e5054bfef80714f810081c08180a9c0b3009500d1c074d600a0f038404030203a00a9504100001a000000fd003c78b7b761010a202020202020000000fc004c433439473935540a20202020000000ff0048345a4e3730303336390a202002ef02032df044105a3f5c2309070783010000e305c0006d1a0000020f3c7800048b127317e3060501e5018b849001565e00a0a0a0295030203500a9504100001a584d00b8a1381440f82c4500a9504100001e1a6800a0f0381f4030203a00a9504100001a6fc200a0a0a0555030203500a9504100001a00000000000000000000fc00ffffffffffff004a8bbf01010050630c140104b5301b783a3585a656489a24125054b30c00714f810081809500d1c0010101010101023a801871382d40582c4500dd0c1100001e000000fd00384b1e5311000a202020202020000000fc0052544b204648440a2020202020000000ff004c35363035313739343330320a0197";
-      };
-      config = {
-        "eDP-1".enable = false;
-        "DP-1" = {
-          enable = true;
-          primary = true;
-          mode = "5120x1440_60.00";
-        };
-      };
-    };
-  };
 
   services.polybar =
     let
@@ -277,6 +309,7 @@
           modules.right = "cpu memory filesystem wired-network wireless-network vpn pymodoro notifications volume microphone backlight battery date";
           module.margin = 1;
           separator = "|";
+          wm.restack = "bspwm";
         };
         "module/bspwm" = {
           type = "internal/bspwm";
