@@ -172,7 +172,7 @@
 
   programs.autorandr =
     let
-      foo = pkgs.writeShellScriptBin "set-up-monitor" ''
+      set-up-monitor = pkgs.writeShellScriptBin "set-up-monitor" ''
         set -e
         echo "setting up monitor..."
 
@@ -226,13 +226,25 @@
         disown
         echo "started polybar"
 
+        sleep 1 # Wait for polybar to initialize
+
+        # Force bspwm to update desktops to prevent polybar behing drawn behind other windows
+        echo "updating desktops"
+        bspc query -D | while read -r desktop; do
+          bspc config -d "$desktop" top_padding 0
+          bspc config -d "$desktop" right_padding 0
+          bspc config -d "$desktop" bottom_padding 0
+          bspc config -d "$desktop" left_padding 0
+        done
+        echo "finished updating desktops"
+
         echo $AUTORANDR_CURRENT_PROFILE > /tmp/autorandr_current_profile
         echo "finished monitor setup"
       '';
     in
     {
       enable = true;
-      hooks.postswitch.set-up-monitor = "${foo}/bin/set-up-monitor >> /home/chris/foo.log 2>&1";
+      hooks.postswitch.set-up-monitor = "${set-up-monitor}/bin/set-up-monitor";
       profiles.mobile = {
         fingerprint = {
           "eDP-1" =
