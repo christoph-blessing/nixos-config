@@ -148,12 +148,15 @@
       bspc rule --add firefox --one-shot node=@II:/
       bspc node @III:/ --insert-receptacle
       bspc rule --add KeePassXC --one-shot node=@III:/
+      bspc node @IV:/ --insert-receptacle
+      bspc rule --add Element --one-shot node=@IV:/
       autorandr --ignore-lid --change
     '';
     startupPrograms = [
       "alacritty"
       "firefox"
       "keepassxc"
+      "element-desktop"
     ];
   };
 
@@ -423,4 +426,20 @@
       ${pkgs.systemd}/bin/systemctl reboot
     '')
   ];
+
+  programs.element-desktop = {
+    enable = true;
+    settings = {
+      default_server_config = {
+        "m.homeserver" = {
+          base_url = "https://matrix.gwdg.de/";
+          server_name = "matrix.gwdg.de";
+        };
+        "m.identity_sever" = {
+          base_url = "";
+        };
+      };
+      default_theme = "dark";
+    };
+  };
 }
