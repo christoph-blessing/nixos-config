@@ -67,6 +67,7 @@
       mini-nvim
       nvim-treesitter.withAllGrammars
       nvim-treesitter-textobjects
+      nvim-autopairs
     ];
     extraPackages = with pkgs; [
       lua-language-server

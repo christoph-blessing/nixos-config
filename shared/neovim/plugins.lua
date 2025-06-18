@@ -1,6 +1,11 @@
 return {
 	{ "NMAC427/guess-indent.nvim", opts = {} },
 	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = true,
+	},
+	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			signs = {
