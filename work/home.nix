@@ -170,9 +170,32 @@
     };
   };
 
+  systemd.user.services.autorandr = {
+    Unit = {
+      Description = "Auto-detect the connected display hardware and load the appropriate X11 setup using xrandr";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.autorandr}/bin/autorandr --change";
+      KillMode = "process"; # HACK: Stops polybar from exiting when the unit stops but also leaves other processes running
+    };
+
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
   programs.autorandr =
     let
       set-up-monitor = pkgs.writeShellScriptBin "set-up-monitor" ''
+        PATH=${
+          lib.makeBinPath [
+            pkgs.toybox
+            pkgs.bspwm
+            pkgs.polybar
+          ]
+        }
+
         set -e
         echo "setting up monitor..."
 
