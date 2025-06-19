@@ -170,21 +170,7 @@
     };
   };
 
-  systemd.user.services.autorandr = {
-    Unit = {
-      Description = "Auto-detect the connected display hardware and load the appropriate X11 setup using xrandr";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.autorandr}/bin/autorandr --change";
-      KillMode = "process"; # HACK: Stops polybar from exiting when the unit stops but also leaves other processes running
-    };
-
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
+  services.autorandr.enable = true;
   programs.autorandr =
     let
       set-up-monitor = pkgs.writeShellScriptBin "set-up-monitor" ''
@@ -192,7 +178,7 @@
           lib.makeBinPath [
             pkgs.toybox
             pkgs.bspwm
-            pkgs.polybar
+            pkgs.systemd
           ]
         }
 
@@ -216,16 +202,9 @@
           echo "profile change: $previous_profile -> $current_profile"
         fi
 
-        echo "checking if polybar is running" 
-        if pgrep -u $UID -x polybar > /dev/null; then
-          echo "polybar is running: sending kill signal" 
-          pkill polybar
-          echo "waiting for polybar to exit" 
-          while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
-          echo "polybar has exited" 
-        else
-          echo "polybar is not running"
-        fi
+        echo "stopping polybar service"
+        systemctl --user stop polybar.service
+        echo "stopped polybar service"
 
         echo "moving desktops"
         target=$AUTORANDR_MONITORS
@@ -244,12 +223,10 @@
         bspc desktop Desktop --remove
         echo "finished moving desktops"
 
-        echo "starting polybar" 
-        nohup polybar mybar & 
-        disown
-        echo "started polybar"
-
+        echo "starting polybar service" 
+        systemctl --user start polybar.service
         sleep 1 # Wait for polybar to initialize
+        echo "started polybar service" 
 
         # Force bspwm to update desktops to prevent polybar behing drawn behind other windows
         echo "updating desktops"
