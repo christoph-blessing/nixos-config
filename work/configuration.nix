@@ -227,12 +227,9 @@
     ACTION=="remove",\
       ENV{SUBSYSTEM}=="bluetooth",\
       RUN+="${pkgs.bash}/bin/bash -c 'export DISPLAY=:0 XAUTHORITY=/home/chris/.Xauthority; ${pkgs.bluez}/bin/bluetoothctl devices Connected | ${pkgs.gnugrep}/bin/grep urchin || ${pkgs.xorg.xinput}/bin/xinput enable \"AT Translated Set 2 keyboard\"'"
-    ACTION=="add",\
+    ACTION=="change",\
       ENV{SUBSYSTEM}=="drm",\
-      RUN+="${pkgs.autorandr}/bin/autorandr --batch --change"
-    ACTION=="remove",\
-      ENV{SUBSYSTEM}=="drm",\
-      RUN+="${pkgs.autorandr}/bin/autorandr --batch --change"
+      RUN+="${pkgs.systemd}/bin/systemctl --user --machine=chris@.host start autorandr.service"
     ACTION=="add",\
       ENV{SUBSYSTEM}=="backlight",\
       KERNEL=="intel_backlight",\
