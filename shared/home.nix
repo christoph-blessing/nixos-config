@@ -121,7 +121,7 @@
     settings = {
       border_width = 9;
       window_gap = -9;
-      top_padding = 9;
+      top_padding = 30;
       right_padding = 9;
       bottom_padding = 9;
       left_padding = 9;
