@@ -30,6 +30,16 @@
     userEmail = "chris24.blessing@gmail.com";
   };
 
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        email = "chris24.blessing@gmail.com";
+        name = "Christoph Blessing";
+      };
+    };
+  };
+
   programs.gpg.enable = true;
 
   programs.himalaya.enable = true;
