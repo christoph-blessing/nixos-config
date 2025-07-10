@@ -135,21 +135,24 @@
   xsession.windowManager.bspwm = {
     monitors = {
       eDP-1 = [
-        "I"
-        "II"
-        "III"
-        "IV"
+        "terminal"
+        "web"
+        "passwords"
+        "chat"
+        "ai"
       ];
     };
     extraConfig = ''
-      bspc node @I:/ --insert-receptacle
-      bspc rule --add Alacritty --one-shot node=@I:/
-      bspc node @II:/ --insert-receptacle
-      bspc rule --add firefox --one-shot node=@II:/
-      bspc node @III:/ --insert-receptacle
-      bspc rule --add KeePassXC --one-shot node=@III:/
-      bspc node @IV:/ --insert-receptacle
-      bspc rule --add Element --one-shot node=@IV:/
+      bspc node @terminal:/ --insert-receptacle
+      bspc rule --add Alacritty --one-shot node=@terminal:/
+      bspc node @web:/ --insert-receptacle
+      bspc rule --add firefox --one-shot node=@web:/
+      bspc node @passwords:/ --insert-receptacle
+      bspc rule --add KeePassXC --one-shot node=@passwords:/
+      bspc node @chat:/ --insert-receptacle
+      bspc rule --add Element --one-shot node=@chat:/
+      bspc node @ai:/ --insert-receptacle
+      bspc rule --add firefox --one-shot node=@ai:/
       autorandr --ignore-lid --change
     '';
     startupPrograms = [
@@ -157,6 +160,7 @@
       "firefox"
       "keepassxc"
       "element-desktop"
+      "firefox --new-window perplexity.ai"
     ];
   };
 
