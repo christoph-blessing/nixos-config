@@ -224,9 +224,7 @@ return {
 						},
 					},
 				},
-				pyright = {
-					settings = { typeCheckingMode = "off" },
-				},
+				basedpyright = {},
 				nixd = {},
 			}
 
