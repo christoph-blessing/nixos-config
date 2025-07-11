@@ -81,7 +81,6 @@
     ];
     extraPackages = with pkgs; [
       lua-language-server
-      pyright
       nixd
       stylua
       nixfmt-rfc-style
