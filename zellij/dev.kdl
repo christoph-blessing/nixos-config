@@ -1,0 +1,16 @@
+layout {
+    tab name="dev" {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane split_direction="vertical" {
+            pane split_direction="horizontal" size="33%" {
+                pane command="nu" name="shell" {}
+            }
+            pane command="nvim" name="editor" {}
+        }
+        pane size=1 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+}
