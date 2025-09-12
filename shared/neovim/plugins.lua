@@ -265,6 +265,7 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				nix = { "nixfmt" },
+				python = { "ruff_format", "ruff_organize_imports" },
 			},
 		},
 	},
@@ -347,6 +348,7 @@ return {
 		opts = {
 			highlight = {
 				enable = true,
+				additional_vim_regex_highlighting = { "htmldjango", "html" },
 			},
 			indent = { enable = true },
 			textobjects = {
