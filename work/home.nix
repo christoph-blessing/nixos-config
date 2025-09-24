@@ -276,7 +276,6 @@
             enable = true;
             primary = true;
             mode = "3440x1440";
-            rate = "144";
           };
         };
       };
