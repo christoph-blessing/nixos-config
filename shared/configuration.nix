@@ -86,6 +86,7 @@
   environment.systemPackages = with pkgs; [
     git
     rofi
+    htop
   ];
 
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
