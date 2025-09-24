@@ -7,7 +7,7 @@
     ./mitmproxy.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_16;
   boot.initrd = {
     kernelModules = [
       "vfat"
@@ -242,9 +242,9 @@
 
   services.fwupd.enable = true;
 
-  services.logind = {
-    lidSwitch = "suspend-then-hibernate";
-    lidSwitchExternalPower = "suspend-then-hibernate";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleLidSwitchExternalPower = "suspend-then-hibernate";
   };
 
   hardware.logitech.wireless.enable = true;
