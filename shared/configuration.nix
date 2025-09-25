@@ -87,6 +87,7 @@
     git
     rofi
     htop
+    zoxide
   ];
 
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];

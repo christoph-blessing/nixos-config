@@ -101,3 +101,5 @@ $env.NU_PLUGIN_DIRS = [
 # $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 
 $env.EDITOR = "nvim"
+
+zoxide init nushell | save -f ~/.zoxide.nu
