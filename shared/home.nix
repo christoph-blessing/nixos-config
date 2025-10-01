@@ -16,7 +16,10 @@
 
   programs.alacritty = {
     enable = true;
-    settings.font.size = 10;
+    settings = {
+      font.size = 10;
+      env.WINIT_X11_SCALE_FACTOR = "1";
+    };
   };
 
   programs.git = {
