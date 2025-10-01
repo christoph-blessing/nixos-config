@@ -490,4 +490,10 @@
       default_theme = "dark";
     };
   };
+  xdg.desktopEntries."element-desktop" = {
+    name = "Element";
+    genericName = "Matrix Client";
+    exec = "element-desktop --password-store=gnome-libsecret";
+    type = "Application";
+  };
 }
