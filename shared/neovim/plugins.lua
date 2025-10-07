@@ -1,10 +1,12 @@
 return {
+
 	{ "NMAC427/guess-indent.nvim", opts = {} },
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		config = true,
 	},
+
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
@@ -169,7 +171,10 @@ return {
 							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
 							callback = function(event2)
 								vim.lsp.buf.clear_references()
-								vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+								vim.api.nvim_clear_autocmds({
+									group = "kickstart-lsp-highlight",
+									buffer = event2.buf,
+								})
 							end,
 						})
 					end
@@ -179,7 +184,9 @@ return {
 						and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
 					then
 						map("<leader>th", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({
+								bufnr = event.buf,
+							}))
 						end, "[T]oggle Inlay [H]ints")
 					end
 				end,
@@ -239,6 +246,26 @@ return {
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
+		config = function(plugin, opts)
+			vim.api.nvim_create_user_command("FormatDisable", function(args)
+				if args.bang then
+					-- FormatDisable! will disable formatting just for this buffer
+					vim.b.disable_autoformat = true
+				else
+					vim.g.disable_autoformat = true
+				end
+			end, {
+				desc = "Disable autoformat-on-save",
+				bang = true,
+			})
+			vim.api.nvim_create_user_command("FormatEnable", function()
+				vim.b.disable_autoformat = false
+				vim.g.disable_autoformat = false
+			end, {
+				desc = "Re-enable autoformat-on-save",
+			})
+			require("conform").setup(opts)
+		end,
 		keys = {
 			{
 				"<leader>f",
@@ -253,7 +280,11 @@ return {
 			notify_on_error = false,
 			format_on_save = function(bufnr)
 				local disable_filetypes = { c = true, cpp = true }
-				if disable_filetypes[vim.bo[bufnr].filetype] then
+				if
+					disable_filetypes[vim.bo[bufnr].filetype]
+					or vim.g.disable_autoformat
+					or vim.b[bufnr].disable_autoformat
+				then
 					return nil
 				else
 					return {
