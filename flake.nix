@@ -13,7 +13,6 @@
       url = "github:christoph-blessing/pymodoro";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-firefox.url = "github:nixos/nixpkgs/4bfec1603835ba0cf0197f66e8240dcc178b69d5";
   };
 
   outputs =
@@ -24,11 +23,9 @@
       sops-nix,
       pre-commit-hooks,
       pymodoro,
-      nixpkgs-firefox,
     }:
     let
       system = "x86_64-linux";
-      pkgsFirefox = import nixpkgs-firefox { inherit system; };
     in
     {
       nixosConfigurations.nixe = nixpkgs.lib.nixosSystem {
@@ -47,16 +44,6 @@
       nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          (
-            { ... }:
-            {
-              nixpkgs.overlays = [
-                (self: super: {
-                  firefox = pkgsFirefox.firefox;
-                })
-              ];
-            }
-          )
           ./work/configuration.nix
           home-manager.nixosModules.home-manager
           {

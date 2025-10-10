@@ -159,22 +159,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-firefox": {
-      "locked": {
-        "lastModified": 1743507885,
-        "narHash": "sha256-0zzjijVR3o1Scc0H7U4VJWP6mZh5UQ0aejbofRR5uDY=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "4bfec1603835ba0cf0197f66e8240dcc178b69d5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "4bfec1603835ba0cf0197f66e8240dcc178b69d5",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -247,7 +231,6 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-firefox": "nixpkgs-firefox",
         "pre-commit-hooks": "pre-commit-hooks",
         "pymodoro": "pymodoro",
         "sops-nix": "sops-nix"
