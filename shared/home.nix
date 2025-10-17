@@ -12,8 +12,6 @@
     options = [ "compose:menu" ];
   };
 
-  xsession.enable = true;
-
   programs.alacritty = {
     enable = true;
     settings = {
@@ -33,19 +31,7 @@
     userEmail = "chris24.blessing@gmail.com";
   };
 
-  programs.jujutsu = {
-    enable = true;
-    settings = {
-      user = {
-        email = "chris24.blessing@gmail.com";
-        name = "Christoph Blessing";
-      };
-    };
-  };
-
   programs.gpg.enable = true;
-
-  programs.himalaya.enable = true;
 
   programs.mbsync.enable = true;
 
@@ -102,7 +88,156 @@
     source = ./zellij/config.kdl;
   };
 
-  programs.rofi.enable = true;
+  programs.wofi.enable = true;
+
+  services.kanshi = {
+    enable = true;
+    profiles = {
+      undocked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            status = "enable";
+          }
+        ];
+      };
+      docked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+          {
+            criteria = "DP-3";
+            status = "enable";
+          }
+        ];
+      };
+    };
+  };
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    settings = {
+      monitor = ",preferred,auto,auto";
+      "$terminal" = "alacritty";
+      "$menu" = "wofi --show drun";
+      "exec-once" = "kanshi & waybar &";
+      "env" = [
+        "XCURSOR_SIZE,24"
+        "HYPRCURSOR_SIZE,24"
+      ];
+      "$mainMod" = "SUPER";
+      bind = [
+        "$mainMod, Q, exec, $terminal"
+        "$mainMod, C, killactive,"
+        "$mainMod, M, exit,"
+        "$mainMod, V, togglefloating,"
+        "$mainMod, R, exec, $menu"
+        "$mainMod, P, pseudo,"
+        "$mainMod, J, togglesplit,"
+        "$mainMod, left, movefocus, l"
+        "$mainMod, right, movefocus, r"
+        "$mainMod, up, movefocus, u"
+        "$mainMod, down, movefocus, d"
+        "$mainMod, 1, workspace, 1"
+        "$mainMod, 2, workspace, 2"
+        "$mainMod, 3, workspace, 3"
+        "$mainMod, 4, workspace, 4"
+        "$mainMod, 5, workspace, 5"
+        "$mainMod, 6, workspace, 6"
+        "$mainMod, 7, workspace, 7"
+        "$mainMod, 8, workspace, 8"
+        "$mainMod, 9, workspace, 9"
+        "$mainMod, 0, workspace, 10"
+        "$mainMod SHIFT, 1, movetoworkspace, 1"
+        "$mainMod SHIFT, 2, movetoworkspace, 2"
+        "$mainMod SHIFT, 3, movetoworkspace, 3"
+        "$mainMod SHIFT, 4, movetoworkspace, 4"
+        "$mainMod SHIFT, 5, movetoworkspace, 5"
+        "$mainMod SHIFT, 6, movetoworkspace, 6"
+        "$mainMod SHIFT, 7, movetoworkspace, 7"
+        "$mainMod SHIFT, 8, movetoworkspace, 8"
+        "$mainMod SHIFT, 9, movetoworkspace, 9"
+        "$mainMod SHIFT, 0, movetoworkspace, 10"
+        "$mainMod, S, togglespecialworkspace, magic"
+        "$mainMod SHIFT, S, movetoworkspace, special:magic"
+        "$mainMod, mouse_down, workspace, e+1"
+        "$mainMod, mouse_up, workspace, e-1"
+      ];
+      bindm = [
+        "$mainMod, mouse:272, movewindow"
+        "$mainMod, mouse:273, resizewindow"
+      ];
+      windowrule = [
+        "suppressevent maximize, class:.*"
+        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+      ];
+    };
+  };
+
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "hyprland/window" ];
+        modules-right = [
+          "idle_inhibitor"
+          "cpu"
+          "memory"
+          "disk"
+          "network"
+          "backlight"
+          "battery"
+          "clock"
+        ];
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
+            activated = "";
+            deactivated = "";
+          };
+        };
+        cpu = {
+          format = "{usage}% ";
+          tooltip = false;
+        };
+        memory = {
+          format = "{}% ";
+        };
+        disk = {
+          format = "{percentage_used}% 🖴";
+        };
+        network = {
+          format-wifi = "{essid} ({signalStrength}%) ";
+          format-ethernet = "{ipaddr}/{cidr} ";
+        };
+        battery = {
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format = "{capacity}% {icon}";
+          format-full = "{capacity}% {icon}";
+          format-charging = "{capacity}% ";
+          format-plugged = "{capacity}% ";
+          format-alt = "{time} {icon}";
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+        };
+        clock = {
+          format-alt = "{:%Y-%m-%d}";
+          tooltip = false;
+        };
+      };
+    };
+  };
 
   programs.firefox = {
     enable = true;
@@ -118,44 +253,9 @@
     };
   };
 
-  xsession.windowManager.bspwm = {
-    enable = true;
-    settings = {
-      border_width = 9;
-      window_gap = -9;
-      top_padding = 30;
-      right_padding = 9;
-      bottom_padding = 9;
-      left_padding = 9;
-      split_ratio = 0.5;
-      borderless_monocle = true;
-      gapless_monocle = true;
-      normal_border_color = "#928374";
-      focused_border_color = "#cc241d";
-      presel_feedback_color = "#b8bb26";
-    };
-    extraConfig = ''
-      loginctl lock-session
-    '';
-  };
-
   services.gpg-agent = {
     enable = true;
     pinentry.package = pkgs.pinentry-curses;
-  };
-  services.sxhkd = {
-    enable = true;
-    keybindings = {
-      "super + Escape" = "pkill -USR1 -x sxhkd";
-      "super + Return" = "alacritty";
-      "super + space" = "rofi -show drun";
-      "super + {_,shift + }{Left,Down,Up,Right}" = "bspc node -{f,s} {west,south,north,east}";
-      "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
-      "super + {_,shift + }w" = "bspc node -{c,k}";
-      "super + f" = "bspc desktop -l next";
-      "control + alt + o" = "oath";
-      "control + alt + l" = "${pkgs.i3lock}/bin/i3lock";
-    };
   };
 
   services.ssh-agent.enable = true;
@@ -176,6 +276,7 @@
     xclip
     (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
     fd
+    font-awesome
   ];
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

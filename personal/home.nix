@@ -19,16 +19,6 @@
     realName = "Christoph Blessing";
   };
 
-  xsession.windowManager.bspwm.monitors = {
-    DP-4 = [
-      "I"
-      "II"
-      "III"
-      "IV"
-      "V"
-    ];
-  };
-
   home.packages = with pkgs; [
     teamspeak_client
     ledger-live-desktop

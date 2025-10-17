@@ -40,16 +40,9 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    windowManager.bspwm.enable = true;
-  };
+  programs.hyprland.enable = true;
 
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "chris";
-  };
+  services.displayManager.gdm.enable = true;
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -85,9 +78,9 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    rofi
     htop
     zoxide
+    wl-clipboard
   ];
 
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
