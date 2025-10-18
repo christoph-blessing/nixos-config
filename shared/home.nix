@@ -124,7 +124,16 @@
       monitor = ",preferred,auto,auto";
       "$terminal" = "alacritty";
       "$menu" = "wofi --show drun";
-      exec-once = "kanshi & waybar & hypridle &";
+      exec-once = [
+        "[workspace 1] alacritty"
+        "[workspace 2 silent] firefox -P default"
+        "[workspace 3 silent] keepassxc"
+        "[workspace 4 silent] firefox -P element"
+        "[workspace 5 silent] firefox -P perplexity"
+        "kanshi"
+        "waybar"
+        "hypridle"
+      ];
       env = [
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
@@ -345,14 +354,35 @@
 
   programs.firefox = {
     enable = true;
-    profiles.default = {
-      settings = {
-        "browser.in-content.dark-mode" = true;
-        "ui.systemUsesDarkTheme" = 1;
-        "browser.sessionstore.resume_from_crash" = false;
-        "signon.rememberSignons" = false;
-        "browser.translations.automaticallyPopup" = false;
-        "browser.aboutConfig.showWarning" = false;
+    profiles = {
+      default = {
+        id = 0;
+        settings = {
+          "browser.in-content.dark-mode" = true;
+          "ui.systemUsesDarkTheme" = 1;
+          "browser.sessionstore.resume_from_crash" = false;
+          "signon.rememberSignons" = false;
+          "browser.translations.automaticallyPopup" = false;
+          "browser.aboutConfig.showWarning" = false;
+        };
+      };
+      perplexity = {
+        id = 1;
+        settings = {
+          "ui.systemUsesDarkTheme" = 1;
+          "signon.rememberSignons" = false;
+          "browser.translations.automaticallyPopup" = false;
+          "browser.startup.homepage" = "https://perplexity.com";
+        };
+      };
+      element = {
+        id = 2;
+        settings = {
+          "ui.systemUsesDarkTheme" = 1;
+          "signon.rememberSignons" = false;
+          "browser.translations.automaticallyPopup" = false;
+          "browser.startup.homepage" = "https://app.element.io/";
+        };
       };
     };
   };
