@@ -113,7 +113,10 @@
       u2fAuth = true;
       unixAuth = false;
     };
-    i3lock.unixAuth = false;
+    hyprlock = {
+      u2fAuth = true;
+      unixAuth = false;
+    };
   };
 
   hardware.bluetooth.enable = true;
