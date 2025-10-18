@@ -124,12 +124,24 @@
       monitor = ",preferred,auto,auto";
       "$terminal" = "alacritty";
       "$menu" = "wofi --show drun";
-      "exec-once" = "kanshi & waybar &";
-      "env" = [
+      exec-once = "kanshi & waybar & hypridle &";
+      env = [
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
       ];
+      general = {
+        gaps_in = 0;
+        gaps_out = 0;
+      };
+      animations = {
+        enabled = false;
+      };
       "$mainMod" = "SUPER";
+      input = {
+        touchpad = {
+          natural_scroll = true;
+        };
+      };
       bind = [
         "$mainMod, Q, exec, $terminal"
         "$mainMod, L, exec, hyprlock"
@@ -171,6 +183,9 @@
       bindm = [
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
+      ];
+      bindl = [
+        ",switch:Lid Switch,exec,hyprlock"
       ];
       windowrule = [
         "suppressevent maximize, class:.*"
