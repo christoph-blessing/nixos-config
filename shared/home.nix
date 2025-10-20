@@ -6,12 +6,6 @@
   home.username = "chris";
   home.homeDirectory = "/home/chris";
 
-  home.keyboard = {
-    layout = "us";
-    model = "pc105";
-    options = [ "compose:menu" ];
-  };
-
   programs.alacritty = {
     enable = true;
     settings = {
@@ -148,6 +142,9 @@
       };
       "$mainMod" = "SUPER";
       input = {
+        kb_layout = "us";
+        kb_model = "pc105";
+        kb_options = "compose:menu";
         touchpad = {
           natural_scroll = true;
         };
