@@ -137,6 +137,7 @@
       env = [
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
+        "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/ssh-agent"
       ];
       general = {
         gaps_in = 0;
