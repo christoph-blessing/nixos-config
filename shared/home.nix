@@ -289,6 +289,7 @@
           "memory"
           "disk"
           "network"
+          "pulseaudio"
           "backlight"
           "battery"
           "clock"
@@ -313,6 +314,19 @@
         network = {
           format-wifi = "{essid} ({signalStrength}%) ";
           format-ethernet = "{ipaddr}/{cidr} ";
+        };
+        pulseaudio = {
+          format = "{volume}% {icon}";
+          format-muted = "";
+          format-icons = {
+            headset = "";
+            default = [
+              ""
+              ""
+            ];
+          };
+          on-click = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          on-click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         battery = {
           states = {
