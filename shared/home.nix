@@ -212,15 +212,7 @@
         hide_cursor = false;
       };
 
-      animations = {
-        enabled = true;
-        bezier = "linear, 1, 1, 0, 0";
-        animation = [
-          "fadeIn, 1, 5, linear"
-          "fadeOut, 1, 5, linear"
-          "inputFieldDots, 1, 2, linear"
-        ];
-      };
+      animations.enabled = false;
 
       background = {
         monitor = "";
@@ -229,6 +221,7 @@
       };
 
       input-field = {
+        hide_input = true;
         monitor = "";
         size = "20%, 5%";
         outline_thickness = 3;
@@ -272,17 +265,6 @@
           position = "-30, -150";
           halign = "right";
           valign = "top";
-        }
-
-        {
-          monitor = "";
-          text = "$LAYOUT[en,ru]";
-          font_size = 24;
-          onclick = "hyprctl switchxkblayout all next";
-
-          position = "250, -20";
-          halign = "center";
-          valign = "center";
         }
       ];
     };
