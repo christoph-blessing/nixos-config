@@ -40,7 +40,11 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+  programs.xwayland.enable = true;
 
   services.displayManager.gdm.enable = true;
 
