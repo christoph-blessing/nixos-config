@@ -194,6 +194,13 @@
       bindl = [
         ",switch:Lid Switch,exec,hyprlock"
       ];
+      workspace = [
+        "1,defaultName:terminal"
+        "2,defaultName:web"
+        "3,defaultName:password"
+        "4,defaultName:messenger"
+        "5,defaultName:ai"
+      ];
       windowrule = [
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
