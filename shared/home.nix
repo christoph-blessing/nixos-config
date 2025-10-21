@@ -1,4 +1,10 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  pymodoro,
+  ...
+}:
 
 {
   imports = [ ./nushell ];
@@ -289,6 +295,7 @@
           "memory"
           "disk"
           "network"
+          "custom/pymodoro"
           "pulseaudio"
           "backlight"
           "battery"
@@ -315,6 +322,37 @@
           format-wifi = "{essid} ({signalStrength}%) ";
           format-ethernet = "{ipaddr}/{cidr} ";
         };
+        "custom/pymodoro" =
+          let
+            pymodoro-waybar = pkgs.writeShellScriptBin "pymodoro-waybar" ''
+              PATH=${
+                lib.makeBinPath [
+                  pymodoro.packages.${pkgs.system}.default
+                ]
+              }
+              case "$1" in
+                status)
+                  status=$(pd status -s)
+                  if [[ "$status" == 'Inactive' ]]; then
+                    echo ""
+                  else
+                    echo ""
+                  fi
+                  ;;
+                toggle)
+                  if [[ "$(pd status -s)" == 'Inactive' ]]; then
+                    pd start
+                  else
+                    pd stop
+                  fi
+              esac
+            '';
+          in
+          {
+            exec = "${pymodoro-waybar}/bin/pymodoro-waybar status";
+            on-click = "${pymodoro-waybar}/bin/pymodoro-waybar toggle";
+            interval = 1;
+          };
         pulseaudio = {
           format = "{volume}% {icon}";
           format-muted = "";
@@ -440,6 +478,7 @@
       #temperature,
       #backlight,
       #network,
+      #custom-pymodoro,
       #pulseaudio,
       #wireplumber,
       #custom-media,
@@ -521,6 +560,10 @@
 
       label:focus {
           background-color: #000000;
+      }
+
+      #custom-pymodoro {
+          background-color: #bf2121;
       }
 
       #cpu {
