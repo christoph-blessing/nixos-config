@@ -124,15 +124,16 @@
       monitor = ",preferred,auto,auto";
       "$terminal" = "alacritty";
       "$menu" = "wofi --show drun";
-      exec-once = [
-        "[workspace 1] alacritty"
-        "[workspace 2 silent] firefox -P default"
-        "[workspace 3 silent] keepassxc"
-        "[workspace 4 silent] firefox -P element"
-        "[workspace 5 silent] firefox -P perplexity"
-        "kanshi"
-        "${pkgs.killall}/bin/killall waybar; waybar"
-        "hypridle"
+      exec-once = with pkgs; [
+        "[workspace 1] ${alacritty}/bin/alacritty"
+        "[workspace 2 silent] ${firefox}/bin/firefox -P default"
+        "[workspace 3 silent] ${keepassxc}/bin/keepassxc"
+        "[workspace 4 silent] ${firefox}/bin/firefox -P element"
+        "[workspace 5 silent] ${firefox}/bin/firefox -P perplexity"
+        "${kanshi}/bin/kanshi"
+        "${killall}/bin/killall waybar; waybar"
+        "${zellij}/bin/zellij kill-all-sessions --yes"
+        "${hypridle}/bin/hypridle"
       ];
       env = [
         "XCURSOR_SIZE,24"
