@@ -335,10 +335,11 @@
                 status)
                   status=$(pd status -s)
                   if [[ "$status" == 'Inactive' ]]; then
-                    echo ""
+                    icon=''
                   else
-                    echo ""
+                    icon=''
                   fi
+                  echo "{\"text\": \"$icon\", \"tooltip\": \"$status\"}"
                   ;;
                 toggle)
                   if [[ "$(pd status -s)" == 'Inactive' ]]; then
@@ -353,6 +354,7 @@
             exec = "${pymodoro-waybar}/bin/pymodoro-waybar status";
             on-click = "${pymodoro-waybar}/bin/pymodoro-waybar toggle";
             interval = 1;
+            return-type = "json";
           };
         pulseaudio = {
           format = "{volume}% {icon}";
