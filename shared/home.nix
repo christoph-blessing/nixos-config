@@ -131,7 +131,7 @@
         "[workspace 4 silent] firefox -P element"
         "[workspace 5 silent] firefox -P perplexity"
         "kanshi"
-        "waybar"
+        "${pkgs.killall}/bin/killall waybar; waybar"
         "hypridle"
       ];
       env = [
