@@ -728,10 +728,9 @@
 
   programs.firefox = {
     enable = true;
-    profiles = {
-      default = {
-        id = 0;
-        settings = {
+    profiles =
+      let
+        common = {
           "browser.in-content.dark-mode" = true;
           "ui.systemUsesDarkTheme" = 1;
           "browser.sessionstore.resume_from_crash" = false;
@@ -739,26 +738,25 @@
           "browser.translations.automaticallyPopup" = false;
           "browser.aboutConfig.showWarning" = false;
         };
-      };
-      perplexity = {
-        id = 1;
-        settings = {
-          "ui.systemUsesDarkTheme" = 1;
-          "signon.rememberSignons" = false;
-          "browser.translations.automaticallyPopup" = false;
-          "browser.startup.homepage" = "https://perplexity.com";
+      in
+      {
+        default = {
+          id = 0;
+          settings = common;
+        };
+        perplexity = {
+          id = 1;
+          settings = common // {
+            "browser.startup.homepage" = "https://perplexity.com";
+          };
+        };
+        element = {
+          id = 2;
+          settings = common // {
+            "browser.startup.homepage" = "https://app.element.io/";
+          };
         };
       };
-      element = {
-        id = 2;
-        settings = {
-          "ui.systemUsesDarkTheme" = 1;
-          "signon.rememberSignons" = false;
-          "browser.translations.automaticallyPopup" = false;
-          "browser.startup.homepage" = "https://app.element.io/";
-        };
-      };
-    };
   };
 
   services.gpg-agent = {
