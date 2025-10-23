@@ -381,6 +381,9 @@
             interval = 1;
             return-type = "json";
           };
+        backlight = {
+          format = "{percent}% ";
+        };
         pulseaudio = {
           format = "{volume}% {icon}";
           format-muted = "";
