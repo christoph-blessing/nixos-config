@@ -358,16 +358,21 @@
               }
               case "$1" in
                 status)
-                  status=$(pd status -s)
-                  if [[ "$status" == 'Inactive' ]]; then
+                  status=$(pd status --format '{remaining}')
+                  percent=$(pd status --format '{percent}')
+                  if [[ "$percent" == 'Inactive' ]]; then
                     icon=''
-                  else
+                  elif ((percent > 66)); then
                     icon=''
+                  elif ((percent > 33 && percent <= 66)); then
+                    icon=''
+                  else
+                    icon=''
                   fi
                   echo "{\"text\": \"$icon\", \"tooltip\": \"$status\"}"
                   ;;
                 toggle)
-                  if [[ "$(pd status -s)" == 'Inactive' ]]; then
+                  if [[ "$(pd status)" == 'Inactive' ]]; then
                     pd start
                   else
                     pd stop
