@@ -355,6 +355,16 @@
           "battery"
           "clock"
         ];
+        "hyprland/workspaces" = {
+          format = "{icon}";
+          "format-icons" = {
+            "terminal" = "";
+            "web" = "";
+            "password" = "";
+            "messenger" = "";
+            "ai" = "";
+          };
+        };
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
@@ -457,7 +467,7 @@
     style = ''
       * {
           /* `otf-font-awesome` is required to be installed for icons */
-          font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+          font-family: "monospace";
           font-size: 13px;
       }
 
