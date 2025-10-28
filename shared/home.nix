@@ -197,9 +197,28 @@
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
       ];
-      bindl = [
-        ",switch:Lid Switch,exec,hyprlock"
-      ];
+      bindl =
+        let
+          lidctl = pkgs.writeShellScriptBin "lidctl" ''
+            PATH=${
+              lib.makeBinPath [
+                pkgs.hyprland
+                pkgs.hyprlock
+                pkgs.ripgrep
+              ]
+            }
+
+            hyprctl monitors | rg -q ' DP-'
+            external_display_connected=$?
+
+            if [ "$external_display_connected" -eq 1 ]; then
+              hyprlock
+            fi
+          '';
+        in
+        [
+          ",switch:Lid Switch,exec,${lidctl}/bin/lidctl"
+        ];
       workspace = [
         "1,defaultName:terminal"
         "2,defaultName:web"
