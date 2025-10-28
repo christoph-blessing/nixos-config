@@ -97,7 +97,7 @@
         profile.name = "undocked";
         profile.outputs = [
           {
-            criteria = "eDP-1";
+            criteria = "AU Optronics 0xD7A4 Unknown";
             status = "enable";
           }
         ];
@@ -106,11 +106,11 @@
         profile.name = "docked";
         profile.outputs = [
           {
-            criteria = "eDP-1";
+            criteria = "AU Optronics 0xD7A4 Unknown";
             status = "disable";
           }
           {
-            criteria = "DP-3";
+            criteria = "Dell Inc. DELL S3422DWG J6DWS63";
             status = "enable";
           }
         ];
@@ -130,7 +130,6 @@
         "[workspace 3 silent] ${firefox}/bin/firefox -P perplexity"
         "[workspace 4 silent] ${keepassxc}/bin/keepassxc"
         "[workspace 5 silent] ${firefox}/bin/firefox -P element"
-        "${kanshi}/bin/kanshi"
         "${killall}/bin/killall waybar; waybar"
         "${zellij}/bin/zellij kill-all-sessions --yes"
         "${hypridle}/bin/hypridle"
