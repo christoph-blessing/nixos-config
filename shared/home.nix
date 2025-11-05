@@ -22,13 +22,15 @@
 
   programs.git = {
     enable = true;
-    extraConfig = {
+    settings = {
       init = {
         defaultBranch = "main";
       };
+      user = {
+        name = "Christoph Blessing";
+        email = "chris24.blessing@gmail.com";
+      };
     };
-    userName = "Christoph Blessing";
-    userEmail = "chris24.blessing@gmail.com";
   };
 
   programs.gpg.enable = true;
