@@ -368,6 +368,7 @@
           "disk"
           "network"
           "custom/pymodoro"
+          "custom/notifications"
           "pulseaudio"
           "backlight"
           "battery"
@@ -441,6 +442,27 @@
             on-click = "${pymodoro-waybar}/bin/pymodoro-waybar toggle";
             interval = 1;
             return-type = "json";
+          };
+        "custom/notifications" =
+          let
+            dunstctl-waybar = pkgs.writeShellScriptBin "dunstctl-waybar" ''
+              PATH=${
+                lib.makeBinPath [
+                  pkgs.dunst
+                ]
+              }
+
+              if [[ "$(dunstctl is-paused)" == 'false' ]]; then
+                echo ''
+              else
+                echo ''
+              fi
+            '';
+          in
+          {
+            exec = "${dunstctl-waybar}/bin/dunstctl-waybar";
+            on-click = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
+            interval = 1;
           };
         backlight = {
           format = "{percent}% ";
@@ -571,6 +593,7 @@
       #backlight,
       #network,
       #custom-pymodoro,
+      #custom-notifications,
       #pulseaudio,
       #wireplumber,
       #custom-media,
@@ -656,6 +679,10 @@
 
       #custom-pymodoro {
           background-color: #bf2121;
+      }
+
+      #custom-notifications {
+          background-color: #a832a6;
       }
 
       #cpu {
