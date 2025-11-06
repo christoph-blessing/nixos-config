@@ -371,6 +371,7 @@
           "network"
           "custom/pymodoro"
           "custom/notifications"
+          "custom/vpn"
           "pulseaudio"
           "backlight"
           "battery"
@@ -465,6 +466,53 @@
             exec = "${dunstctl-waybar}/bin/dunstctl-waybar";
             on-click = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
             interval = 1;
+            tooltip = false;
+          };
+        "custom/vpn" =
+          let
+            eduvpn-cli-waybar = pkgs.writeShellScriptBin "eduvpn-cli-waybar" ''
+              PATH=${
+                lib.makeBinPath [
+                  pkgs.coreutils
+                  pkgs.eduvpn-client
+                  pkgs.xdg-utils
+                  pkgs.firefox
+                ]
+              }
+
+              command=$1
+
+              is_connected () {
+                 output=$(eduvpn-cli status 2>&1 > /dev/null)
+                 if [ "$output" = "You are currently not connected to a server" ]; then
+                    echo 1
+                 else
+                    echo 0
+                 fi
+              }
+
+              if [ "$command" = "status" ]; then
+                 if [ $(is_connected) -eq 1 ]; then
+                    echo ""
+                 else
+                    echo ""
+                 fi
+              elif [ "$command" = "toggle" ]; then
+                 if [ $(is_connected) -eq 0 ]; then
+                    eduvpn-cli disconnect
+                 else
+                    eduvpn-cli connect -n 1
+                 fi
+              else
+                 echo "Error: Incorrect command supplied"
+              fi
+            '';
+          in
+          {
+            exec = "${eduvpn-cli-waybar}/bin/eduvpn-cli-waybar status";
+            interval = 1;
+            on-click = "${eduvpn-cli-waybar}/bin/eduvpn-cli-waybar toggle";
+            tooltip = false;
           };
         backlight = {
           format = "{percent}% ";
@@ -596,6 +644,7 @@
       #network,
       #custom-pymodoro,
       #custom-notifications,
+      #custom-vpn,
       #pulseaudio,
       #wireplumber,
       #custom-media,
@@ -684,7 +733,12 @@
       }
 
       #custom-notifications {
-          background-color: #a832a6;
+          background-color: #9b59b6;
+      }
+
+      #custom-vpn {
+          background-color: #2ecc71;
+          color: #000000;
       }
 
       #cpu {
