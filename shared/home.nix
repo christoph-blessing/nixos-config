@@ -205,8 +205,8 @@
             PATH=${
               lib.makeBinPath [
                 pkgs.hyprland
-                pkgs.hyprlock
                 pkgs.ripgrep
+                pkgs.systemd
               ]
             }
 
@@ -214,7 +214,7 @@
             external_display_connected=$?
 
             if [ "$external_display_connected" -eq 1 ]; then
-              hyprlock
+              loginctl lock-session
             fi
           '';
         in
