@@ -44,6 +44,23 @@
       nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          (
+            { ... }:
+            {
+              nixpkgs.overlays = [
+                (final: prev: {
+                  goimapnotify = prev.goimapnotify.overrideAttrs (old: {
+                    src = prev.fetchFromGitLab {
+                      owner = "shackra";
+                      repo = "goimapnotify";
+                      tag = "2.5.4";
+                      hash = "sha256-6hsepgXdG+BSSKTVics2459qUxYPIHKNqm2yq8UJXks=";
+                    };
+                  });
+                })
+              ];
+            }
+          )
           ./work/configuration.nix
           home-manager.nixosModules.home-manager
           {
