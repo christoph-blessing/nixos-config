@@ -46,7 +46,7 @@
       };
     };
     imapnotify = {
-      enable = false;
+      enable = true;
       boxes = [ "INBOX" ];
       onNotify = "${pkgs.isync}/bin/mbsync work";
       onNotifyPost = "${pkgs.libnotify}/bin/notify-send 'New mail arrived'";
