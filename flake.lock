@@ -159,22 +159,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-xss-lock": {
-      "locked": {
-        "lastModified": 1760046999,
-        "narHash": "sha256-oR80+9yZKDDLIpO2YHxCwkq0LyZW+Z+ei9s9mNw8hLw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "7ab46aaa4588426e5cc1797921854c6021ca5486",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "7ab46aaa4588426e5cc1797921854c6021ca5486",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -247,7 +231,6 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-xss-lock": "nixpkgs-xss-lock",
         "pre-commit-hooks": "pre-commit-hooks",
         "pymodoro": "pymodoro",
         "sops-nix": "sops-nix"

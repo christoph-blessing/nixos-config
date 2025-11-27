@@ -13,7 +13,6 @@
       url = "github:christoph-blessing/pymodoro";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-xss-lock.url = "github:NixOS/nixpkgs?rev=7ab46aaa4588426e5cc1797921854c6021ca5486";
   };
 
   outputs =
@@ -24,11 +23,9 @@
       sops-nix,
       pre-commit-hooks,
       pymodoro,
-      nixpkgs-xss-lock,
     }:
     let
       system = "x86_64-linux";
-      pkgsXssLock = import nixpkgs-xss-lock { inherit system; };
     in
     {
       nixosConfigurations.nixe = nixpkgs.lib.nixosSystem {
@@ -47,16 +44,6 @@
       nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          (
-            { ... }:
-            {
-              nixpkgs.overlays = [
-                (self: super: {
-                  xss-lock = pkgsXssLock.xss-lock;
-                })
-              ];
-            }
-          )
           ./work/configuration.nix
           home-manager.nixosModules.home-manager
           {
