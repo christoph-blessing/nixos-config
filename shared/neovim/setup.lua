@@ -29,6 +29,7 @@ function M.setup(options)
 	vim.o.cursorline = true
 	vim.o.scrolloff = 10
 	vim.o.confirm = true
+	vim.o.backupcopy = "yes"
 
 	vim.opt.hlsearch = true
 	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
