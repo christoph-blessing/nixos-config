@@ -299,6 +299,7 @@ return {
 				nix = { "nixfmt" },
 				python = { "ruff_format", "ruff_organize_imports" },
 				go = { "gofmt" },
+				htmldjango = { "djlint" },
 			},
 		},
 	},
