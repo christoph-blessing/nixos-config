@@ -234,6 +234,7 @@ return {
 				basedpyright = {},
 				nixd = {},
 				gopls = {},
+				vacuum = {},
 			}
 
 			for name, config in pairs(servers) do
@@ -241,6 +242,13 @@ return {
 				vim.lsp.enable(name)
 				vim.lsp.config(name, config)
 			end
+
+			vim.filetype.add({
+				pattern = {
+					["openapi.*%.ya?ml"] = "yaml.openapi",
+					["openapi.*%.json"] = "json.openapi",
+				},
+			})
 		end,
 	},
 	{
@@ -300,6 +308,7 @@ return {
 				python = { "ruff_format", "ruff_organize_imports" },
 				go = { "gofmt" },
 				htmldjango = { "djlint" },
+				yaml = { "yamlfmt" },
 			},
 		},
 	},
