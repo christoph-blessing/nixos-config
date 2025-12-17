@@ -31,6 +31,10 @@ function M.setup(options)
 	vim.o.confirm = true
 	vim.o.backupcopy = "yes"
 
+	vim.wo.foldmethod = "expr"
+	vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+	vim.wo.foldlevel = 99
+
 	vim.opt.hlsearch = true
 	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
