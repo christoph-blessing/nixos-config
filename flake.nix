@@ -58,6 +58,18 @@
                     };
                   });
                 })
+                (final: prev: {
+                  vimPlugins = prev.vimPlugins // {
+                    nvim-treesitter-textobjects = prev.vimPlugins.nvim-treesitter-textobjects.overrideAttrs (old: {
+                      src = prev.fetchFromGitHub {
+                        owner = "nvim-treesitter";
+                        repo = "nvim-treesitter-textobjects";
+                        rev = "28a3494c075ef0f353314f627546537e43c09592";
+                        hash = "sha256-5VeIAW09my+4fqXbzVG7RnLXrjpXAk/g2vd7RbhNws8=";
+                      };
+                    });
+                  };
+                })
               ];
             }
           )
