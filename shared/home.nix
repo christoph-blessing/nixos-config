@@ -229,9 +229,9 @@
         "5,defaultName:messenger"
       ];
       windowrule = [
-        "suppressevent maximize, class:.*"
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-        "move onscreen cursor, title:^(menu window)$, class:^(zoom)$"
+        "suppress_event maximize, match:class .*"
+        "no_initial_focus on,match:class ^$,match:title ^$,match:xwayland 1,match:float 1,match:fullscreen 0,match:pin 0"
+        "move onscreen cursor, match:title ^(menu window)$, match:class ^(zoom)$"
       ];
     };
   };
