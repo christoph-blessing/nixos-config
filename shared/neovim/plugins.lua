@@ -384,7 +384,6 @@ return {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
-		main = "nvim-treesitter.configs",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
