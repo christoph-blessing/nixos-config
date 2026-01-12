@@ -153,6 +153,7 @@
         kb_layout = "us";
         kb_model = "pc105";
         kb_options = "compose:menu";
+        numlock_by_default = true;
         touchpad = {
           natural_scroll = true;
         };
