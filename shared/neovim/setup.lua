@@ -47,16 +47,6 @@ function M.setup(options)
 	vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
-	vim.keymap.set("n", "h", "<Nop>")
-	vim.keymap.set("n", "l", "<Nop>")
-	vim.keymap.set("n", "j", "<Nop>")
-	vim.keymap.set("n", "k", "<Nop>")
-
-	vim.keymap.set("v", "h", "<Nop>")
-	vim.keymap.set("v", "l", "<Nop>")
-	vim.keymap.set("v", "j", "<Nop>")
-	vim.keymap.set("v", "k", "<Nop>")
-
 	vim.keymap.set("n", "<C-left>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 	vim.keymap.set("n", "<C-right>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 	vim.keymap.set("n", "<C-down>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
