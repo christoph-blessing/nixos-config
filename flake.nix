@@ -44,35 +44,6 @@
       nixosConfigurations.nixe-work = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          (
-            { ... }:
-            {
-              nixpkgs.overlays = [
-                (final: prev: {
-                  goimapnotify = prev.goimapnotify.overrideAttrs (old: {
-                    src = prev.fetchFromGitLab {
-                      owner = "shackra";
-                      repo = "goimapnotify";
-                      tag = "2.5.4";
-                      hash = "sha256-6hsepgXdG+BSSKTVics2459qUxYPIHKNqm2yq8UJXks=";
-                    };
-                  });
-                })
-                (final: prev: {
-                  vimPlugins = prev.vimPlugins // {
-                    nvim-treesitter-textobjects = prev.vimPlugins.nvim-treesitter-textobjects.overrideAttrs (old: {
-                      src = prev.fetchFromGitHub {
-                        owner = "nvim-treesitter";
-                        repo = "nvim-treesitter-textobjects";
-                        rev = "28a3494c075ef0f353314f627546537e43c09592";
-                        hash = "sha256-5VeIAW09my+4fqXbzVG7RnLXrjpXAk/g2vd7RbhNws8=";
-                      };
-                    });
-                  };
-                })
-              ];
-            }
-          )
           ./work/configuration.nix
           home-manager.nixosModules.home-manager
           {
@@ -90,7 +61,7 @@
       checks.${system}.pre-commit-check = pre-commit-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
-          nixfmt-rfc-style.enable = true;
+          nixfmt.enable = true;
         };
       };
       devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {

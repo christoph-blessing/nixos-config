@@ -44,8 +44,9 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    extraLuaConfig = ''
-      require("setup").setup({lazy_dev_path = "${pkgs.vimUtils.packDir config.programs.neovim.finalPackage.passthru.packpathDirs}/pack/myNeovimPackages/start"})
+    initLua = ''
+      local xdg_data_home = "${config.xdg.dataHome}"
+      require("setup").setup({lazy_dev_path=xdg_data_home .. "/nvim/site/pack/hm/start"})
     '';
     plugins = with pkgs.vimPlugins; [
       tokyonight-nvim
@@ -75,7 +76,7 @@
       lua-language-server
       nixd
       stylua
-      nixfmt-rfc-style
+      nixfmt
     ];
   };
 
