@@ -486,7 +486,7 @@
               command=$1
 
               is_connected () {
-                 output=$(eduvpn-cli status 2>&1 > /dev/null)
+                 output=$({ eduvpn-cli status 1> /dev/null; } 2>&1)
                  if [ "$output" = "You are currently not connected to a server" ]; then
                     echo 1
                  else
