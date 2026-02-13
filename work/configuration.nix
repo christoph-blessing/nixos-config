@@ -284,4 +284,10 @@
   programs.nix-ld.enable = true;
 
   networking.firewall.checkReversePath = "loose";
+
+  xdg.mime.defaultApplications = {
+    "x-scheme-handler/element" = [ "element-desktop.desktop" ];
+    "x-scheme-handler/io.element.desktop" = [ "element-desktop.desktop" ];
+  };
+
 }

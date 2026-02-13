@@ -173,7 +173,11 @@
   xdg.desktopEntries."element-desktop" = {
     name = "Element";
     genericName = "Matrix Client";
-    exec = "element-desktop --password-store=gnome-libsecret";
+    exec = "element-desktop --password-store=gnome-libsecret %u";
     type = "Application";
+    mimeType = [
+      "x-scheme-handler/element"
+      "x-scheme-handler/io.element.desktop"
+    ];
   };
 }

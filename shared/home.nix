@@ -133,7 +133,7 @@
         "[workspace 2 silent] ${firefox}/bin/firefox -P default"
         "[workspace 3 silent] ${firefox}/bin/firefox -P perplexity"
         "[workspace 4 silent] ${keepassxc}/bin/keepassxc"
-        "[workspace 5 silent] ${firefox}/bin/firefox -P element"
+        "[workspace 5 silent] ${gtk3}/bin/gtk-launch element-desktop"
         "${killall}/bin/killall waybar; waybar"
         "${zellij}/bin/zellij kill-all-sessions --yes"
         "${hypridle}/bin/hypridle"
@@ -926,12 +926,6 @@
           id = 1;
           settings = common // {
             "browser.startup.homepage" = "https://perplexity.com";
-          };
-        };
-        element = {
-          id = 2;
-          settings = common // {
-            "browser.startup.homepage" = "https://app.element.io/";
           };
         };
       };
