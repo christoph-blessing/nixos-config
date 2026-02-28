@@ -107,7 +107,7 @@
         ];
       }
       {
-        profile.name = "docked";
+        profile.name = "office";
         profile.outputs = [
           {
             criteria = "AU Optronics 0xD7A4 Unknown";
@@ -115,6 +115,19 @@
           }
           {
             criteria = "Dell Inc. DELL S3422DWG J6DWS63";
+            status = "enable";
+          }
+        ];
+      }
+      {
+        profile.name = "home";
+        profile.outputs = [
+          {
+            criteria = "AU Optronics 0xD7A4 Unknown";
+            status = "disable";
+          }
+          {
+            criteria = "Samsung Electric Company LC49G95T H4ZN700369";
             status = "enable";
           }
         ];
