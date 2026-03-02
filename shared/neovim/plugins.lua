@@ -235,6 +235,7 @@ return {
 				nixd = {},
 				gopls = {},
 				vacuum = {},
+				rust_analyzer = {},
 			}
 
 			for name, config in pairs(servers) do
@@ -309,6 +310,7 @@ return {
 				go = { "gofmt" },
 				htmldjango = { "djlint" },
 				yaml = { "yamlfmt" },
+				rust = { "rustfmt" },
 			},
 		},
 	},
