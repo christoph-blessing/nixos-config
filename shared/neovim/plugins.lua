@@ -311,6 +311,7 @@ return {
 				htmldjango = { "djlint" },
 				yaml = { "yamlfmt" },
 				rust = { "rustfmt" },
+				json = { "jq" },
 			},
 		},
 	},
