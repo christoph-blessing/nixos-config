@@ -94,68 +94,98 @@
 
   programs.wofi.enable = true;
 
-  services.kanshi = {
-    enable = true;
-    settings = [
-      {
-        profile.name = "undocked";
-        profile.outputs = [
-          {
-            criteria = "AU Optronics 0xD7A4 Unknown";
-            status = "enable";
-          }
-        ];
-      }
-      {
-        profile.name = "office";
-        profile.outputs = [
-          {
-            criteria = "AU Optronics 0xD7A4 Unknown";
-            status = "disable";
-          }
-          {
-            criteria = "Dell Inc. DELL S3422DWG J6DWS63";
-            status = "enable";
-          }
-        ];
-      }
-      {
-        profile.name = "tilman";
-        profile.outputs = [
-          {
-            criteria = "AU Optronics 0xD7A4 Unknown";
-            status = "disable";
-          }
-          {
-            criteria = "Dell Inc. DELL U2412M Y1H5T1AJ3EDL";
-            status = "enable";
-          }
-          {
-            criteria = "Dell Inc. DELL P2314H J8J3138CB8HL";
-            status = "enable";
-          }
-        ];
-      }
-      {
-        profile.name = "home";
-        profile.outputs = [
-          {
-            criteria = "AU Optronics 0xD7A4 Unknown";
-            status = "disable";
-          }
-          {
-            criteria = "Samsung Electric Company LC49G95T H4ZN700369";
-            status = "enable";
-          }
-        ];
-      }
-    ];
-  };
+  services.kanshi =
+    let
+      arrangeWorkspaces = pkgs.writeShellScriptBin "arrange-workspaces" ''
+        profile="''${1:-}"
+
+        if [[ "$profile" == "tilman" ]]; then
+          hyprctl dispatch moveworkspacetomonitor 1 DP-4
+          hyprctl dispatch moveworkspacetomonitor 2 DP-3
+          hyprctl dispatch moveworkspacetomonitor 3 DP-3
+          hyprctl dispatch moveworkspacetomonitor 4 DP-3
+          hyprctl dispatch moveworkspacetomonitor 5 DP-3
+          hyprctl dispatch moveworkspacetomonitor 6 DP-3
+          hyprctl dispatch moveworkspacetomonitor 7 DP-3
+          hyprctl dispatch moveworkspacetomonitor 8 DP-3
+          hyprctl dispatch moveworkspacetomonitor 9 DP-3
+          hyprctl dispatch moveworkspacetomonitor 10 DP-3
+        fi
+
+        if [[ "$profile" == "undocked" ]]; then
+          for ws in {1..10}; do
+            hyprctl dispatch moveworkspacetomonitor "$ws" eDP-1
+          done
+        fi
+      '';
+    in
+    {
+      enable = true;
+      settings = [
+        {
+          profile = {
+            name = "undocked";
+            outputs = [
+              {
+                criteria = "AU Optronics 0xD7A4 Unknown";
+                status = "enable";
+              }
+            ];
+            exec = "${arrangeWorkspaces}/bin/arrange-workspaces undocked";
+          };
+        }
+        {
+          profile.name = "office";
+          profile.outputs = [
+            {
+              criteria = "AU Optronics 0xD7A4 Unknown";
+              status = "disable";
+            }
+            {
+              criteria = "Dell Inc. DELL S3422DWG J6DWS63";
+              status = "enable";
+            }
+          ];
+        }
+        {
+          profile = {
+            name = "tilman";
+            outputs = [
+              {
+                criteria = "Dell Inc. DELL U2412M Y1H5T1AJ3EDL";
+                status = "enable";
+              }
+              {
+                criteria = "Dell Inc. DELL P2314H J8J3138CB8HL";
+                status = "enable";
+              }
+            ];
+            exec = "${arrangeWorkspaces}/bin/arrange-workspaces tilman";
+          };
+        }
+        {
+          profile.name = "home";
+          profile.outputs = [
+            {
+              criteria = "AU Optronics 0xD7A4 Unknown";
+              status = "disable";
+            }
+            {
+              criteria = "Samsung Electric Company LC49G95T H4ZN700369";
+              status = "enable";
+            }
+          ];
+        }
+      ];
+    };
 
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = ",preferred,auto,auto";
+      monitor = [
+        "eDP-1,preferred,auto,1"
+        ",preferred,auto,auto"
+      ];
       "$terminal" = "alacritty";
       "$menu" = "wofi --show drun";
       exec-once = with pkgs; [
