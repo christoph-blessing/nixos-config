@@ -249,27 +249,6 @@
 
   hardware.logitech.wireless.enable = true;
 
-  services.xserver = {
-    deviceSection = ''
-      Option "ModeValidation" "AllowNonEdidModes"
-    '';
-    xrandrHeads = [
-      {
-        output = "DP-1";
-        monitorConfig = ''
-          Modeline "5120x1440_60.00"  624.50  5120 5496 6048 6976  1440 1443 1453 1493 -hsync +vsync
-        '';
-      }
-    ];
-    xkb.extraLayouts = {
-      mine = {
-        description = "My custom xkb layout.";
-        languages = [ "eng" ];
-        symbolsFile = ./keyboard/xkb_symbols;
-      };
-    };
-  };
-
   services.guix.enable = true;
 
   services.printing.enable = true;
