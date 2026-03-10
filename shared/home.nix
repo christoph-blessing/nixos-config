@@ -120,6 +120,23 @@
         ];
       }
       {
+        profile.name = "tilman";
+        profile.outputs = [
+          {
+            criteria = "AU Optronics 0xD7A4 Unknown";
+            status = "disable";
+          }
+          {
+            criteria = "Dell Inc. DELL U2412M Y1H5T1AJ3EDL";
+            status = "enable";
+          }
+          {
+            criteria = "Dell Inc. DELL P2314H J8J3138CB8HL";
+            status = "enable";
+          }
+        ];
+      }
+      {
         profile.name = "home";
         profile.outputs = [
           {
