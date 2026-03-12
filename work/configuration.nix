@@ -72,37 +72,6 @@
           psk = "$HOME_PSK";
         };
       };
-      eduroam = {
-        "802-1x" = {
-          anonymous-identity = "eduroam@gwdg.de";
-          ca-cert = "/run/secrets/network/eduroam-ca-cert.pem";
-          domain-suffix-match = "eduroam.gwdg.de";
-          eap = "peap;";
-          identity = "$IDENTITY";
-          password = "$PASSWORD";
-          phase2-auth = "mschapv2";
-        };
-        connection = {
-          id = "eduroam";
-          type = "wifi";
-          uuid = "af4e59e8-862d-4a8e-84e2-aa59816652e6";
-        };
-        ipv4 = {
-          method = "auto";
-        };
-        ipv6 = {
-          addr-gen-mode = "default";
-          method = "auto";
-        };
-        proxy = { };
-        wifi = {
-          mode = "infrastructure";
-          ssid = "eduroam";
-        };
-        wifi-security = {
-          key-mgmt = "wpa-eap";
-        };
-      };
       parents5g = {
         connection = {
           id = "parents5g";
