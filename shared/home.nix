@@ -112,6 +112,12 @@
           hyprctl dispatch moveworkspacetomonitor 10 DP-3
         fi
 
+        if [[ "$profile" == "rz" ]]; then
+          for ws in {1..10}; do
+            hyprctl dispatch moveworkspacetomonitor "$ws" 1
+          done
+        fi
+
         if [[ "$profile" == "undocked" ]]; then
           for ws in {1..10}; do
             hyprctl dispatch moveworkspacetomonitor "$ws" eDP-1
@@ -161,6 +167,22 @@
               }
             ];
             exec = "${arrangeWorkspaces}/bin/arrange-workspaces tilman";
+          };
+        }
+        {
+          profile = {
+            name = "rz";
+            outputs = [
+              {
+                criteria = "AU Optronics 0xD7A4 Unknown";
+                status = "enable";
+              }
+              {
+                criteria = "Dell Inc. Dell U4919DW 4PFLXH3";
+                status = "enable";
+              }
+            ];
+            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
           };
         }
         {
