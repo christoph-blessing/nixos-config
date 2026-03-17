@@ -171,7 +171,7 @@
         }
         {
           profile = {
-            name = "rz";
+            name = "rz1";
             outputs = [
               {
                 criteria = "AU Optronics 0xD7A4 Unknown";
@@ -179,6 +179,22 @@
               }
               {
                 criteria = "Dell Inc. Dell U4919DW 4PFLXH3";
+                status = "enable";
+              }
+            ];
+            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
+          };
+        }
+        {
+          profile = {
+            name = "rz2";
+            outputs = [
+              {
+                criteria = "AU Optronics 0xD7A4 Unknown";
+                status = "enable";
+              }
+              {
+                criteria = "Dell Inc. Dell U4919DW F5Y2VY2";
                 status = "enable";
               }
             ];
