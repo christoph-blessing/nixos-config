@@ -82,7 +82,7 @@
         "Deleted Items"
       ];
       extraConfig = ''
-        set smime_sign_as = 0x56BD7EFC
+        set smime_sign_as = 0x2B071CC7
         set crypt_auto_sign = yes
         set smime_is_default = yes
         set record = "+Sent Items"
@@ -100,7 +100,7 @@
   '';
 
   home.file.".gnupg/trustlist.txt".text = ''
-    D1:EB:23:A4:6D:17:D6:8F:D9:25:64:C2:F1:F1:60:17:64:D8:E3:49 S
+    46:C6:90:0A:77:3A:B6:BC:F4:65:AD:AC:FC:E3:F7:07:00:6E:DE:6E S
   '';
 
   programs.neomutt = {
