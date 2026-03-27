@@ -202,6 +202,22 @@
           };
         }
         {
+          profile = {
+            name = "rz3";
+            outputs = [
+              {
+                criteria = "AU Optronics 0xD7A4 Unknown";
+                status = "enable";
+              }
+              {
+                criteria = "Dell Inc. Dell U4919DW 9PS2VY2";
+                status = "enable";
+              }
+            ];
+            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
+          };
+        }
+        {
           profile.name = "home";
           profile.outputs = [
             {
