@@ -218,6 +218,38 @@
           };
         }
         {
+          profile = {
+            name = "rz4";
+            outputs = [
+              {
+                criteria = "AU Optronics 0xD7A4 Unknown";
+                status = "enable";
+              }
+              {
+                criteria = "Dell Inc. Dell U4919DW 17NWTY2";
+                status = "enable";
+              }
+            ];
+            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
+          };
+        }
+        {
+          profile = {
+            name = "rz5";
+            outputs = [
+              {
+                criteria = "AU Optronics 0xD7A4 Unknown";
+                status = "enable";
+              }
+              {
+                criteria = "Dell Inc. Dell U4919DW 9CQXTY2";
+                status = "enable";
+              }
+            ];
+            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
+          };
+        }
+        {
           profile.name = "home";
           profile.outputs = [
             {
