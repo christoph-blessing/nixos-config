@@ -191,15 +191,6 @@
 
   services.udev.extraRules = ''
     ACTION=="add",\
-      ENV{SUBSYSTEM}=="bluetooth",\
-      RUN+="${pkgs.bash}/bin/bash -c 'export DISPLAY=:0 XAUTHORITY=/home/chris/.Xauthority; ${pkgs.bluez}/bin/bluetoothctl devices Connected | ${pkgs.gnugrep}/bin/grep urchin && ${pkgs.xorg.xinput}/bin/xinput disable \"AT Translated Set 2 keyboard\"'"
-    ACTION=="remove",\
-      ENV{SUBSYSTEM}=="bluetooth",\
-      RUN+="${pkgs.bash}/bin/bash -c 'export DISPLAY=:0 XAUTHORITY=/home/chris/.Xauthority; ${pkgs.bluez}/bin/bluetoothctl devices Connected | ${pkgs.gnugrep}/bin/grep urchin || ${pkgs.xorg.xinput}/bin/xinput enable \"AT Translated Set 2 keyboard\"'"
-    ACTION=="change",\
-      ENV{SUBSYSTEM}=="drm",\
-      RUN+="${pkgs.systemd}/bin/systemctl --user --machine=chris@.host start autorandr.service"
-    ACTION=="add",\
       ENV{SUBSYSTEM}=="backlight",\
       KERNEL=="intel_backlight",\
       RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"

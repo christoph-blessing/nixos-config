@@ -31,6 +31,7 @@
         email = "chris24.blessing@gmail.com";
       };
     };
+    signing.format = null;
   };
 
   programs.gpg.enable = true;
