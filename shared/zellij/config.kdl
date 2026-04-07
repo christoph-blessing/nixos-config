@@ -157,6 +157,12 @@ keybinds clear-defaults=true {
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
+        bind "Alt m" {
+            Run "neomutt" {
+                in_place true
+                close_on_exit true
+            }
+        }
     }
     shared_except "locked" "renametab" "renamepane" {
         bind "Enter" { SwitchToMode "Locked"; }
