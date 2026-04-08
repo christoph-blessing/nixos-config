@@ -1080,7 +1080,7 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentry.package = pkgs.pinentry-curses;
+    pinentry.package = pkgs.pinentry-gtk2;
   };
 
   services.ssh-agent.enable = true;
