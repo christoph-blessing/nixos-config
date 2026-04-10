@@ -79,6 +79,8 @@
       stylua
       nixfmt
     ];
+    withRuby = true;
+    withPython3 = true;
   };
 
   xdg = {
@@ -278,7 +280,7 @@
       exec-once = with pkgs; [
         "[workspace 1] ${alacritty}/bin/alacritty"
         "[workspace 2 silent] ${firefox}/bin/firefox -P default"
-        "[workspace 3 silent] ${firefox}/bin/firefox -P perplexity"
+        "[workspace 3 silent] ${firefox}/bin/firefox -P ai"
         "[workspace 4 silent] ${keepassxc}/bin/keepassxc"
         "[workspace 5 silent] ${gtk3}/bin/gtk-launch element-desktop"
         "${killall}/bin/killall waybar; waybar"
@@ -1069,10 +1071,10 @@
           id = 0;
           settings = common;
         };
-        perplexity = {
+        ai = {
           id = 1;
           settings = common // {
-            "browser.startup.homepage" = "https://perplexity.com";
+            "browser.startup.homepage" = "https://claude.ai";
           };
         };
       };

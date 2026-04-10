@@ -157,6 +157,7 @@
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
+      "claude-code"
       "zoom"
       "ipu6-camera-bins-unstable"
       "ipu6-camera-bins"
@@ -174,6 +175,7 @@
     libreoffice
     tree
     qrencode
+    claude-code
   ];
 
   virtualisation.docker.enable = true;
