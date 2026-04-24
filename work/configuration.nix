@@ -226,6 +226,10 @@
 
   networking.firewall.checkReversePath = "loose";
 
+  networking.hosts = {
+    "127.0.0.1" = [ "keycloak" ];
+  };
+
   xdg.mime.defaultApplications = {
     "x-scheme-handler/element" = [ "element-desktop.desktop" ];
     "x-scheme-handler/io.element.desktop" = [ "element-desktop.desktop" ];
