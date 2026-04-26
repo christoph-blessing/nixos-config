@@ -108,18 +108,21 @@
 
   services.pcscd.enable = true;
 
-  security.pam.services = {
-    login = {
-      u2fAuth = true;
-      unixAuth = false;
-    };
-    sudo = {
-      u2fAuth = true;
-      unixAuth = false;
-    };
-    hyprlock = {
-      u2fAuth = true;
-      unixAuth = false;
+  security.pam = {
+    u2f.settings.cue = true;
+    services = {
+      login = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
+      sudo = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
+      hyprlock = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
     };
   };
 
