@@ -100,172 +100,76 @@
   services.kanshi =
     let
       arrangeWorkspaces = pkgs.writeShellScriptBin "arrange-workspaces" ''
-        profile="''${1:-}"
+        monitor="''${1:-eDP-1}"
 
-        if [[ "$profile" == "tilman" ]]; then
-          hyprctl dispatch moveworkspacetomonitor 1 DP-4
-          hyprctl dispatch moveworkspacetomonitor 2 DP-3
-          hyprctl dispatch moveworkspacetomonitor 3 DP-3
-          hyprctl dispatch moveworkspacetomonitor 4 DP-3
-          hyprctl dispatch moveworkspacetomonitor 5 DP-3
-          hyprctl dispatch moveworkspacetomonitor 6 DP-3
-          hyprctl dispatch moveworkspacetomonitor 7 DP-3
-          hyprctl dispatch moveworkspacetomonitor 8 DP-3
-          hyprctl dispatch moveworkspacetomonitor 9 DP-3
-          hyprctl dispatch moveworkspacetomonitor 10 DP-3
-        fi
+        workspaces=$(hyprctl workspaces -j | nix run nixpkgs#jq '.[].id' | sort -n)
+        for ws in $workspaces; do
+          echo "Moving workspace $ws to monitor $monitor"
+          hyprctl dispatch moveworkspacetomonitor "$ws" "desc:$monitor"
+        done
 
-        if [[ "$profile" == "rz" ]]; then
-          for ws in {1..10}; do
-            hyprctl dispatch moveworkspacetomonitor "$ws" 1
-          done
-        fi
-
-        if [[ "$profile" == "undocked" ]]; then
-          for ws in {1..10}; do
-            hyprctl dispatch moveworkspacetomonitor "$ws" eDP-1
-          done
+        if [[ "$monitor" == "eDP-1" ]]; then
+          hyprctl keyword monitor "eDP-1, preferred, auto, 1"
+        else
+          hyprctl keyword monitor "eDP-1, preferred, auto, 1, mirror, desc:$monitor"
         fi
       '';
     in
     {
       enable = true;
-      settings = [
-        {
-          profile = {
-            name = "undocked";
-            outputs = [
-              {
-                criteria = "AU Optronics 0xD7A4 Unknown";
-                status = "enable";
-              }
-            ];
-            exec = "${arrangeWorkspaces}/bin/arrange-workspaces undocked";
-          };
-        }
-        {
-          profile.name = "office";
-          profile.outputs = [
+      settings =
+        let
+          mkDockedProfile =
+            { criteria }:
             {
-              criteria = "AU Optronics 0xD7A4 Unknown";
-              status = "disable";
-            }
-            {
-              criteria = "Dell Inc. DELL S3422DWG J6DWS63";
-              status = "enable";
-            }
-          ];
-        }
-        {
-          profile = {
-            name = "tilman";
-            outputs = [
-              {
-                criteria = "Dell Inc. DELL U2412M Y1H5T1AJ3EDL";
-                status = "enable";
-              }
-              {
-                criteria = "Dell Inc. DELL P2314H J8J3138CB8HL";
-                status = "enable";
-              }
-            ];
-            exec = "${arrangeWorkspaces}/bin/arrange-workspaces tilman";
-          };
-        }
-        {
-          profile = {
-            name = "rz1";
-            outputs = [
-              {
-                criteria = "AU Optronics 0xD7A4 Unknown";
-                status = "enable";
-              }
-              {
-                criteria = "Dell Inc. Dell U4919DW 4PFLXH3";
-                status = "enable";
-              }
-            ];
-            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
-          };
-        }
-        {
-          profile = {
-            name = "rz2";
-            outputs = [
-              {
-                criteria = "AU Optronics 0xD7A4 Unknown";
-                status = "enable";
-              }
-              {
-                criteria = "Dell Inc. Dell U4919DW F5Y2VY2";
-                status = "enable";
-              }
-            ];
-            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
-          };
-        }
-        {
-          profile = {
-            name = "rz3";
-            outputs = [
-              {
-                criteria = "AU Optronics 0xD7A4 Unknown";
-                status = "enable";
-              }
-              {
-                criteria = "Dell Inc. Dell U4919DW 9PS2VY2";
-                status = "enable";
-              }
-            ];
-            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
-          };
-        }
-        {
-          profile = {
-            name = "rz4";
-            outputs = [
-              {
-                criteria = "AU Optronics 0xD7A4 Unknown";
-                status = "enable";
-              }
-              {
-                criteria = "Dell Inc. Dell U4919DW 17NWTY2";
-                status = "enable";
-              }
-            ];
-            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
-          };
-        }
-        {
-          profile = {
-            name = "rz5";
-            outputs = [
-              {
-                criteria = "AU Optronics 0xD7A4 Unknown";
-                status = "enable";
-              }
-              {
-                criteria = "Dell Inc. Dell U4919DW 9CQXTY2";
-                status = "enable";
-              }
-            ];
-            exec = "${arrangeWorkspaces}/bin/arrange-workspaces rz";
-          };
-        }
-        {
-          profile.name = "home";
-          profile.outputs = [
-            {
-              criteria = "AU Optronics 0xD7A4 Unknown";
-              status = "disable";
-            }
-            {
-              criteria = "Samsung Electric Company LC49G95T H4ZN700369";
-              status = "enable";
-            }
-          ];
-        }
-      ];
+              profile = {
+                name = lib.toLower (builtins.replaceStrings [ " " ] [ "-" ] criteria);
+                outputs = [
+                  {
+                    criteria = "AU Optronics 0xD7A4 Unknown";
+                    status = "enable";
+                  }
+                  {
+                    criteria = "${criteria}";
+                    status = "enable";
+                  }
+                ];
+                exec = "${arrangeWorkspaces}/bin/arrange-workspaces '${criteria}'";
+              };
+            };
+        in
+        [
+          {
+            profile = {
+              name = "undocked";
+              outputs = [
+                {
+                  criteria = "AU Optronics 0xD7A4 Unknown";
+                  status = "enable";
+                }
+              ];
+              exec = "${arrangeWorkspaces}/bin/arrange-workspaces";
+            };
+          }
+          (mkDockedProfile {
+            criteria = "Dell Inc. Dell U4919DW 4PFLXH3";
+          })
+          (mkDockedProfile {
+            criteria = "Dell Inc. Dell U4919DW F5Y2VY2";
+          })
+          (mkDockedProfile {
+            criteria = "Dell Inc. Dell U4919DW 9PS2VY2";
+          })
+          (mkDockedProfile {
+            criteria = "Dell Inc. Dell U4919DW 17NWTY2";
+          })
+          (mkDockedProfile {
+            criteria = "Dell Inc. Dell U4919DW 9CQXTY2";
+          })
+          (mkDockedProfile {
+            criteria = "Dell Inc. Dell U4924DW 17LX0S3";
+          })
+        ];
     };
 
   wayland.windowManager.hyprland = {
