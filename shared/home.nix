@@ -100,7 +100,7 @@
   services.kanshi =
     let
       arrangeWorkspaces = pkgs.writeShellScriptBin "arrange-workspaces" ''
-        monitor="''${1:-eDP-1}"
+        monitor="''${1:-AU Optronics 0xD7A4}"
 
         workspaces=$(hyprctl workspaces -j | nix run nixpkgs#jq '.[].id' | sort -n)
         for ws in $workspaces; do
