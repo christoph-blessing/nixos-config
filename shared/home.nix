@@ -100,19 +100,24 @@
   services.kanshi =
     let
       arrangeWorkspaces = pkgs.writeShellScriptBin "arrange-workspaces" ''
-        monitor="''${1:-AU Optronics 0xD7A4}"
+        internal="AU Optronics 0xD7A4"
+        monitor="''${1:-$internal}"
+
+        if [[ "$monitor" != "$internal" ]]; then
+          echo "Mirroring external monitor $monitor onto internal display $internal"
+          hyprctl keyword monitor "eDP-1, preferred, auto, 1, mirror, desc:$monitor"
+        else
+          echo "Configuring internal display $internal"
+          hyprctl keyword monitor "eDP-1, preferred, auto, 1"
+        fi
+
+        systemctl --user restart waybar
 
         workspaces=$(hyprctl workspaces -j | nix run nixpkgs#jq '.[].id' | sort -n)
         for ws in $workspaces; do
           echo "Moving workspace $ws to monitor $monitor"
           hyprctl dispatch moveworkspacetomonitor "$ws" "desc:$monitor"
         done
-
-        if [[ "$monitor" == "eDP-1" ]]; then
-          hyprctl keyword monitor "eDP-1, preferred, auto, 1"
-        else
-          hyprctl keyword monitor "eDP-1, preferred, auto, 1, mirror, desc:$monitor"
-        fi
       '';
     in
     {
@@ -187,7 +192,6 @@
         "[workspace 3 silent] ${firefox}/bin/firefox -P ai"
         "[workspace 4 silent] ${keepassxc}/bin/keepassxc"
         "[workspace 5 silent] ${gtk3}/bin/gtk-launch element-desktop"
-        "${killall}/bin/killall waybar; waybar"
         "${zellij}/bin/zellij kill-all-sessions --yes"
         "${hypridle}/bin/hypridle"
       ];
@@ -415,6 +419,7 @@
 
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     settings = {
       mainBar = {
         modules-left = [ "hyprland/workspaces" ];
