@@ -15,24 +15,7 @@
       "nls_iso8859-1"
       "usbhid"
     ];
-    luks = {
-      yubikeySupport = true;
-      devices.cryptroot = {
-        device = "/dev/disk/by-uuid/9beadd98-f8e3-4bdd-8c3b-15619ae38609";
-        yubikey = {
-          slot = 2;
-          twoFactor = true;
-          gracePeriod = 30;
-          keyLength = 64;
-          saltLength = 32;
-          storage = {
-            device = "/dev/disk/by-uuid/BC2B-6537";
-            fsType = "vfat";
-            path = "/crypt-storage/default";
-          };
-        };
-      };
-    };
+    luks.devices.cryptroot.device = "/dev/disk/by-uuid/9beadd98-f8e3-4bdd-8c3b-15619ae38609";
   };
 
   swapDevices = [ { label = "swap"; } ];
