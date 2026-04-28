@@ -1008,6 +1008,7 @@
   home.packages = with pkgs; [
     keepassxc
     git
+    jujutsu
     ripgrep
     yubikey-manager
     xclip
