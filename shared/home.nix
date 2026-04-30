@@ -174,6 +174,9 @@
           (mkDockedProfile {
             criteria = "Dell Inc. Dell U4924DW 17LX0S3";
           })
+          (mkDockedProfile {
+            criteria = "Dell Inc. DELL U4025QW 5JXK734";
+          })
         ];
     };
 
