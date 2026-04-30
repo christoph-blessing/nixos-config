@@ -610,7 +610,7 @@
           ];
         };
         clock = {
-          format-alt = "{:%Y-%m-%d}";
+          format-alt = "{:%Y-%m-%d %H:%M}";
           tooltip = false;
         };
       };
