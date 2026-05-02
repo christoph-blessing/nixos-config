@@ -20,7 +20,6 @@
   };
 
   home.packages = with pkgs; [
-    teamspeak_client
     ledger-live-desktop
     monero-cli
   ];
