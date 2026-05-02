@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./sync-conflicts.nix
     ../shared/home.nix
   ];
 
