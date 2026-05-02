@@ -8,6 +8,7 @@
 {
   imports = [
     ../shared/home.nix
+    ./hyprland.nix
   ];
 
   sops = {

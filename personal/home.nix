@@ -1,7 +1,10 @@
 { pkgs, ... }:
 
 {
-  imports = [ ../shared/home.nix ];
+  imports = [
+    ../shared/home.nix
+    ./hyprland.nix
+  ];
 
   accounts.email.accounts.gmail = {
     address = "chris24.blessing@gmail.com";
