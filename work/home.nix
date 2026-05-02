@@ -92,7 +92,6 @@
   };
 
   services.imapnotify.enable = true;
-  services.dunst.enable = true;
 
   home.file.".gnupg/gpgsm.conf".text = ''
     disable-crl-checks

@@ -920,6 +920,8 @@
 
   services.ssh-agent.enable = true;
 
+  services.dunst.enable = true;
+
   home.file = {
     keepassxc = {
       enable = true;
