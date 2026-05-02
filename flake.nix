@@ -37,6 +37,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.chris = import ./personal/home.nix;
+            home-manager.extraSpecialArgs = {inherit pymodoro;};
           }
           sops-nix.nixosModules.sops
         ];
