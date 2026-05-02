@@ -9,6 +9,7 @@
   imports = [
     ../shared/home.nix
     ./hyprland.nix
+    ./hypridle.nix
   ];
 
   sops = {

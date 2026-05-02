@@ -4,6 +4,7 @@
   imports = [
     ../shared/home.nix
     ./hyprland.nix
+    ./hypridle.nix
   ];
 
   accounts.email.accounts.gmail = {
