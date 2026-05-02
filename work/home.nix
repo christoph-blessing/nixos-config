@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./pymodoro/pymodoro.nix
     ./sync-conflicts.nix
     ../shared/home.nix
   ];

@@ -7,7 +7,10 @@
 }:
 
 {
-  imports = [ ./nushell ];
+  imports = [
+    ./nushell
+    ./pymodoro/pymodoro.nix
+  ];
 
   home.username = "chris";
   home.homeDirectory = "/home/chris";
