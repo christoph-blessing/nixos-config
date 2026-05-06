@@ -155,91 +155,66 @@
     '')
   ];
 
-  services.kanshi =
-    let
-      arrangeWorkspaces = pkgs.writeShellScriptBin "arrange-workspaces" ''
-        internal="AU Optronics 0xD7A4"
-        monitor="''${1:-$internal}"
-
-        if [[ "$monitor" != "$internal" ]]; then
-          echo "Mirroring external monitor $monitor onto internal display $internal"
-          hyprctl keyword monitor "eDP-1, preferred, auto, 1, mirror, desc:$monitor"
-        else
-          echo "Configuring internal display $internal"
-          hyprctl keyword monitor "eDP-1, preferred, auto, 1"
-        fi
-
-        systemctl --user restart waybar
-
-        workspaces=$(hyprctl workspaces -j | nix run nixpkgs#jq '.[].id' | sort -n)
-        for ws in $workspaces; do
-          echo "Moving workspace $ws to monitor $monitor"
-          hyprctl dispatch moveworkspacetomonitor "$ws" "desc:$monitor"
-        done
-      '';
-    in
-    {
-      enable = true;
-      settings =
-        let
-          mkDockedProfile =
-            { criteria }:
-            {
-              profile = {
-                name = lib.toLower (builtins.replaceStrings [ " " ] [ "-" ] criteria);
-                outputs = [
-                  {
-                    criteria = "AU Optronics 0xD7A4 Unknown";
-                    status = "enable";
-                  }
-                  {
-                    criteria = "${criteria}";
-                    status = "enable";
-                  }
-                ];
-                exec = "${arrangeWorkspaces}/bin/arrange-workspaces '${criteria}'";
-              };
-            };
-        in
-        [
+  services.kanshi = {
+    enable = true;
+    settings =
+      let
+        mkDockedProfile =
+          { criteria }:
           {
             profile = {
-              name = "undocked";
+              name = lib.toLower (builtins.replaceStrings [ " " ] [ "-" ] criteria);
               outputs = [
                 {
                   criteria = "AU Optronics 0xD7A4 Unknown";
+                  status = "disable";
+                }
+                {
+                  criteria = "${criteria}";
                   status = "enable";
                 }
               ];
-              exec = "${arrangeWorkspaces}/bin/arrange-workspaces";
             };
-          }
-          (mkDockedProfile {
-            criteria = "Dell Inc. Dell U4919DW 4PFLXH3";
-          })
-          (mkDockedProfile {
-            criteria = "Dell Inc. Dell U4919DW F5Y2VY2";
-          })
-          (mkDockedProfile {
-            criteria = "Dell Inc. Dell U4919DW 9PS2VY2";
-          })
-          (mkDockedProfile {
-            criteria = "Dell Inc. Dell U4919DW 17NWTY2";
-          })
-          (mkDockedProfile {
-            criteria = "Dell Inc. Dell U4919DW 9CQXTY2";
-          })
-          (mkDockedProfile {
-            criteria = "Dell Inc. Dell U4924DW 17LX0S3";
-          })
-          (mkDockedProfile {
-            criteria = "Dell Inc. DELL U4025QW 5JXK734";
-          })
-          (mkDockedProfile {
-            criteria = "Dell Inc. DELL U4025QW 8FXK734";
-          })
-        ];
-    };
+          };
+      in
+      [
+        {
+          profile = {
+            name = "undocked";
+            outputs = [
+              {
+                criteria = "AU Optronics 0xD7A4 Unknown";
+                status = "enable";
+              }
+            ];
+          };
+        }
+        (mkDockedProfile {
+          criteria = "Dell Inc. Dell U4919DW 4PFLXH3";
+        })
+        (mkDockedProfile {
+          criteria = "Dell Inc. Dell U4919DW F5Y2VY2";
+        })
+        (mkDockedProfile {
+          criteria = "Dell Inc. Dell U4919DW 9PS2VY2";
+        })
+        (mkDockedProfile {
+          criteria = "Dell Inc. Dell U4919DW 17NWTY2";
+        })
+        (mkDockedProfile {
+          criteria = "Dell Inc. Dell U4919DW 9CQXTY2";
+        })
+        (mkDockedProfile {
+          criteria = "Dell Inc. Dell U4924DW 17LX0S3";
+        })
+        (mkDockedProfile {
+          criteria = "Dell Inc. DELL U4025QW 5JXK734";
+        })
+        (mkDockedProfile {
+          criteria = "Dell Inc. DELL U4025QW 8FXK734";
+        })
+      ];
+  };
 
   programs.element-desktop = {
     enable = true;
