@@ -18,4 +18,9 @@
     '';
     envFile.source = ./env.nu;
   };
+
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
 }
