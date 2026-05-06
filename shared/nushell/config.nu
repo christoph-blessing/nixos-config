@@ -787,8 +787,6 @@ if $env.ZELLIJ? == null {
     zellij attach --create
 }
 
-use completions/bluetoothctl-completions.nu *
-
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ""
 $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
 

@@ -1,10 +1,5 @@
 { pkgs, ... }:
 {
-  home.file.".config/nushell/completions" = {
-    source = ./completions;
-    recursive = true;
-  };
-
   programs.nushell = {
     enable = true;
     configFile.source = ./config.nu;
