@@ -183,6 +183,10 @@
       ENV{SUBSYSTEM}=="backlight",\
       KERNEL=="intel_backlight",\
       RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+    ACTION=="add",\
+      SUBSYSTEM=="usb",\
+      ATTR{idVendor}=="20a0",\
+      ATTR{power/control}="on"
   '';
 
   services.fwupd.enable = true;
