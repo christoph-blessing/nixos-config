@@ -26,5 +26,6 @@
   home.packages = with pkgs; [
     ledger-live-desktop
     monero-cli
+    darktable
   ];
 }
