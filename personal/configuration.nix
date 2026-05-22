@@ -67,4 +67,17 @@
   '';
 
   services.monero.enable = true;
+
+  fileSystems = {
+    "/mnt/photos" = {
+      device = "192.168.1.5:/volume1/homes/christoph/Photos";
+      fsType = "nfs";
+      options = [
+        "x-systemd.automount"
+        "noauto"
+        "x-systemd.idle-timeout=600"
+        "soft"
+      ];
+    };
+  };
 }
