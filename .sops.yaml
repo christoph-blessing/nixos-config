@@ -1,7 +1,9 @@
 keys:
-  - &primary age1clz7k8ggcn3vsvclsd6zf4uzgr96wlvqux8pe2c5cjc8ahqsmf4s7j5upk
+  - &nixe age19qvqz2qmd288twaxueyl8fjpxzqne4cfhpxcma98p0zurqe0wfsq9yy2gd
+  - &nixe_work age1clz7k8ggcn3vsvclsd6zf4uzgr96wlvqux8pe2c5cjc8ahqsmf4s7j5upk
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
-        - *primary
+        - *nixe
+        - *nixe_work
