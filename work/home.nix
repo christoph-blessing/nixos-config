@@ -19,7 +19,6 @@
     secrets = {
       "email/password" = { };
       "email/signature.txt" = { };
-      "email/aliases" = { };
     };
   };
 
@@ -88,7 +87,8 @@
         set smime_is_default = yes
         set record = "+Sent Items"
         set trash = "+Deleted Items"
-        source ${config.sops.secrets."email/aliases".path}
+        set alias_file = "~/.config/neomutt/aliases"
+        source ~/.config/neomutt/aliases
       '';
     };
   };
