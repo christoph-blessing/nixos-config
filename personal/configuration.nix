@@ -32,6 +32,7 @@
       "steam-run"
       "steam-unwrapped"
       "teamspeak3"
+      "xone-dongle-firmware"
     ];
 
   programs.steam = {
@@ -88,4 +89,6 @@
     openFirewall = true;
     settings.min_log_level = 0;
   };
+
+  hardware.xone.enable = true;
 }
