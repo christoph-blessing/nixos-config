@@ -126,12 +126,6 @@
     $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/chris/.config/guix/current/bin')
   '';
 
-  programs.direnv = {
-    enable = true;
-    enableNushellIntegration = true;
-    nix-direnv.enable = true;
-  };
-
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
