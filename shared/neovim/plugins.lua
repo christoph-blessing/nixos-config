@@ -237,6 +237,7 @@ return {
 				gopls = {},
 				vacuum = {},
 				rust_analyzer = {},
+				clangd = {},
 			}
 
 			for name, config in pairs(servers) do
