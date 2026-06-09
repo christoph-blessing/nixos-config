@@ -768,6 +768,8 @@
     (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
     fd
     font-awesome
+    man-pages
+    man-pages-posix
   ];
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
