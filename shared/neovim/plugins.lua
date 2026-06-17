@@ -304,6 +304,7 @@ return {
 					}
 				end
 			end,
+			formatters = { guix_style = { command = "guix", args = { "style", "-f", "$FILENAME" }, stdin = false } },
 			formatters_by_ft = {
 				lua = { "stylua" },
 				nix = { "nixfmt" },
@@ -313,6 +314,7 @@ return {
 				yaml = { "yamlfmt" },
 				rust = { "rustfmt" },
 				json = { "jq" },
+				scheme = { "guix_style" },
 			},
 		},
 	},
