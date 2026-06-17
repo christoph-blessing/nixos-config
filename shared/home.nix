@@ -75,6 +75,7 @@
       nvim-treesitter-textobjects
       nvim-autopairs
       indent-blankline-nvim
+      nvim-paredit
     ];
     extraPackages = with pkgs; [
       lua-language-server

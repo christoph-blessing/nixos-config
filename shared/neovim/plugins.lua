@@ -433,4 +433,10 @@ return {
 		---@type ibl.config
 		opts = {},
 	},
+	{
+		"julienvincent/nvim-paredit",
+		config = function()
+			require("nvim-paredit").setup()
+		end,
+	},
 }
