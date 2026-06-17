@@ -20,7 +20,7 @@ function M.setup(options)
 	vim.o.smartcase = true
 	vim.o.signcolumn = "yes"
 	vim.o.updatetime = 250
-	vim.o.timeoutlen = 300
+	vim.o.timeoutlen = 500
 	vim.o.splitright = true
 	vim.o.splitbelow = true
 	vim.o.list = true
