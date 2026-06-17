@@ -3,7 +3,7 @@ local M = {}
 function M.setup(options)
 	vim.cmd.hi("Comment gui=none")
 	vim.g.mapleader = " "
-	vim.g.maplocalleader = " "
+	vim.g.maplocalleader = ","
 	vim.g.have_nerd_font = true
 	vim.o.number = true
 	vim.o.relativenumber = true
