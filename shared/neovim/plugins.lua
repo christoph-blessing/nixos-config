@@ -390,23 +390,20 @@ return {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
-		opts = {
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = { "htmldjango", "html" },
-			},
-			indent = { enable = true },
-			textobjects = {
+		config = function()
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function(ev)
+					pcall(vim.treesitter.start, ev.buf)
+					local ft = vim.bo[ev.buf].filetype
+					if ft == "html" or ft == "htmldjango" then
+						vim.bo[ev.buf].syntax = "on"
+					end
+				end,
+			})
+
+			require("nvim-treesitter-textobjects").setup({
 				select = {
-					enable = true,
 					lookahead = true,
-					keymaps = {
-						["af"] = { query = "@function.outer", desc = "around function" },
-						["if"] = { query = "@function.inner", desc = "inner function" },
-						["ac"] = { query = "@class.outer", desc = "around class" },
-						["ic"] = { query = "@class.inner", desc = "inner class" },
-						["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
-					},
 					selection_modes = {
 						["@function.outer"] = "V",
 						["@function.inner"] = "V",
@@ -414,8 +411,20 @@ return {
 						["@class.inner"] = "V",
 					},
 				},
-			},
-		},
+			})
+
+			local select = require("nvim-treesitter-textobjects.select")
+			local map = function(key, query, group)
+				vim.keymap.set({ "x", "o" }, key, function()
+					select.select_textobject(query, group or "textobjects")
+				end, { desc = query })
+			end
+			map("af", "@function.outer")
+			map("if", "@function.inner")
+			map("ac", "@class.outer")
+			map("ic", "@class.inner")
+			map("as", "@local.scope", "locals")
+		end,
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
