@@ -33,6 +33,7 @@
       bind = [
         "$mainMod, Q, exec, $terminal"
         "$mainMod, L, exec, hyprlock"
+        "$mainMod, G, exec, grimblast copy area"
         "$mainMod, C, killactive,"
         "$mainMod, V, togglefloating,"
         "$mainMod, R, exec, $menu"

@@ -765,12 +765,12 @@
     jujutsu
     ripgrep
     yubikey-manager
-    xclip
     (writeScriptBin "oath" (builtins.readFile ./scripts/oath.nu))
     fd
     font-awesome
     man-pages
     man-pages-posix
+    grimblast
   ];
 
   programs.direnv = {
