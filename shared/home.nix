@@ -771,6 +771,7 @@
     man-pages
     man-pages-posix
     grimblast
+    imv
   ];
 
   programs.direnv = {
