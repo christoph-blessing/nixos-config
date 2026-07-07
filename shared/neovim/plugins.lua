@@ -205,19 +205,25 @@ return {
 						[vim.diagnostic.severity.HINT] = "󰌶 ",
 					},
 				} or {},
-				virtual_text = {
-					source = "if_many",
-					spacing = 2,
-					format = function(diagnostic)
-						local diagnostic_message = {
-							[vim.diagnostic.severity.ERROR] = diagnostic.message,
-							[vim.diagnostic.severity.WARN] = diagnostic.message,
-							[vim.diagnostic.severity.INFO] = diagnostic.message,
-							[vim.diagnostic.severity.HINT] = diagnostic.message,
-						}
-						return diagnostic_message[diagnostic.severity]
-					end,
-				},
+				virtual_text = function(_, bufnr)
+					if vim.bo[bufnr].filetype == "rust" then
+						---@diagnostic disable-next-line: return-type-mismatch
+						return false
+					end
+					return {
+						source = "if_many",
+						spacing = 2,
+						format = function(diagnostic)
+							local diagnostic_message = {
+								[vim.diagnostic.severity.ERROR] = diagnostic.message,
+								[vim.diagnostic.severity.WARN] = diagnostic.message,
+								[vim.diagnostic.severity.INFO] = diagnostic.message,
+								[vim.diagnostic.severity.HINT] = diagnostic.message,
+							}
+							return diagnostic_message[diagnostic.severity]
+						end,
+					}
+				end,
 			})
 
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -236,7 +242,6 @@ return {
 				nixd = {},
 				gopls = {},
 				vacuum = {},
-				rust_analyzer = {},
 				clangd = {},
 				yamlls = {},
 			}
@@ -443,5 +448,9 @@ return {
 		config = function()
 			require("nvim-paredit").setup()
 		end,
+	},
+	{
+		"mrcjkb/rustaceanvim",
+		lazy = false,
 	},
 }

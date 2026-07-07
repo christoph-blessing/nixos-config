@@ -76,6 +76,7 @@
       nvim-autopairs
       indent-blankline-nvim
       nvim-paredit
+      rustaceanvim
     ];
     extraPackages = with pkgs; [
       lua-language-server
