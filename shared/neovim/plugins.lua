@@ -238,6 +238,7 @@ return {
 				vacuum = {},
 				rust_analyzer = {},
 				clangd = {},
+				yamlls = {},
 			}
 
 			for name, config in pairs(servers) do
