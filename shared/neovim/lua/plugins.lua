@@ -134,9 +134,17 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
-					local map = function(keys, func, desc, mode)
-						mode = mode or "n"
-						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+					local map = function(keys, func, desc, modes)
+						modes = modes or "n"
+						modes = type(modes) == "table" and modes or { modes }
+						for _, mode in ipairs(modes) do
+							for _, map in ipairs(vim.api.nvim_buf_get_keymap(event.buf, mode)) do
+								if map.lhs == vim.keycode(keys) then
+									return
+								end
+							end
+							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+						end
 					end
 
 					map("grn", vim.lsp.buf.rename, "[R]e[n]ame")
