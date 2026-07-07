@@ -30,6 +30,7 @@ function M.setup(options)
 	vim.o.scrolloff = 10
 	vim.o.confirm = true
 	vim.o.backupcopy = "yes"
+	vim.o.winborder = "rounded"
 
 	vim.wo.foldmethod = "expr"
 	vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
