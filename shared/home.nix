@@ -89,7 +89,7 @@
   };
 
   xdg = {
-    configFile."nvim/lua" = {
+    configFile."nvim" = {
       recursive = true;
       source = ./neovim;
     };
