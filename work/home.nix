@@ -108,6 +108,7 @@
     extraConfig = ''
       set crypt_use_gpgme
       set abort_key = "<Esc>"
+      bind index,pager \Cr search-reverse
     '';
   };
   home.sessionVariables = {
