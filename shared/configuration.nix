@@ -46,7 +46,10 @@
   };
   programs.xwayland.enable = true;
 
-  services.displayManager.gdm.enable = true;
+  services.displayManager = {
+    defaultSession = "hyprland";
+    gdm.enable = true;
+  };
 
   nix.settings.experimental-features = [
     "nix-command"
