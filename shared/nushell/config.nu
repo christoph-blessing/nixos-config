@@ -783,10 +783,6 @@ $env.config = {
     ]
 }
 
-if $env.ZELLIJ? == null {
-    zellij attach --create
-}
-
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ""
 $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
 
