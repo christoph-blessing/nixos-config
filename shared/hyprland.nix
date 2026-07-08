@@ -38,7 +38,7 @@
         "$mainMod, V, togglefloating,"
         "$mainMod, R, exec, $menu"
         "$mainMod, P, pseudo,"
-        "$mainMod, J, togglesplit,"
+        "$mainMod, J, layoutmsg, togglesplit,"
         "$mainMod, F, fullscreen, 1"
         "$mainMod, Tab, workspace, previous"
         "$mainMod, left, movefocus, l"
