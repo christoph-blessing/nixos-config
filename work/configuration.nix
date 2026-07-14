@@ -211,7 +211,13 @@
 
   programs.nix-ld.enable = true;
 
-  networking.firewall.checkReversePath = "loose";
+  networking.firewall = {
+    checkReversePath = "loose";
+    extraCommands = ''
+      iptables -I nixos-fw -p tcp -s 172.21.0.0/16 --dport 5000 -j nixos-fw-accept  # allow tcp from k3d network to port 5000 (REE API)
+    '';
+
+  };
 
   networking.hosts = {
     "127.0.0.1" = [ "keycloak" ];
