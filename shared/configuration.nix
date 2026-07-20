@@ -85,7 +85,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    htop
+    btop
     zoxide
     wl-clipboard
   ];
