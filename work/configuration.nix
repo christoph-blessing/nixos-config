@@ -187,7 +187,16 @@
       SUBSYSTEM=="usb",\
       ATTR{idVendor}=="20a0",\
       ATTR{power/control}="on"
+    ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="1050/*", RUN+="${pkgs.systemd}/bin/systemctl --no-block start yubikey-removed.service"
   '';
+
+  systemd.services.yubikey-removed = {
+    description = "Lock all sessions when the YubiKey is removed";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.systemd}/bin/loginctl lock-sessions";
+    };
+  };
 
   services.fwupd.enable = true;
 
