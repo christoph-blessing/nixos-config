@@ -80,6 +80,23 @@
         "soft"
       ];
     };
+    "/mnt/sd" = {
+      device = "/dev/disk/by-id/usb-USB_Mass_Storage_Device_816820120306-0:0-part1";
+      fsType = "vfat";
+      options = [
+        "noauto"
+        "nofail"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=60"
+        "x-systemd.device-timeout=5s"
+        "uid=1000"
+        "gid=100"
+        "fmask=0133"
+        "dmask=0022"
+        "flush"
+        "noatime"
+      ];
+    };
   };
 
   services.sunshine = {
