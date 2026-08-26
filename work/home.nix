@@ -130,8 +130,7 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      emoji = [ "Font Awesome 7 Brands:style=Regular" ];
-      monospace = [ "JetBrainsMono Nerd Font,JetBrainsMono NF:style=Regular" ];
+      monospace = [ "JetBrainsMono Nerd Font" ];
     };
   };
 

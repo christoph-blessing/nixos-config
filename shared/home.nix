@@ -194,11 +194,11 @@
         "hyprland/workspaces" = {
           format = "{icon}";
           "format-icons" = {
-            "terminal" = "";
-            "web" = "";
-            "password" = "";
+            "terminal" = "";
+            "web" = "";
+            "password" = "󰟵";
             "messenger" = "";
-            "ai" = "";
+            "ai" = "";
           };
         };
         idle_inhibitor = {
@@ -371,7 +371,7 @@
     style = ''
       * {
           /* `otf-font-awesome` is required to be installed for icons */
-          font-family: "monospace";
+          font-family: "JetBrainsMono Nerd Font", "Font Awesome 7 Free Solid", "Font Awesome 7 Brands";
           font-size: 13px;
       }
 
