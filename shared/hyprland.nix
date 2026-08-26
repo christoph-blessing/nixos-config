@@ -31,7 +31,7 @@
       end
 
       hl.animation({ leaf = "global", enabled = false })
-      hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 2 } })
+      hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 2 }, input = { kb_options = "compose:menu" } })
 
       hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
       hl.window_rule({
