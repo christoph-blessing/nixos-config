@@ -4,6 +4,8 @@
     enable = true;
     configType = "lua";
     extraConfig = ''
+      hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
+
       local mod = "SUPER"
       local terminal = "alacritty"
       local menu = "wofi --show drun"
@@ -30,16 +32,12 @@
 
       hl.animation({ leaf = "global", enabled = false })
       hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 2 } })
+
+      hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
+      hl.window_rule({
+        match = { class = "^(zoom)$", title = "^(menu window)$" },
+        move  = "onscreen cursor",
+      })
     '';
-    settings = {
-      # monitor = [
-      #   ",preferred,auto,auto"
-      # ];
-      # windowrule = [
-      #   "suppress_event maximize, match:class .*"
-      #   "no_initial_focus on,match:class ^$,match:title ^$,match:xwayland 1,match:float 1,match:fullscreen 0,match:pin 0"
-      #   "move onscreen cursor, match:title ^(menu window)$, match:class ^(zoom)$"
-      # ];
-    };
   };
 }
