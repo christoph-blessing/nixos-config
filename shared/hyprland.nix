@@ -4,8 +4,6 @@
     enable = true;
     configType = "lua";
     extraConfig = ''
-      hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
-
       local mod = "SUPER"
       local terminal = "alacritty"
       local menu = "wofi --show drun"
@@ -22,12 +20,6 @@
       for _, dir in ipairs({ "left", "right", "up", "down" }) do
         hl.bind(mod .. " + " .. dir,  hl.dsp.focus({ direction = dir }))
         hl.bind(mod .. " + SHIFT + " .. dir, hl.dsp.window.swap({ direction = dir }))
-      end
-
-      for i = 1, 10 do
-        local key = i % 10
-        hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-        hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
       end
 
       hl.animation({ leaf = "global", enabled = false })
