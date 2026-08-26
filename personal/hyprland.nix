@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [ ../shared/hyprland.nix ];
-  wayland.windowManager.hyprland.settings.monitor = [
-    "DP-2,5120x1440@239.76,auto,1"
-  ];
+  wayland.windowManager.hyprland.extraConfig = ''
+    hl.monitor({ output = "DP-2", mode = "5120x1440@239.76", position = "auto", scale = 1 })
+  '';
 }

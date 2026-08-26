@@ -2,87 +2,42 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    settings = {
-      monitor = [
-        ",preferred,auto,auto"
-      ];
-      "$terminal" = "alacritty";
-      "$menu" = "wofi --show drun";
-      env = [
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
-        "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/ssh-agent"
-      ];
-      general = {
-        gaps_in = 0;
-        gaps_out = 0;
-      };
-      animations = {
-        enabled = false;
-      };
-      "$mainMod" = "SUPER";
-      input = {
-        kb_layout = "us";
-        kb_model = "pc105";
-        kb_options = "compose:menu";
-        numlock_by_default = true;
-        touchpad = {
-          natural_scroll = true;
-        };
-      };
-      bind = [
-        "$mainMod, Q, exec, $terminal"
-        "$mainMod, L, exec, hyprlock"
-        "$mainMod, G, exec, grimblast copy area"
-        "$mainMod, C, killactive,"
-        "$mainMod, V, togglefloating,"
-        "$mainMod, R, exec, $menu"
-        "$mainMod, P, pseudo,"
-        "$mainMod, J, layoutmsg, togglesplit,"
-        "$mainMod, F, fullscreen, 1"
-        "$mainMod, Tab, workspace, previous"
-        "$mainMod, left, movefocus, l"
-        "$mainMod, right, movefocus, r"
-        "$mainMod, up, movefocus, u"
-        "$mainMod, down, movefocus, d"
-        "$mainMod SHIFT, left, swapwindow, l"
-        "$mainMod SHIFT, right, swapwindow, r"
-        "$mainMod SHIFT, up, swapwindow, u"
-        "$mainMod SHIFT, down, movefocus, d"
-        "$mainMod, 1, workspace, 1"
-        "$mainMod, 2, workspace, 2"
-        "$mainMod, 3, workspace, 3"
-        "$mainMod, 4, workspace, 4"
-        "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
-        "$mainMod SHIFT, 1, movetoworkspace, 1"
-        "$mainMod SHIFT, 2, movetoworkspace, 2"
-        "$mainMod SHIFT, 3, movetoworkspace, 3"
-        "$mainMod SHIFT, 4, movetoworkspace, 4"
-        "$mainMod SHIFT, 5, movetoworkspace, 5"
-        "$mainMod SHIFT, 6, movetoworkspace, 6"
-        "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
-        "$mainMod, S, togglespecialworkspace, magic"
-        "$mainMod SHIFT, S, movetoworkspace, special:magic"
-        "$mainMod, mouse_down, workspace, e+1"
-        "$mainMod, mouse_up, workspace, e-1"
-      ];
-      bindm = [
-        "$mainMod, mouse:272, movewindow"
-        "$mainMod, mouse:273, resizewindow"
-      ];
-      windowrule = [
-        "suppress_event maximize, match:class .*"
-        "no_initial_focus on,match:class ^$,match:title ^$,match:xwayland 1,match:float 1,match:fullscreen 0,match:pin 0"
-        "move onscreen cursor, match:title ^(menu window)$, match:class ^(zoom)$"
-      ];
-    };
+    configType = "lua";
+    extraConfig = ''
+      hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
+
+      local mod = "SUPER"
+      local terminal = "alacritty"
+      local menu = "wofi --show drun"
+
+      hl.bind(mod .. " + Q", hl.dsp.exec_cmd(terminal))
+      hl.bind(mod .. " + R", hl.dsp.exec_cmd(menu))
+      hl.bind(mod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+      hl.bind(mod .. " + G", hl.dsp.exec_cmd("grimblast copy area"))
+      hl.bind(mod .. " + C", hl.dsp.window.close())
+      hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+      hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+      hl.bind(mod .. " + Tab", hl.dsp.focus({ workspace = "previous" }))
+
+      for _, dir in ipairs({ "left", "right", "up", "down" }) do
+        hl.bind(mod .. " + " .. dir,  hl.dsp.focus({ direction = dir }))
+        hl.bind(mod .. " + SHIFT + " .. dir, hl.dsp.window.swap({ direction = dir }))
+      end
+
+      for i = 1, 10 do
+        local key = i % 10
+        hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+        hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+      end
+
+      hl.animation({ leaf = "global", enabled = false })
+      hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 2 } })
+
+      hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
+      hl.window_rule({
+        match = { class = "^(zoom)$", title = "^(menu window)$" },
+        move  = "onscreen cursor",
+      })
+    '';
   };
 }
