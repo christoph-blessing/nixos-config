@@ -50,7 +50,8 @@ Larger dotfiles live as plain files and are pulled in via `source`/`recursive` r
 Hyprland uses `configType = "lua"`. `shared/hyprland.lua` is installed as `~/.config/hypr/shared.lua` and exports `M.mod` plus `M.main()` (common keybinds, gaps, window rules); host configs `require("shared")` and call `shared.main()`, then add monitors, workspace rules, and autostarts.
 
 - `work/hyprland.nix` installs `work/hyprland.lua` as `hyprland.lua` and generates `paths.lua` with Nix store paths for the binaries the Lua launches (firefox profiles, keepassxc, element, alacritty) — add a `M.foo = "${pkg}/bin/foo"` line there before referencing it from Lua.
-- `personal/hyprland.nix` instead inlines its config via `wayland.windowManager.hyprland.extraConfig`, so **`personal/hyprland.lua` is currently orphaned** (no `.nix` references it). Changes to personal Hyprland config must go in `personal/hyprland.nix`.
+- `personal/hyprland.nix` does the same for `personal/hyprland.lua`, but without a `paths.lua`.
+- `hl` is a global injected by Hyprland's Lua runtime, and the host files `require("shared")`, which only resolves once the files sit flat in `~/.config/hypr/`. `.luarc.json` at the repo root declares both to lua-language-server (`diagnostics.globals`, `runtime.path`) — extend it if Hyprland gains another injected global.
 
 ### Secrets
 
