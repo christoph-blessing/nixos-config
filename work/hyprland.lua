@@ -38,10 +38,29 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("env MOZ_APP_REMOTINGNAME=firefox-ai " .. paths.firefox .. " -P ai")
 end)
 
+-- The browser access request dialog shares the class of the main window.
+local keepassxc_class = "^(org\\.keepassxc\\.KeePassXC)$"
+local access_request = "(^KeePassXC\\s+-\\s+Access Request$)"
+local unlock_database = "(^Unlock Database\\s+-\\s+KeePassXC$)"
+
 hl.window_rule({
 	name = "keepassxc",
-	match = { initial_class = "^(org\\.keepassxc\\.KeePassXC)$" },
+	match = { initial_class = keepassxc_class, initial_title = "negative:" .. access_request .. "|" .. unlock_database },
 	workspace = ws.password.id .. " silent",
+})
+
+hl.window_rule({
+	name = "keepassxc-access-request",
+	match = { initial_class = keepassxc_class, initial_title = access_request },
+	float = true,
+	center = true,
+})
+
+hl.window_rule({
+	name = "keepassxc-unlock-database",
+	match = { initial_class = keepassxc_class, initial_title = unlock_database },
+	float = true,
+	center = true,
 })
 
 hl.on("hyprland.start", function()
