@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../shared/configuration.nix
+    ./monitor-calibration.nix
   ];
 
   networking.hostName = "nixe";

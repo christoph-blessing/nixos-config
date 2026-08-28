@@ -1,7 +1,13 @@
 local shared = require("shared")
 shared.main()
 
-hl.monitor({ output = "DP-2", mode = "5120x1440@239.76", position = "auto", scale = 1 })
+hl.monitor({
+	output = "DP-2",
+	mode = "5120x1440@239.76",
+	position = "auto",
+	scale = 1,
+	icc = "/home/chris/.local/share/icc/odyssey-g9.icc",
+})
 
 for i = 1, 10 do
 	local key = i % 10
