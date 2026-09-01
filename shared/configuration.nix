@@ -8,6 +8,10 @@
 }:
 
 {
+  imports = [
+    ./docker.nix
+  ];
+
   sops = {
     defaultSopsFile = ../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
