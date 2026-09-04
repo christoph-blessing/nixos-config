@@ -10,6 +10,7 @@
 {
   imports = [
     ./docker.nix
+    ./go60.nix
   ];
 
   sops = {
