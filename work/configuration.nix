@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ../shared/configuration.nix
     ./mitmproxy.nix
+    ./printing.nix
   ];
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_18;
@@ -205,8 +206,6 @@
   hardware.logitech.wireless.enable = true;
 
   services.guix.enable = true;
-
-  services.printing.enable = true;
 
   hardware.ipu6 = {
     enable = true;
