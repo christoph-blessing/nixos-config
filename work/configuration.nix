@@ -160,6 +160,7 @@
     tree
     qrencode
     claude-code
+    glow
   ];
 
   users.users.chris.extraGroups = [
