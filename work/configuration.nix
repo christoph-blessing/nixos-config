@@ -138,16 +138,13 @@
     pulse.enable = true;
   };
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "claude-code"
-      "zoom"
-      "ipu6-camera-bins-unstable"
-      "ipu6-camera-bins"
-      "ivsc-firmware-unstable"
-      "ivsc-firmware"
-    ];
+  myModule.unfreePackageNames = [
+    "zoom"
+    "ipu6-camera-bins-unstable"
+    "ipu6-camera-bins"
+    "ivsc-firmware-unstable"
+    "ivsc-firmware"
+  ];
 
   environment.systemPackages = with pkgs; [
     zoom-us
@@ -159,7 +156,6 @@
     libreoffice
     tree
     qrencode
-    claude-code
     glow
   ];
 

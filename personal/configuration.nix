@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   ...
 }:
@@ -23,18 +22,16 @@
     ];
   };
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia-settings"
-      "steam"
-      "steam-original"
-      "steam-run"
-      "steam-unwrapped"
-      "teamspeak3"
-      "xone-dongle-firmware"
-    ];
+  myModule.unfreePackageNames = [
+    "nvidia-x11"
+    "nvidia-settings"
+    "steam"
+    "steam-original"
+    "steam-run"
+    "steam-unwrapped"
+    "teamspeak3"
+    "xone-dongle-firmware"
+  ];
 
   programs.steam = {
     enable = true;
