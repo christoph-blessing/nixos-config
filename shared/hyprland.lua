@@ -2,6 +2,10 @@ local M = {}
 M.mod = "SUPER"
 
 function M.main()
+	hl.exec_cmd(
+		"systemctl --user import-environment WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_CURRENT_DESKTOP && systemctl --user start hyprland-session.target"
+	)
+
 	local terminal = "alacritty"
 	local menu = "wofi --show drun"
 
