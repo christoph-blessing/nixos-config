@@ -5,7 +5,8 @@
   ...
 }:
 let
-  pymodoroPkg = pymodoro.packages.${pkgs.system}.default;
+  system = pkgs.stdenv.hostPlatform.system;
+  pymodoroPkg = pymodoro.packages.${system}.default;
   dunstPause = pkgs.writeShellScriptBin "dunst-pause" ''
     PATH=${lib.makeBinPath [ pkgs.dunst ]}
 

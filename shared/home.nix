@@ -224,10 +224,11 @@
         };
         "custom/pymodoro" =
           let
+            system = pkgs.stdenv.hostPlatform.system;
             pymodoro-waybar = pkgs.writeShellScriptBin "pymodoro-waybar" ''
               PATH=${
                 lib.makeBinPath [
-                  pymodoro.packages.${pkgs.system}.default
+                  pymodoro.packages.${system}.default
                 ]
               }
               case "$1" in
