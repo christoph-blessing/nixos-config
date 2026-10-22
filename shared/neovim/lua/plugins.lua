@@ -263,6 +263,7 @@ return {
 				vacuum = {},
 				clangd = {},
 				yamlls = {},
+				nushell = {},
 			}
 
 			for name, config in pairs(servers) do
