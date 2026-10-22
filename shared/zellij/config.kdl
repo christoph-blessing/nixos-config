@@ -243,6 +243,14 @@ default_shell "nu"
 //
 // pane_frames true
 
+// Set the pane frame style when pane_frames is enabled
+// Options:
+//   - titles (default - draw a title above each pane)
+//   - full (draw a full frame around each pane)
+//   - none (equivalent to pane_frames false)
+//
+pane_frame_style "full"
+
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:
 //   - true (default)
@@ -317,7 +325,7 @@ session_serialization false
 //   - true (default)
 //   - false
 //
-// mouse_mode false
+mouse_mode false
 
 // Configure the scroll back buffer size
 // This is the number of lines zellij stores for each pane in the scroll back
