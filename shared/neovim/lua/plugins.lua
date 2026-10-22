@@ -1,3 +1,5 @@
+local slow_format_filetypes = { kotlin = true }
+
 return {
 
 	{ "NMAC427/guess-indent.nvim", opts = {} },
@@ -305,7 +307,7 @@ return {
 			{
 				"<leader>f",
 				function()
-					require("conform").format({ async = true, lsp_format = "fallback" })
+					require("conform").format({ async = true })
 				end,
 				mode = "",
 				desc = "[F]ormat buffer",
@@ -313,10 +315,14 @@ return {
 		},
 		opts = {
 			notify_on_error = false,
+			default_format_opts = {
+				lsp_format = "fallback",
+			},
 			format_on_save = function(bufnr)
 				local disable_filetypes = { c = true, cpp = true }
 				if
 					disable_filetypes[vim.bo[bufnr].filetype]
+					or slow_format_filetypes[vim.bo[bufnr].filetype]
 					or vim.g.disable_autoformat
 					or vim.b[bufnr].disable_autoformat
 				then
@@ -324,9 +330,19 @@ return {
 				else
 					return {
 						timeout_ms = 500,
-						lsp_format = "fallback",
 					}
 				end
+			end,
+			-- formatters too slow to block the write (ktlint starts a JVM) run after it instead
+			format_after_save = function(bufnr)
+				if
+					not slow_format_filetypes[vim.bo[bufnr].filetype]
+					or vim.g.disable_autoformat
+					or vim.b[bufnr].disable_autoformat
+				then
+					return nil
+				end
+				return {}
 			end,
 			formatters = { guix_style = { command = "guix", args = { "style", "-f", "$FILENAME" }, stdin = false } },
 			formatters_by_ft = {
@@ -339,6 +355,7 @@ return {
 				rust = { "rustfmt" },
 				json = { "jq" },
 				scheme = { "guix_style" },
+				kotlin = { "ktlint", lsp_format = "never" },
 			},
 		},
 	},
