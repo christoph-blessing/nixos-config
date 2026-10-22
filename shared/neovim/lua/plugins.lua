@@ -264,6 +264,9 @@ return {
 				clangd = {},
 				yamlls = {},
 				nushell = {},
+				kotlin_lsp = {
+					cmd = { "kotlin-lsp", "--stdio" },
+				},
 			}
 
 			for name, config in pairs(servers) do
