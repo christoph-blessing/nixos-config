@@ -11,9 +11,10 @@ local ws = {
 	ai = { id = 3, key = "A" },
 	password = { id = 4, key = "P" },
 	messenger = { id = 5, key = "M" },
+	zoom = { id = 6, key = "Z" },
 }
 for name, config in pairs(ws) do
-	hl.workspace_rule({ workspace = tostring(config.id), default_name = name, persistent = true })
+	hl.workspace_rule({ workspace = tostring(config.id), default_name = name })
 	hl.bind(shared.mod .. " + " .. config.key, hl.dsp.focus({ workspace = tostring(config.id) }))
 	hl.bind(shared.mod .. " + SHIFT + " .. config.key, hl.dsp.window.move({ workspace = tostring(config.id) }))
 end
@@ -76,6 +77,12 @@ hl.window_rule({
 hl.on("hyprland.start", function()
 	hl.exec_cmd(paths.gtk_launch .. " element-desktop")
 end)
+
+hl.window_rule({
+	name = "zoom",
+	match = { initial_class = "^(zoom)$" },
+	workspace = ws.zoom.id .. " silent",
+})
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd(paths.alacritty, { workspace = ws.terminal.id })

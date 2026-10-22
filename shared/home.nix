@@ -199,6 +199,7 @@
             "password" = "󰟵";
             "messenger" = "";
             "ai" = "";
+            "zoom" = "";
           };
         };
         idle_inhibitor = {
