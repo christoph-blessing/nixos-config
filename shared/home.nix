@@ -783,6 +783,14 @@
     nix-direnv.enable = true;
   };
 
+  programs.claude-code = {
+    enable = true;
+    settings = {
+      model = "opus";
+      effortLevel = "high";
+    };
+  };
+
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards

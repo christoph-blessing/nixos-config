@@ -111,7 +111,6 @@ in
       btop
       zoxide
       wl-clipboard
-      claude-code
     ];
 
     fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
