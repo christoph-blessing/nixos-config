@@ -60,6 +60,21 @@ function M.setup(options)
 			vim.highlight.on_yank()
 		end,
 	})
+
+	vim.api.nvim_create_user_command("CopyPathLine", function(opts)
+		local path = vim.api.nvim_buf_get_name(0)
+		if path == "" then
+			vim.notify("buffer has no file", vim.log.levels.WARN)
+			return
+		end
+		local position = tostring(opts.line1)
+		if opts.range > 0 then
+			position = position .. "-" .. opts.line2
+		end
+		vim.fn.setreg("+", path .. ":" .. position)
+	end, { range = true, desc = "Copy path:line to clipboard" })
+	vim.keymap.set({ "n", "x" }, "<leader>p", ":CopyPathLine<cr>", { desc = "Copy path:line", silent = true })
+
 	require("lazy").setup({
 		spec = {
 			{ import = "plugins" },
