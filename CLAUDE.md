@@ -51,7 +51,7 @@ Hyprland uses `configType = "lua"`. `shared/hyprland.lua` is installed as `~/.co
 
 - `work/hyprland.nix` installs `work/hyprland.lua` as `hyprland.lua` and generates `paths.lua` with Nix store paths for the binaries the Lua launches (firefox profiles, keepassxc, element, alacritty) — add a `M.foo = "${pkg}/bin/foo"` line there before referencing it from Lua.
 - `personal/hyprland.nix` does the same for `personal/hyprland.lua`, but without a `paths.lua`.
-- `hl` is a global injected by Hyprland's Lua runtime, and the host files `require("shared")`, which only resolves once the files sit flat in `~/.config/hypr/`. `.luarc.json` at the repo root declares both to lua-language-server (`diagnostics.globals`, `runtime.path`) — extend it if Hyprland gains another injected global.
+- `hl` is a global injected by Hyprland's Lua runtime, and the host files `require("shared")`, which only resolves once the files sit flat in `~/.config/hypr/`. `.luarc.json` at the repo root declares both to lua-language-server (`workspace.library` pointing at the Hyprland stubs, `runtime.path`). Because a `.luarc.json` overrides client-side settings, `shared/neovim/` has its own near-empty `.luarc.json` so lua_ls roots there and lazydev.nvim's library (`vim` etc.) isn't clobbered — don't delete it.
 
 ### Secrets
 
