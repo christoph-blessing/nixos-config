@@ -30,6 +30,16 @@ return {
 				changedelete = { text = "~" },
 			},
 		},
+		config = function(_, opts)
+			local gitsigns = require("gitsigns")
+			gitsigns.setup(opts)
+			vim.keymap.set("n", "]h", function()
+				gitsigns.nav_hunk("next")
+			end, { desc = "Go to next hunk" })
+			vim.keymap.set("n", "[h", function()
+				gitsigns.nav_hunk("prev")
+			end, { desc = "Go to previous hunk" })
+		end,
 	},
 	{
 		"folke/which-key.nvim",
