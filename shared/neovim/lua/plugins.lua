@@ -276,6 +276,48 @@ return {
 				nushell = {},
 				kotlin_lsp = {
 					cmd = { "kotlin-lsp", "--stdio" },
+					handlers = (function()
+						local naming = {
+							ClassName = true,
+							FunctionName = true,
+							PropertyName = true,
+							LocalVariableName = true,
+							PrivatePropertyName = true,
+							ObjectPropertyName = true,
+							ObjectPrivatePropertyName = true,
+							ConstPropertyName = true,
+							EnumEntryName = true,
+							TestFunctionName = true,
+						}
+						local function keep(d)
+							if naming[d.code] then
+								return false
+							end
+							return not (d.message or ""):find("should not contain underscores", 1, true)
+						end
+						local function wrap(method, get, set)
+							return function(err, res, ctx, cfg)
+								if res and get(res) then
+									set(res, vim.tbl_filter(keep, get(res)))
+								end
+								return vim.lsp.handlers[method](err, res, ctx, cfg)
+							end
+						end
+						return {
+							-- push diagnostics
+							["textDocument/publishDiagnostics"] = wrap("textDocument/publishDiagnostics", function(r)
+								return r.diagnostics
+							end, function(r, v)
+								r.diagnostics = v
+							end),
+							-- pull diagnostics
+							["textDocument/diagnostic"] = wrap("textDocument/diagnostic", function(r)
+								return r.items
+							end, function(r, v)
+								r.items = v
+							end),
+						}
+					end)(),
 				},
 			}
 
@@ -297,7 +339,7 @@ return {
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
-		config = function(plugin, opts)
+		config = function(_, opts)
 			vim.api.nvim_create_user_command("FormatDisable", function(args)
 				if args.bang then
 					-- FormatDisable! will disable formatting just for this buffer
