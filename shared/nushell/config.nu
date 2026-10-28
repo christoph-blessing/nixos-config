@@ -786,4 +786,10 @@ $env.config = {
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ""
 $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
 
+# neovim using the config straight from the repo, restarting on every change
+def nvim-dev [...args] {
+    let dir = $"($env.HOME)/projects/nixos-config/shared/neovim"
+    nvim --cmd $"set rtp^=($dir)" -c $"luafile ($dir)/dev.lua" ...$args
+}
+
 source ~/.zoxide.nu
