@@ -774,6 +774,7 @@
     man-pages
     man-pages-posix
     grimblast
+    xprop
     imv
   ];
 
