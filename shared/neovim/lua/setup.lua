@@ -75,6 +75,27 @@ function M.setup(options)
 	end, { range = true, desc = "Copy path:line to clipboard" })
 	vim.keymap.set({ "n", "x" }, "<leader>p", ":CopyPathLine<cr>", { desc = "Copy path:line", silent = true })
 
+	vim.api.nvim_create_autocmd("BufReadCmd", {
+		pattern = "jar://*",
+		callback = function(args)
+			local jar, entry = args.file:sub(#"jar://" + 1):match("^(.*)!/(.*)$")
+			local res = vim.system({ "unzip", "-p", jar, entry }, { text = true }):wait()
+			local lines = vim.split(res.stdout or "", "\r?\n")
+			if lines[#lines] == "" then
+				table.remove(lines)
+			end
+
+			local buf = args.buf
+			vim.bo[buf].modifiable = true
+			vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+			vim.bo[buf].buftype = "nofile"
+			vim.bo[buf].swapfile = false
+			vim.bo[buf].modifiable = false
+			vim.bo[buf].readonly = true
+			vim.bo[buf].filetype = vim.filetype.match({ filename = entry, buf = buf }) or ""
+		end,
+	})
+
 	require("lazy").setup({
 		spec = {
 			{ import = "plugins" },
