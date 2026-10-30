@@ -200,6 +200,7 @@
             "messenger" = "";
             "ai" = "";
             "zoom" = "";
+            "email" = "󰇮";
           };
         };
         idle_inhibitor = {

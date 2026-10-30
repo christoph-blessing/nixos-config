@@ -11,6 +11,7 @@
     M.alacritty = "${alacritty}/bin/alacritty"
     M.zellij = "${zellij}/bin/zellij"
     M.loginctl = "${pkgs.systemd}/bin/loginctl"
+    M.neomutt = "${pkgs.neomutt}/bin/neomutt"
 
     return M
   '';

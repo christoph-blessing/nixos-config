@@ -12,6 +12,7 @@ local ws = {
 	password = { id = 4, key = "P" },
 	messenger = { id = 5, key = "M" },
 	zoom = { id = 6, key = "Z" },
+	email = { id = 7, key = "E" },
 }
 for name, config in pairs(ws) do
 	hl.workspace_rule({ workspace = tostring(config.id), default_name = name })
@@ -83,6 +84,16 @@ hl.window_rule({
 	match = { initial_class = "^(zoom)$" },
 	workspace = ws.zoom.id .. " silent",
 })
+
+hl.window_rule({
+	name = "neomutt",
+	match = { initial_class = "^(neomutt)$" },
+	workspace = ws.email.id .. " silent",
+})
+
+hl.on("hyprland.start", function()
+	hl.exec_cmd(paths.alacritty .. " --class neomutt --command " .. paths.neomutt)
+end)
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd(paths.alacritty, { workspace = ws.terminal.id })
