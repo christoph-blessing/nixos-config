@@ -16,7 +16,6 @@ function M.main()
 	hl.bind(M.mod .. " + C", hl.dsp.window.close())
 	hl.bind(M.mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 	hl.bind(M.mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
-	hl.bind(M.mod .. " + Tab", hl.dsp.focus({ workspace = "previous" }))
 
 	for _, dir in ipairs({ "left", "right", "up", "down" }) do
 		hl.bind(M.mod .. " + " .. dir, hl.dsp.focus({ direction = dir }))
